@@ -1,0 +1,25 @@
+{% extends 'base/base.html' %}
+
+{% load custom_tags %}
+
+{% block main_content %}
+    <form method="POST" action="{% url 'login-user' %}">
+
+        {% csrf_token %}
+
+        <p class="login-title">Log In</p>
+
+        {{ form.username|placeholder:'Email' }}
+        {{ form.password|placeholder:'Password' }}
+
+        <button>
+            Log In
+        </button>
+
+        <p class="sign-up-new-account">
+            <span>Don't have an account?: </span>
+            <span><a href="{% url 'register-user' %}">Sign Up</a></span>
+        </p>
+
+    </form>
+{% endblock %}

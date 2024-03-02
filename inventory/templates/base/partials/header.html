@@ -1,0 +1,62 @@
+{% load static %}
+<nav class="navbar">
+    <div class="container">
+        <div class="logo">
+            <!-- Link to Home Page -->
+            <a href="{% url 'dashboard' %}">
+                <img width="50px" src="{% static '/img/app_logo.png' %}" alt="img1">
+            </a>
+        </div>
+
+        <div class="nav-links">
+            <ul class="nav-group">
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <!-- Link to Add Pet Page -->
+                        <a href="{% url 'home-page' %}">
+                            <i>Home</i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <!-- Link to Profile Page -->
+                        {% if request.user.profile_pic %}
+                            <a href="{% url 'details-profile' %}">
+                                <i>Profile</i>
+                            </a>
+                        {% else %}
+                            <a href="{% url 'details-profile' %}">
+                                <img src="{% static '/img/default-user.png' %}" alt="{{ request.user.email }}">
+                            </a>
+                        {% endif %}
+                    </li>
+                    <li class="nav-item">
+                        <!-- Lpg out -->
+                        <form action="{% url 'logout-user' %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit"><i>Log out</i>
+                            </button>
+                            {#                        <a href="{% url 'logout-user' %}">#}
+                            {#                            <i>Log out</i>#}
+                            {#                        </a>#}
+                        </form>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+
+                        <!-- Link to Login Page -->
+                        <a href="{% url 'login-user' %}">
+                            <i>Login</i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+
+                        <!-- Link to Register Page -->
+                        <a href="{% url 'register-user' %}">
+                            <i>Register</i>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
