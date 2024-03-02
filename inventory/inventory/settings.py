@@ -22,10 +22,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     "inventory.devices",
-    "inventory.support",
     "inventory.business",
     "inventory.common",
     "inventory.accounts",
+    "inventory.suppliers",
 ]
 
 MIDDLEWARE = [

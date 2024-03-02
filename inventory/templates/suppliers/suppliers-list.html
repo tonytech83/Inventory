@@ -1,0 +1,13 @@
+{% extends 'base/base.html' %}
+
+{% block main_content %}
+    <h1>Suppliers</h1>
+    <a href="{% url 'create-supplier' %}">Create Supplier</a>
+
+    <ul>
+        {% for supplier in object_list %}
+            <li>{{ supplier.name }}</li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}

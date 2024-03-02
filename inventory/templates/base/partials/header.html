@@ -18,6 +18,13 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <!-- Link to Supplier page -->
+                        {# TODO: Fix the link to suppliers #}
+                        <a href="{% url 'supplier-list' %}">
+                            <i>Suppliers</i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <!-- Link to Profile Page -->
                         {% if request.user.profile_pic %}
                             <a href="{% url 'details-profile' %}">{{ request.user.profile_pic }}</a>
