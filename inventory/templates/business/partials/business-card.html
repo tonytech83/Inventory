@@ -1,0 +1,8 @@
+{# TODO: fix the details link to business #}
+<div class="business-card" onclick="window.location.href='https://dir.bg';">
+    {% if business.owner.pk == request.user.pk %}
+        {# TODO: to try made owned in upper right angle #}
+        <p style="color: green;">owned</p>
+    {% endif %}
+    <p class="business-link">{{ business.business_name }}</p>
+</div>

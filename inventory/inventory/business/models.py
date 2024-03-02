@@ -30,9 +30,17 @@ class Business(models.Model):
         blank=False,
     )
 
-    business_picture = models.ImageField()
+    business_picture = models.ImageField(
+        null=True,
+        blank=True,
+    )
 
     owner = models.ForeignKey(
         to=AppUser,
         on_delete=models.DO_NOTHING,
+        related_name="owner",
+    )
+
+    is_visible = models.BooleanField(
+        default=True
     )

@@ -65,8 +65,15 @@ class AppProfile(models.Model):
     account = models.OneToOneField(
         to=AppUser,
         on_delete=models.CASCADE,
+        related_name='profile',
     )
 
     @property
     def full_name(self):
         return f'{self.first_name} {self.last_name}'
+
+    @property
+    def initials(self):
+        if self.first_name and self.last_name:
+            return f'{self.first_name[0]}{self.last_name[0]}'.upper()
+        return self.account.email[0].upper()

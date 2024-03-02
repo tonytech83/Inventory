@@ -1,0 +1,14 @@
+{% extends 'base/base.html' %}
+
+{% block main_content %}
+    <h1>Create Business</h1>
+    <form action="{% url 'create-business' %}" method="POST">
+        {{ form.as_p }}
+
+        {% csrf_token %}
+
+        <button>Create</button>
+        <a href="{% url 'home-page' %}">Cancel</a>
+    </form>
+
+{% endblock %}

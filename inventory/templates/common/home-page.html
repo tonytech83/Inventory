@@ -2,4 +2,13 @@
 
 {% block main_content %}
     <h1>HOME PAGE</h1>
+    <section id="catalogue">
+        {% include 'business/partials/create-business-card.html' %}
+        {% for owned_business in owned_businesses %}
+            {% include 'business/partials/business-card.html' with business=owned_business %}
+        {% endfor %}
+        {% for not_owned_business in not_owned_businesses %}
+            {% include 'business/partials/business-card.html' with business=not_owned_business %}
+        {% endfor %}
+    </section>
 {% endblock %}

@@ -1,0 +1,36 @@
+#catalogue {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.business-card {
+    display: flex;
+    justify-content: center; /* Aligns horizontally */
+    align-items: center; /* Aligns vertically */
+    flex-direction: column;
+    font-weight: bold;
+    width: 150px;
+    height: 150px;
+    padding: 20px 20px;
+    border: 1px solid black;
+    border-radius: 10px;
+    background: grey;
+    cursor: pointer;
+}
+
+.business-card:hover {
+    background: lightgray;
+}
+
+.business-link {
+    font-size: 1.5em;
+    color: black;
+    margin: 0;
+}
+
+.plus {
+    margin: 0;
+    font-size: 1.5em;
+}
