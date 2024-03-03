@@ -5,30 +5,14 @@ from inventory.business.models import Business
 from inventory.suppliers.models import Supplier
 
 
-class OperationSystem(models.Model):
-    MIN_NAME_LENGTH = 2
-    MAX_NAME_LENGTH = 30
-
-    name = models.CharField(
-        max_length=MAX_NAME_LENGTH,
-        validators=(
-            MinLengthValidator(MIN_NAME_LENGTH),
-        ),
-    )
-
-
 class Support(models.Model):
-    """
-    warranty -> how many years
-
-    """
     purchase_order_number = models.IntegerField(
         # TODO: to validate length of PO ?
         null=True,
         blank=True,
     )
 
-    purchase_order = models.ImageField(
+    invoice_img = models.ImageField(
         # TODO: To fix upload of pdf document or pic maybe
         null=True,
         blank=True,
@@ -43,6 +27,42 @@ class Support(models.Model):
     @property
     def days_under_support(self):
         return datetime.now().date() - self.eos
+
+
+class Risk(models.Model):
+    MIN_SUPPORT_LENGTH = 2
+    MAX_SUPPORT_LENGTH = 100
+
+    MIN_BUSINESS_LENGTH = 2
+    MAX_BUSINESS_LENGTH = 50
+
+    support_model = models.TextField(
+        max_length=MAX_SUPPORT_LENGTH,
+        validators=(
+            MinLengthValidator(MIN_SUPPORT_LENGTH),
+        ),
+        help_text='Short description of support model',
+    )
+
+    business_processes_at_risk = models.TextField(
+        max_length=MAX_BUSINESS_LENGTH,
+        validators=(
+            MinLengthValidator(MIN_BUSINESS_LENGTH),
+        ),
+        help_text='Identify the business process that is at risk'
+    )
+    impact = models.IntegerField(
+        choices=[(i, i) for i in range(1, 6)],
+        default=1,
+    )
+    likelihood = models.IntegerField(
+        choices=[(i, i) for i in range(1, 6)],
+        default=1,
+    )
+
+    @property
+    def risk_score(self):
+        return self.impact * self.likelihood
 
 
 class Category(models.TextChoices):
@@ -125,6 +145,9 @@ class Device(models.Model):
     MIN_DOMAIN_LENGTH = 1
     MAX_DOMAIN_LENGTH = 50
 
+    MIN_OS_LENGTH = 2
+    MAX_OS_LENGTH = 100
+
     device_name = models.CharField(
         max_length=MAX_NAME_LENGTH,
         validators=(
@@ -203,6 +226,15 @@ class Device(models.Model):
         blank=True,
     )
 
+    operating_system = models.CharField(
+        max_length=MAX_OS_LENGTH,
+        validators=(
+            MinLengthValidator(MIN_OS_LENGTH),
+        ),
+        null=True,
+        blank=True,
+    )
+
     owner_name = models.CharField(
         max_length=MAX_NAME_LENGTH,
         validators=(
@@ -214,6 +246,13 @@ class Device(models.Model):
     support = models.OneToOneField(
         to=Support,
         on_delete=models.CASCADE,
+    )
+
+    risk = models.OneToOneField(
+        to=Risk,
+        on_delete=models.CASCADE,
+        # TODO: should be null=False
+        null=True,
     )
 
     supplier = models.ForeignKey(

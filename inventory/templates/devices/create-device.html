@@ -1,0 +1,24 @@
+{% extends 'base/base.html' %}
+
+{% block main_content %}
+    <form action="{% url 'create-device' business_id=business_id %}" method="POST">
+        <div class="device-wrapper">
+            <div class="device-form">
+                <h1>Device</h1>
+                {{ form.as_p }}
+            </div>
+            <div class="support-form">
+                <h1>Support</h1>
+                {{ support_form.as_p }}
+            </div>
+            <div class="risk-form">
+                <h1>Risk</h1>
+                {{ risk_form.as_p }}
+            </div>
+        </div>
+
+        {% csrf_token %}
+
+        <button>Create</button>
+    </form>
+{% endblock %}

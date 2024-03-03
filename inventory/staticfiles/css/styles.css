@@ -1,5 +1,6 @@
 @import "./nav.css";
 @import "business-card.css";
+@import "create_device.css";
 
 body {
     font-family: "Open Sans", sans-serif;

@@ -1,0 +1,13 @@
+.device-wrapper {
+    display: flex;
+    flex-basis: 0;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.device-form,
+.risk-form,
+.support-form {
+    flex-basis: 100%;
+    background: azure;
+}

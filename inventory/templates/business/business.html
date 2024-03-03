@@ -2,7 +2,7 @@
 
 {% block main_content %}
     <h1>{{ object.business_name }}</h1>
-
+    <a href="{% url 'create-device' business_id=business.pk %}">Create device</a>
     <ul>
         {% for device in devices %}
             <li>{{ device.device_name }}</li>
