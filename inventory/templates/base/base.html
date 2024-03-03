@@ -1,24 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<!-- Head Start -->
-{% include 'base/partials/head.html' %}
-<!-- Head End -->
-
-<!-- Header Start -->
-<header>
-    {% include 'base/partials/header.html' %}
-</header>
-<!-- Header End -->
-
-<!-- Header Start -->
+<head>
+    <!-- Head Start -->
+    {% include 'base/partials/head.html' %}
+    <!-- Head End -->
+    <title></title></head>
 <body>
-{% block main_content %}{% endblock %}
+<div class="site-container">
+    <!-- Header Start -->
+    <header>
+        {% include 'base/partials/header.html' %}
+    </header>
+    <!-- Header End -->
+
+
+    <!-- Main Content Start -->
+    <main class="content">
+        {% block main_content %}{% endblock %}
+    </main>
+    <!-- Main Content End -->
+
+    <!-- Footer Start -->
+    <footer class="footer">
+        {% include 'base/partials/footer.html' %}
+    </footer>
+    <!-- Footer End -->
+</div>
 </body>
-<!-- Header End -->
-
-<!-- Footer Start -->
-{% include 'base/partials/footer.html' %}
-<!-- Footer End -->
-
 </html>

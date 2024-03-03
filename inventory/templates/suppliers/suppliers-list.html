@@ -3,11 +3,28 @@
 {% block main_content %}
     <h1>Suppliers</h1>
     <a href="{% url 'create-supplier' %}">Create Supplier</a>
-
-    <ul>
+    
+    <table class="table table-dark table-hover table-striped">
+        <thead>
+        <tr>
+            <th></th>
+            <th>SUPPLIER</th>
+            <th>CONTACT</th>
+            <th>PHONE</th>
+            <th>EMAIL</th>
+        </tr>
+        </thead>
+        <tbody>
         {% for supplier in object_list %}
-            <li>{{ supplier.name }}</li>
+            <tr>
+                <td><a href="#"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                <td>{{ supplier.name }}</td>
+                <td>{{ supplier.contact_name }}</td>
+                <td>{{ supplier.phone_number }}</td>
+                <td>{{ supplier.email }}</td>
+            </tr>
         {% endfor %}
-    </ul>
+        </tbody>
+    </table>
 
 {% endblock %}

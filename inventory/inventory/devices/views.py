@@ -1,6 +1,6 @@
 from django.db import transaction
 from django.shortcuts import get_object_or_404, redirect
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse_lazy
 from django.views import generic as views
 
 from inventory.business.models import Business
@@ -30,6 +30,12 @@ class DeviceCreateView(views.CreateView):
         support_form = context['support_form']
 
         with transaction.atomic():
+            """
+            Use Django's transaction.atomic decorator to ensure that the entire operation is atomic.
+            This means either all operations succeed, or none do, preventing database integrity errors.
+            Additionally, save the Device instance only after the Risk and Support instances have been saved
+            and associated with it.
+            """
             if form.is_valid() and risk_form.is_valid() and support_form.is_valid():
                 # Temporarily save the Device form without committing to the DB
                 self.object = form.save(commit=False)
@@ -53,5 +59,5 @@ class DeviceCreateView(views.CreateView):
                 return self.form_invalid(form)
 
     def get_success_url(self):
-        # Redirect to the business detail page or wherever you prefer after successful device creation
+        # Redirect to the business detail page
         return reverse_lazy('business', kwargs={'pk': self.kwargs.get('business_id')})

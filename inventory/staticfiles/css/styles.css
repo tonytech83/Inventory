@@ -1,7 +1,30 @@
 @import "./nav.css";
+@import "content.css";
 @import "business-card.css";
 @import "create_device.css";
 
-body {
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    background: darkgrey;
     font-family: "Open Sans", sans-serif;
+}
+
+.site-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Make sure container takes up at least the height of the viewport */
+}
+
+
+.footer {
+    text-align: center;
+    background: darkslategray;
+    padding: 10px 0; /* Add some padding for aesthetics */
 }
