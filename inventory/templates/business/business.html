@@ -2,11 +2,20 @@
 
 {% block main_content %}
     <section>
-        <h1>{{ object.business_name }}</h1>
+        <div class="stats">
+            <p>Business: {{ object.business_name }}</p>
+            <p>Country: {{ object.country }}</p>
+            <p>Business owner: {{ object.owner.profile.full_name }}</p>
+            <p>Total devices: {{ object.device_set.count }}</p>
+        </div>
         {% if request.user.pk == object.owner_id %}
-            <a href="{% url 'create-device' business_id=business.pk %}">Create device</a>
-            <a href="{% url 'upload-csv' %}">Import device from .csv</a>
-            <a href="{% url 'edit-business' pk=object.pk %}">Edit Business</a>
+            <div class="button-container">
+                <a class="button" href="{% url 'create-device' business_id=business.pk %}">Create device</a>
+                <a class="button" href="{% url 'upload-csv' %}">Import device from .csv</a>
+                <a class="button" href="{% url 'edit-business' pk=object.pk %}">Edit Business</a>
+            </div>
+        {% else %}
+            <p></p>
         {% endif %}
         <table class="table table-dark table-hover table-striped">
             <thead>

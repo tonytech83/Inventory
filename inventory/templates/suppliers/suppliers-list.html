@@ -2,29 +2,35 @@
 
 {% block main_content %}
     <h1>Suppliers</h1>
-    <a href="{% url 'create-supplier' %}">Create Supplier</a>
-    
-    <table class="table table-dark table-hover table-striped">
-        <thead>
-        <tr>
-            <th></th>
-            <th>SUPPLIER</th>
-            <th>CONTACT</th>
-            <th>PHONE</th>
-            <th>EMAIL</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for supplier in object_list %}
+    <div class="button-container">
+        <a class="button" href="{% url 'create-supplier' %}">Create Supplier</a>
+    </div>
+
+    <div class="table">
+
+
+        <table class="table table-dark table-hover table-striped">
+            <thead>
             <tr>
-                <td><a href="#"><i class="fa-solid fa-pen-to-square"></i></a></td>
-                <td>{{ supplier.name }}</td>
-                <td>{{ supplier.contact_name }}</td>
-                <td>{{ supplier.phone_number }}</td>
-                <td>{{ supplier.email }}</td>
+                <th></th>
+                <th>SUPPLIER</th>
+                <th>CONTACT</th>
+                <th>PHONE</th>
+                <th>EMAIL</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for supplier in object_list %}
+                <tr>
+                    <td><a href="#"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                    <td>{{ supplier.name }}</td>
+                    <td>{{ supplier.contact_name }}</td>
+                    <td>{{ supplier.phone_number }}</td>
+                    <td>{{ supplier.email }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
 {% endblock %}

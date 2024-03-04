@@ -5,7 +5,6 @@ from inventory.business.forms import CreateBusinessForm, EditBusinessForm
 from inventory.business.models import Business
 
 
-
 class BusinessView(views.DetailView):
     queryset = Business.objects.all()
     template_name = 'business/business.html'

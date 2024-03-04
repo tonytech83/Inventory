@@ -1,10 +1,10 @@
 {% load static %}
 <nav class="navbar">
-    <div class="container">
+    <div class="nav-container">
         <div class="logo">
             <!-- Link to Home Page -->
             <a href="{% url 'dashboard' %}">
-                <img width="50px" src="{% static '/img/app_logo.png' %}" alt="img1">
+                <img src="{% static '/img/app_logo.png' %}" alt="img1">
             </a>
         </div>
 
@@ -13,16 +13,12 @@
                 {% if request.user.is_authenticated %}
                     <li class="nav-item">
                         <!-- Link to Add Pet Page -->
-                        <a href="{% url 'home-page' %}">
-                            <i>Home</i>
-                        </a>
+                        <a href="{% url 'home-page' %}">Home </a>
                     </li>
                     <li class="nav-item">
                         <!-- Link to Supplier page -->
                         {# TODO: Fix the link to suppliers #}
-                        <a href="{% url 'supplier-list' %}">
-                            <i>Suppliers</i>
-                        </a>
+                        <a href="{% url 'supplier-list' %}">Suppliers </a>
                     </li>
                     <li class="nav-item">
                         <!-- Link to Profile Page -->
@@ -34,13 +30,9 @@
                     </li>
                     <li class="nav-item">
                         <!-- Lpg out -->
-                        <form action="{% url 'logout-user' %}" method="post" style="display:inline;">
+                        <form action="{% url 'logout-user' %}" method="post">
                             {% csrf_token %}
-                            <button type="submit"><i>Log out</i>
-                            </button>
-                            {#                        <a href="{% url 'logout-user' %}">#}
-                            {#                            <i>Log out</i>#}
-                            {#                        </a>#}
+                            <button class="reset-button-style button" type="submit">Log out</button>
                         </form>
                     </li>
                 {% else %}

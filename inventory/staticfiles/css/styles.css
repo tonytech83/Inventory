@@ -3,6 +3,15 @@
 @import "business-card.css";
 @import "create_device.css";
 @import "profile.css";
+@import "stats.css";
+@import "button.css";
+
+:root {
+    --background-color: #373737;
+    --primary-color: #ACBABF;
+    --secondary-color: #6c757d;
+    --text-color: #c0c0c2;
+}
 
 * {
     margin: 0;
@@ -26,6 +35,6 @@ html, body {
 
 .footer {
     text-align: center;
-    background: darkslategray;
+    background: var(--background-color);
     padding: 10px 0; /* Add some padding for aesthetics */
 }

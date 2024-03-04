@@ -3,6 +3,7 @@
 {% block main_content %}
     <div class="profile-container">
         <h1>Edit Profile</h1>
+        <p>for: {{ object.account.email }}</p>
         <form action="{% url 'edit-profile' pk=request.user.pk %}" method="POST">
             {{ form.as_p }}
 

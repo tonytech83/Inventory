@@ -7,18 +7,16 @@
 
         {% csrf_token %}
 
-        <p class="login-title">Log In</p>
+        <h3 class="login-title">Log In</h3>
 
-        {{ form.username|placeholder:'Email' }}
-        {{ form.password|placeholder:'Password' }}
+        <p>{{ form.username|placeholder:'Email' }}</p>
+        <p>{{ form.password|placeholder:'Password' }}</p>
 
-        <button>
-            Log In
-        </button>
+        <button class="reset-button-style button">Log In</button>
 
         <p class="sign-up-new-account">
             <span>Don't have an account?: </span>
-            <span><a href="{% url 'register-user' %}">Sign Up</a></span>
+            <span><a class="button" href="{% url 'register-user' %}">Sign Up</a></span>
         </p>
 
     </form>

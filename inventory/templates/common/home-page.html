@@ -1,6 +1,10 @@
 {% extends 'base/base.html' %}
 
 {% block main_content %}
+    <div class="stats">
+        <p>Total business: {{ object_list.count }}</p>
+        <p>Total devices: {{ all_devices }}</p>
+    </div>
     <h1>HOME PAGE</h1>
     <section id="catalogue">
         {% include 'business/partials/create-business-card.html' %}

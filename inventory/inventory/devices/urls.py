@@ -1,6 +1,6 @@
 from django.urls import path
 
-from inventory.devices.views import DeviceCreateView, DeviceEditView, DeviceDeleteView, CSVUploadView
+from inventory.devices.views import DeviceEditView, DeviceDeleteView, CSVUploadView
 
 urlpatterns = (
     path('edit/<int:pk>/', DeviceEditView.as_view(), name='edit-device'),

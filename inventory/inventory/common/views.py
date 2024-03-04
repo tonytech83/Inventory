@@ -1,6 +1,7 @@
 from django.views import generic as views
 
 from inventory.business.models import Business
+from inventory.devices.models import Device
 
 
 class DashboardView(views.TemplateView):
@@ -8,7 +9,9 @@ class DashboardView(views.TemplateView):
 
 
 class HomeView(views.ListView):
-    queryset = Business.objects.all()
+    queryset = (Business.objects.all()
+                .prefetch_related('device_set'))
+
     template_name = 'common/home-page.html'
 
     def get_context_data(self, **kwargs):
@@ -17,5 +20,6 @@ class HomeView(views.ListView):
         context['not_owned_businesses'] = (self.queryset
                                            .exclude(owner=self.request.user)
                                            .filter(is_visible=True))
+        context['all_devices'] = Device.objects.all().count()
 
         return context

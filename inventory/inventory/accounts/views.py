@@ -33,7 +33,8 @@ class DetailsProfileView(views.DetailView):
 
 
 class EditProfileView(views.UpdateView):
-    queryset = AppProfile.objects.all()
+    queryset = (AppProfile.objects.all()
+                .prefetch_related('account'))
     form_class = ProfileEditForm
     template_name = 'accounts/edit-profile.html'
 
