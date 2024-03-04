@@ -1,0 +1,15 @@
+{% extends 'base/base.html' %}
+
+{% block main_content %}
+    <div>
+        <form action="{% url 'delete-device' pk=object.pk %}" method="POST">
+            {{ form }}
+
+            {% csrf_token %}
+
+            <button>Confirm Delete</button>
+            {# TODO: Fix the `Cancel` button to redirect to Business #}
+            <a href="#">Cancel</a>
+        </form>
+    </div>
+{% endblock %}

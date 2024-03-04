@@ -1,0 +1,17 @@
+{% extends 'base/base.html' %}
+
+{% block main_content %}
+    <div class="profile-container">
+        <h1>Edit Profile</h1>
+        <form action="{% url 'edit-profile' pk=request.user.pk %}" method="POST">
+            {{ form.as_p }}
+
+            {% csrf_token %}
+
+            <button>Save</button>
+            {# TODO: Back to current profile #}
+            <a href="#">Cancel</a>
+        </form>
+    </div>
+
+{% endblock %}

@@ -3,7 +3,11 @@
 {% block main_content %}
     <section>
         <h1>{{ object.business_name }}</h1>
-        <a href="{% url 'create-device' business_id=business.pk %}">Create device</a>
+        {% if request.user.pk == object.owner_id %}
+            <a href="{% url 'create-device' business_id=business.pk %}">Create device</a>
+            <a href="{% url 'upload-csv' %}">Import device from .csv</a>
+            <a href="{% url 'edit-business' pk=object.pk %}">Edit Business</a>
+        {% endif %}
         <table class="table table-dark table-hover table-striped">
             <thead>
             <tr>
@@ -22,7 +26,8 @@
             <tbody>
             {% for device in devices %}
                 <tr>
-                    <td><a href="#"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                    <td><a href="{% url 'edit-device' pk=device.pk %}"><i class="fa-solid fa-pen-to-square"></i></a>
+                    </td>
                     <td>{{ device.device_name }}</td>
                     <td>{{ device.status }}</td>
                     <td>{{ device.manufacturer }}</td>

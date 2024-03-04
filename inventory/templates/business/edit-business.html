@@ -1,0 +1,14 @@
+{% extends 'base/base.html' %}
+
+{% block main_content %}
+    <div>
+        <form action="{% url 'edit-business' pk=object.pk %}" method="POST">
+            {{ form }}
+
+            {% csrf_token %}
+
+            <button>Save</button>
+            <a href="{% url 'business' pk=object.pk %}"></a>
+        </form>
+    </div>
+{% endblock %}

@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+from inventory.accounts.models import AppUser
+
+
+@admin.register(AppUser)
+class AppUserAdmin(admin.ModelAdmin):
+    pass

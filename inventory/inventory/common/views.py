@@ -14,6 +14,8 @@ class HomeView(views.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['owned_businesses'] = self.queryset.filter(owner=self.request.user)
-        context['not_owned_businesses'] = self.queryset.exclude(owner=self.request.user)
+        context['not_owned_businesses'] = (self.queryset
+                                           .exclude(owner=self.request.user)
+                                           .filter(is_visible=True))
 
         return context

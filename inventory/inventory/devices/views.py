@@ -1,13 +1,19 @@
+import csv
+
 from django.db import transaction
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import generic as views
+from django.views.generic.edit import FormView
+from django.contrib import messages
 
 from inventory.business.models import Business
-from inventory.devices.forms import DeviceCreateForm, RiskForm, SupportForm
+from inventory.devices.forms import DeviceCreateForm, RiskForm, SupportForm, DeviceEditForm, DeviceDeleteForm, \
+    CSVUploadForm
 from inventory.devices.models import Device
 
 
+# TODO: Should check if there way to fix the device creation url
 class DeviceCreateView(views.CreateView):
     model = Device
     form_class = DeviceCreateForm
@@ -61,3 +67,60 @@ class DeviceCreateView(views.CreateView):
     def get_success_url(self):
         # Redirect to the business detail page
         return reverse_lazy('business', kwargs={'pk': self.kwargs.get('business_id')})
+
+
+# TODO: Check for login permissions
+class DeviceEditView(views.UpdateView):
+    queryset = Device.objects.all()
+    form_class = DeviceEditForm
+    template_name = 'devices/edit-device.html'
+
+    def get_success_url(self):
+        # Redirect to the business detail page
+        return reverse_lazy('business', kwargs={'pk': self.object.business_id})
+
+
+class DeviceDeleteView(views.DeleteView):
+    queryset = Device.objects.all()
+    form_class = DeviceDeleteForm
+    template_name = 'devices/delete-device.html'
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['instance'] = self.object
+
+        return kwargs
+
+    def get_success_url(self):
+        # Redirect to the business detail page
+        return reverse_lazy('business', kwargs={'pk': self.object.business_id})
+
+
+class CSVUploadView(FormView):
+    template_name = 'business/upload-devices.html'
+    form_class = CSVUploadForm
+    # TODO: Fix the `success_url`
+    success_url = reverse_lazy('your_success_url_here')
+
+    def form_valid(self, form):
+        csv_file = form.cleaned_data['csv_file']
+        decoded_file = csv_file.read().decode('utf-8').splitlines()
+        reader = csv.DictReader(decoded_file)
+
+        for row in reader:
+            # TODO: Should check which fields to read form .csv file and which to generate
+            Device.objects.create(
+                device_name=row['device_name'],
+                domain=row.get('domain', ''),  # Use .get for optional fields
+                description=row.get('description', ''),
+                status=row['status'],
+                category=row['category'],
+                sub_category=row['sub_category'],
+                manufacturer=row['manufacturer'],
+                model=row['model'],
+                ip_address=row.get('ip_address', None),
+                serial_number=row['serial_number'],
+                operating_system=row.get('operating_system', ''),
+            )
+        messages.success(self.request, "Devices imported successfully.")
+        return super().form_valid(form)

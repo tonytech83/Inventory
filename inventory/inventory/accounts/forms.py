@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth import forms as auth_forms
+from django.contrib.auth.models import User
 
 from inventory.accounts.models import AppUser, AppProfile
 
@@ -32,3 +33,15 @@ class UserRegistrationForm(auth_forms.UserCreationForm):
                 profile_pic=self.cleaned_data.get('profile_pic', None),
             )
         return user
+
+
+class ProfileBaseForm(forms.ModelForm):
+    class Meta:
+        model = AppProfile
+        fields = '__all__'
+
+
+class ProfileEditForm(ProfileBaseForm):
+    class Meta:
+        model = AppProfile
+        exclude = ('account',)

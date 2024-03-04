@@ -35,12 +35,15 @@ class Business(models.Model):
         blank=True,
     )
 
+    is_visible = models.BooleanField(
+        default=True
+    )
+
     owner = models.ForeignKey(
         to=AppUser,
         on_delete=models.DO_NOTHING,
         related_name="owner",
     )
 
-    is_visible = models.BooleanField(
-        default=True
-    )
+    def __str__(self):
+        return self.business_name

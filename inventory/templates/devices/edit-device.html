@@ -1,0 +1,18 @@
+{% extends 'base/base.html' %}
+
+{% block main_content %}
+    <div>
+        <form action="{% url 'edit-device' pk=object.pk %}" method="POST">
+            {{ form }}
+
+            {% csrf_token %}
+
+            {% if request.user.pk == object.business.owner.pk %}
+                <button>Save</button>
+                {# TODO: fix the `Cancel` button #}
+                <a href="{% url 'delete-device' pk=object.pk %}">Delete</a>
+            {% endif %}
+            <a href="#">Cancel</a>
+        </form>
+    </div>
+{% endblock %}

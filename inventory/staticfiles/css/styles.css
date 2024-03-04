@@ -1,7 +1,8 @@
-@import "./nav.css";
+@import "nav.css";
 @import "content.css";
 @import "business-card.css";
 @import "create_device.css";
+@import "profile.css";
 
 * {
     margin: 0;

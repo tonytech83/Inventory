@@ -1,7 +1,9 @@
 from django.urls import path
 
-from inventory.devices.views import DeviceCreateView
+from inventory.devices.views import DeviceCreateView, DeviceEditView, DeviceDeleteView, CSVUploadView
 
 urlpatterns = (
-    # path('create/', DeviceCreateView.as_view(), name='create-device'),
+    path('edit/<int:pk>/', DeviceEditView.as_view(), name='edit-device'),
+    path('delete/<int:pk>/', DeviceDeleteView.as_view(), name='delete-device'),
+    path('upload-csv/', CSVUploadView.as_view(), name='upload-csv'),
 )

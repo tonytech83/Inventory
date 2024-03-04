@@ -13,3 +13,14 @@ class CreateBusinessForm(BusinessBaseForm):
     class Meta:
         model = Business
         exclude = ('owner',)
+
+
+class EditBusinessForm(BusinessBaseForm):
+    pass
+
+
+class DeleteBusinessForm(BusinessBaseForm):
+    pass
+
+
+
