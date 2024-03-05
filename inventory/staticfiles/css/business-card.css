@@ -14,23 +14,24 @@
     width: 150px;
     height: 150px;
     padding: 20px 20px;
-    border: 2px solid black;
+    /*border: 2px solid black;*/
     border-radius: 10px;
-    background: grey;
+    background: var(--background-color);
+    color: var(--text-color);
     cursor: pointer;
 }
 
 .business-card:hover {
     background: lightgray;
+    color: var(--background-color);
 }
 
 .business-link {
     font-size: 1.5em;
-    color: black;
     margin: 0;
 }
 
 .plus {
     margin: 0;
-    font-size: 1.5em;
+    font-size: 4em;
 }

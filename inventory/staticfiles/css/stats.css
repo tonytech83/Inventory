@@ -1,0 +1,24 @@
+.stats {
+    height: 18vh; /* This will make .stats take up 30% of the viewport height */
+    border: 2px solid black;
+    border-radius: 10px;
+    background: var(--background-color);
+    padding: 10px;
+    color: var(--text-color);
+    margin-bottom: 20px;
+}
+
+/*Other way for stats*/
+/*.content {*/
+/*    display: flex; !* Make main content also a flex container *!*/
+/*    flex-direction: column; !* Stack children vertically *!*/
+/*    flex: 1; !* Fill available space *!*/
+/*    !* Optional: Set a min-height to ensure it takes up space even if content is short *!*/
+/*}*/
+
+/*.stats {*/
+/*    flex: 0 0 30%; !* Do not grow, do not shrink, start at 30% of the parent's height *!*/
+/*    border: 2px solid black;*/
+/*    border-radius: 10px;*/
+/*    background-color: coral;*/
+/*}*/

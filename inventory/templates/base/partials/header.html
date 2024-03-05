@@ -1,4 +1,5 @@
 {% load static %}
+
 <nav class="navbar">
     <div class="nav-container">
         <div class="logo">
@@ -12,28 +13,52 @@
             <ul class="nav-group">
                 {% if request.user.is_authenticated %}
                     <li class="nav-item">
-                        <!-- Link to Add Pet Page -->
+                        <!-- Link to Home Page -->
                         <a href="{% url 'home-page' %}">Home </a>
                     </li>
                     <li class="nav-item">
-                        <!-- Link to Supplier page -->
-                        {# TODO: Fix the link to suppliers #}
-                        <a href="{% url 'supplier-list' %}">Suppliers </a>
+                        <div class="dropdown" data-bs-theme="dark">
+                            <a
+                                    class="dropdown-toggle"
+                                    href="#"
+                                    role="button"
+                                    id="dropdownMenuLink"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+
+                            >Suppliers</a>
+
+                            <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="dropdownMenuLink">
+                                <li><a class="dropdown-item" href="{% url 'supplier-list' %}">List</a></li>
+                                <li><a class="dropdown-item" href="{% url 'create-supplier' %}">Add Supplier</a></li>
+                            </ul>
+                        </div>
                     </li>
                     <li class="nav-item">
-                        <!-- Link to Profile Page -->
-                        {% if request.user.profile_pic %}
-                            <a href="{% url 'details-profile' %}">{{ request.user.profile_pic }}</a>
-                        {% else %}
-                            <a href="{% url 'details-profile' %}">{{ request.user.profile.initials }}</a>
-                        {% endif %}
-                    </li>
-                    <li class="nav-item">
-                        <!-- Lpg out -->
-                        <form action="{% url 'logout-user' %}" method="post">
-                            {% csrf_token %}
-                            <button class="reset-button-style button" type="submit">Log out</button>
-                        </form>
+                        <div class="dropdown" data-bs-theme="dark">
+                            <a
+                                    class="dropdown-toggle"
+                                    href="#"
+                                    role="button"
+                                    id="dropdownMenuLink"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                            >
+                                {% if request.user.profile_pic %}
+                                    <img class="profile-image" src="{{ request.user.profile_pic }}" alt="Profile">
+                                {% else %}
+                                    <span class="profile-image initials">{{ request.user.profile.initials }}</span>
+                                {% endif %}
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="dropdownMenuLink">
+                                <li><h1 class="dropdown-header">{{ request.user }}</h1></li>
+                                <li><h1 class="dropdown-header">{{ request.user.profile.full_name }}</h1></li>
+                                <li><a class="dropdown-item" href="{% url 'details-profile' %}">Profile</a></li>
+                                <li><a class="dropdown-item" href="{% url 'password-change' %}">Change password</a></li>
+                                <li><a class="dropdown-item" href="#" id="logout-link">Logout</a></li>
+                            </ul>
+                        </div>
                     </li>
                 {% else %}
                     <li class="nav-item">

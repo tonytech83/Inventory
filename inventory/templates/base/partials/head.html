@@ -34,3 +34,10 @@
 <!-- Template Stylesheet -->
 <link href="{% static 'css/styles.css' %}" rel="stylesheet">
 
+<!-- Include CSRF Token for the POST Request -->
+{# Logout button as a tag #}
+ <meta name="csrf-token" content="{{ csrf_token }}">
+
+<!-- Custom js scripts -->
+<script src="../../../staticfiles/js/logout.js"></script>
+

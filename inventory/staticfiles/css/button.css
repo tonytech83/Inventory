@@ -1,0 +1,29 @@
+.reset-button-style {
+    border: none;
+    margin: 0;
+    padding: 0;
+    width: auto;
+    overflow: visible;
+    background: transparent;
+
+    /* inherit font & color from ancestor */
+    color: inherit;
+    font: inherit;
+
+    /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */
+    line-height: normal;
+}
+
+.button-container {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.button {
+    text-decoration: none;
+    color: var(--text-color);
+    background: var(--background-color);
+    padding: 4px 8px;
+    font-size: 22px;
+}
+
