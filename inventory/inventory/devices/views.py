@@ -137,9 +137,8 @@ class CSVUploadView(FormView):
     template_name = 'business/upload-devices.html'
     form_class = CSVUploadForm
 
-    # TODO: Fix the `success_url`
     def get_success_url(self):
-        # Redirect to the business detail page
+        # Redirect to the business page
         return reverse_lazy('business', kwargs={'pk': self.kwargs.get('business_id')})
 
     def get_context_data(self, **kwargs):

@@ -59,14 +59,6 @@ class EditProfileView(OwnerRequiredMixin, views.UpdateView):
 
     success_url = reverse_lazy('details-profile')
 
-    # def dispatch(self, request, *args, **kwargs):
-    #     try:
-    #         # First, call the parent class's dispatch method
-    #         return super().dispatch(request, *args, **kwargs)
-    #     except PermissionDenied:
-    #         # If PermissionDenied is caught, render your custom template
-    #         return render(request, '403.html', {}, status=403)
-
 
 # TODO: Check can I use CBV or somehow add it in my 'EditProfileView`
 def custom_permission_denied_view(request, exception, template_name='403.html'):

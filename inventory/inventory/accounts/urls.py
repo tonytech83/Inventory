@@ -1,4 +1,4 @@
-from django.urls import path, include
+from django.urls import path
 
 from inventory.accounts.views import LoginView, RegisterUserView, LogoutView, DetailsProfileView, EditProfileView, \
     PasswordChangeView, PasswordChangeDoneView
