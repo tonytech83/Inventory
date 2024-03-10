@@ -1,7 +1,11 @@
+from django.contrib.auth import get_user_model
+
 from django.views import generic as views
 
 from inventory.business.models import Business
 from inventory.devices.models import Device
+
+UserModel = get_user_model()
 
 
 class DashboardView(views.TemplateView):
@@ -23,3 +27,6 @@ class HomeView(views.ListView):
         context['all_devices'] = Device.objects.all().count()
 
         return context
+
+
+

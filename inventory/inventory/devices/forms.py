@@ -1,6 +1,6 @@
 from django import forms
 
-from inventory.core.forms_mixins import ReadOnlyFieldsFormMixin
+from inventory.core.form_mixins import ReadOnlyFieldsFormMixin
 from inventory.devices.models import Device, Risk, Support
 
 

@@ -12,5 +12,4 @@ urlpatterns = (
     path('details/', DetailsProfileView.as_view(), name='details-profile'),
     path('password_change/', PasswordChangeView.as_view(), name='password-change'),
     path('password_change/done/', PasswordChangeDoneView.as_view(), name='password_change_done'),
-
 )

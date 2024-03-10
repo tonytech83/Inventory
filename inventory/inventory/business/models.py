@@ -1,7 +1,8 @@
+from django.contrib.auth import get_user_model
 from django.core.validators import MinLengthValidator
 from django.db import models
 
-from inventory.accounts.models import AppUser
+UserModel = get_user_model()
 
 
 class Business(models.Model):
@@ -40,7 +41,7 @@ class Business(models.Model):
     )
 
     owner = models.ForeignKey(
-        to=AppUser,
+        to=UserModel,
         on_delete=models.DO_NOTHING,
         related_name="owner",
     )

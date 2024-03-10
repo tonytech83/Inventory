@@ -1,8 +1,9 @@
 from django.contrib import admin
+from django.contrib.auth import get_user_model
 
-from inventory.accounts.models import AppUser
+UserModel = get_user_model()
 
 
-@admin.register(AppUser)
+@admin.register(UserModel)
 class AppUserAdmin(admin.ModelAdmin):
     pass

@@ -1,28 +1,52 @@
 from django.core.validators import MinLengthValidator
 from django.db import models
 from django.contrib.auth import models as auth_models
+from django.utils import timezone
 
-from inventory.accounts.managers import AccountCustomManager
+from django.utils.translation import gettext_lazy as _
+
+from inventory.accounts.managers import InventoryUserManager
 from inventory.accounts.validators import phone_validator, check_name_symbols_for_non_alphabetical
 
 
-class AppUser(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
+# auth_models.AbstractUser
+class InventoryUser(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
     email = models.EmailField(
         unique=True,
         null=False,
-        blank=True,
+        blank=False,
+        help_text=_(
+            "Required. Valid email address."
+        ),
+        error_messages={
+            "unique": _("A user with that email already exists."),
+        },
+    )
+
+    date_joined = models.DateTimeField(
+        _("date joined"),
+        default=timezone.now,
     )
 
     is_staff = models.BooleanField(
         default=False,
     )
 
+    is_active = models.BooleanField(
+        _("active"),
+        default=True,
+        help_text=_(
+            "Designates whether this user should be treated as active. "
+            "Unselect this instead of deleting accounts."
+        ),
+    )
+
     USERNAME_FIELD = 'email'
 
-    objects = AccountCustomManager()
+    objects = InventoryUserManager()
 
 
-class AppProfile(models.Model):
+class Profile(models.Model):
     MIN_NAME_LENGTH = 2
     MAX_NAME_LENGTH = 15
 
@@ -62,9 +86,12 @@ class AppProfile(models.Model):
         blank=True,
     )
 
+    is_first_login = models.BooleanField(default=True)
+
     account = models.OneToOneField(
-        to=AppUser,
+        to=InventoryUser,
         on_delete=models.CASCADE,
+        primary_key=True,
         related_name='profile',
     )
 

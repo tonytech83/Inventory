@@ -1,5 +1,3 @@
-{% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,8 +30,10 @@
 </div>
 {# define the logout URL using a data-* attribute on an HTML element, which can then be accessed by your JavaScript #}
 <div id="logout-config" data-logout-url="{% url 'logout-user' %}" style="display:none;"></div>
-<!-- JavaScript Libraries -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="{% static 'js/logout.js' %}" defer></script>
+
+<!-- JavaScript Libraries Start -->
+{% include 'base/partials/js.html' %}
+<!-- JavaScript Libraries End -->
+
 </body>
 </html>

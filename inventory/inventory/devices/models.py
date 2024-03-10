@@ -1,8 +1,11 @@
+from django.contrib.auth import get_user_model
 from django.core.validators import MinLengthValidator
 from django.db import models
 from datetime import datetime
 from inventory.business.models import Business
 from inventory.suppliers.models import Supplier
+
+UserModel = get_user_model()
 
 
 class Support(models.Model):
