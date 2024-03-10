@@ -3,7 +3,17 @@
 {% block main_content %}
     <div>
         <form action="{% url 'edit-device' pk=object.pk %}" method="POST">
-            {{ form }}
+            <div class="device-wrapper">
+                <div class="device-form">
+                    {{ form.as_p }}
+                </div>
+                <div class="support-form">
+                    {{ support_form.as_p }}
+                </div>
+                <div class="risk-form">
+                    {{ risk_form.as_p }}
+                </div>
+            </div>
 
             {% csrf_token %}
 

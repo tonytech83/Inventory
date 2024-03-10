@@ -1,9 +1,10 @@
 from django.urls import path
 
-from inventory.devices.views import DeviceEditView, DeviceDeleteView, CSVUploadView
+from inventory.devices.views import DeviceEditView, DeviceDeleteView, CSVUploadView, download_template
 
 urlpatterns = (
     path('edit/<int:pk>/', DeviceEditView.as_view(), name='edit-device'),
     path('delete/<int:pk>/', DeviceDeleteView.as_view(), name='delete-device'),
-    path('upload-csv/', CSVUploadView.as_view(), name='upload-csv'),
+
+    path('download-template/', download_template, name='download-template'),
 )

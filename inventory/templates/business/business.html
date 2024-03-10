@@ -11,7 +11,7 @@
         {% if request.user.pk == object.owner_id %}
             <div class="button-container">
                 <a class="button" href="{% url 'create-device' business_id=business.pk %}">Create device</a>
-                <a class="button" href="{% url 'upload-csv' %}">Import device from .csv</a>
+                <a class="button" href="{% url 'upload-csv' business_id=object.pk %}">Import device from .csv</a>
                 <a class="button" href="{% url 'edit-business' pk=object.pk %}">Edit Business</a>
             </div>
         {% else %}

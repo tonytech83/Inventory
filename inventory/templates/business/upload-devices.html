@@ -2,12 +2,15 @@
 
 {% block main_content %}
     <div>
-        <form action="{% url 'upload-csv' %}" method="POST">
+        <a href="{% url 'download-template' %}">Download template file</a>
+    </div>
+    <div>
+        <form action="{% url 'upload-csv' business_id=business_id %}" method="POST" enctype="multipart/form-data">
             {{ form }}
 
             {% csrf_token %}
 
-            <button>Import</button>
+            <button>Upload</button>
         </form>
     </div>
 {% endblock %}

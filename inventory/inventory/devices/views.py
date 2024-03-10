@@ -1,4 +1,8 @@
-import csv
+from django.http import FileResponse
+import openpyxl
+
+from django.conf import settings
+import os
 
 from django.db import transaction
 from django.shortcuts import get_object_or_404, redirect
@@ -10,7 +14,8 @@ from django.contrib import messages
 from inventory.business.models import Business
 from inventory.devices.forms import DeviceCreateForm, RiskForm, SupportForm, DeviceEditForm, DeviceDeleteForm, \
     CSVUploadForm
-from inventory.devices.models import Device
+from inventory.devices.models import Device, Support, Risk
+from inventory.suppliers.models import Supplier
 
 
 # TODO: Should check if there way to fix the device creation url
@@ -71,9 +76,41 @@ class DeviceCreateView(views.CreateView):
 
 # TODO: Check for login permissions
 class DeviceEditView(views.UpdateView):
-    queryset = Device.objects.all()
+    queryset = (Device.objects.all()
+                .prefetch_related('support')
+                .prefetch_related('risk'))
+
     form_class = DeviceEditForm
     template_name = 'devices/edit-device.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if 'support_form' not in context:
+            context['support_form'] = SupportForm(instance=self.object.support)
+        if 'risk_form' not in context:
+            context['risk_form'] = RiskForm(instance=self.object.risk)
+        return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        support_form = SupportForm(request.POST, instance=self.object.support)
+        risk_form = RiskForm(request.POST, instance=self.object.risk)
+
+        if form.is_valid() and support_form.is_valid() and risk_form.is_valid():
+            return self.form_valid(form, support_form, risk_form)
+        else:
+            return self.form_invalid(form, support_form, risk_form)
+
+    def form_valid(self, form, support_form, risk_form):
+        self.object = form.save()
+        support_form.save()
+        risk_form.save()
+        return redirect(self.get_success_url())
+
+    def form_invalid(self, form, support_form, risk_form):
+        return self.render_to_response(
+            self.get_context_data(form=form, support_form=support_form, risk_form=risk_form))
 
     def get_success_url(self):
         # Redirect to the business detail page
@@ -99,28 +136,83 @@ class DeviceDeleteView(views.DeleteView):
 class CSVUploadView(FormView):
     template_name = 'business/upload-devices.html'
     form_class = CSVUploadForm
+
     # TODO: Fix the `success_url`
-    success_url = reverse_lazy('your_success_url_here')
+    def get_success_url(self):
+        # Redirect to the business detail page
+        return reverse_lazy('business', kwargs={'pk': self.kwargs.get('business_id')})
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['business_id'] = self.kwargs.get('business_id')
+
+        return context
 
     def form_valid(self, form):
-        csv_file = form.cleaned_data['csv_file']
-        decoded_file = csv_file.read().decode('utf-8').splitlines()
-        reader = csv.DictReader(decoded_file)
+        # Handle the uploaded file
+        uploaded_file = form.cleaned_data['csv_file']
+        wb = openpyxl.load_workbook(uploaded_file)
+        sheet = wb.active
+        business_id = self.kwargs.get('business_id')
+        business = get_object_or_404(Business, pk=business_id)
 
-        for row in reader:
-            # TODO: Should check which fields to read form .csv file and which to generate
-            Device.objects.create(
-                device_name=row['device_name'],
-                domain=row.get('domain', ''),  # Use .get for optional fields
-                description=row.get('description', ''),
-                status=row['status'],
-                category=row['category'],
-                sub_category=row['sub_category'],
-                manufacturer=row['manufacturer'],
-                model=row['model'],
-                ip_address=row.get('ip_address', None),
-                serial_number=row['serial_number'],
-                operating_system=row.get('operating_system', ''),
-            )
+        for row in sheet.iter_rows(min_row=3):  # Skip the first two header rows
+            try:
+                # Create a new Support object for every device
+                support = Support.objects.create(
+                    support_model=row[14].value if row[14].value else "Default Support Model",
+                    purchase_order_number=row[15].value,
+                    invoice_img=row[16].value or 'Not set',
+                    # TODO: Fix this dates
+                    sos=row[17].value or '2024-03-10',
+                    eos=row[18].value or '2024-03-10',
+                    eol=row[19].value or '2024-03-10',
+                )
+
+                # Create a new Risk object for every device
+                risk = Risk.objects.create(
+                    business_processes_at_risk=row[20].value if row[20].value else "Default Risk",
+                    impact=row[21].value or 1,
+                    likelihood=row[22].value or 1,
+                )
+
+                Device.objects.create(
+                    device_name=row[0].value,
+                    domain=row[1].value,
+                    description=row[2].value,
+                    status=row[3].value,
+                    category=row[4].value,
+                    sub_category=row[5].value,
+                    manufacturer=row[6].value,
+                    model=row[7].value,
+                    ip_address=row[8].value,
+                    ip_address_sec=row[9].value,
+                    serial_number=row[10].value,
+                    operating_system=row[11].value,
+                    building=row[12].value,
+                    owner_name=row[13].value,
+                    support=support,
+                    risk=risk,
+                    business=business,
+                    supplier=Supplier.objects.all().first(),
+                )
+            except Exception as e:
+                print(e)
+                continue
+
         messages.success(self.request, "Devices imported successfully.")
         return super().form_valid(form)
+
+
+def download_template(request):
+    # Define the path to the template
+    template_path = os.path.join(settings.BASE_DIR, 'staticfiles', 'template_file', 'template.xlsx')
+
+    # Open the file for reading
+    excel = open(template_path, 'rb')
+    response = FileResponse(excel)
+
+    # Set the content-type and disposition to prompt download
+    response['Content-Type'] = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    response['Content-Disposition'] = 'attachment; filename=template.xlsx'
+    return response

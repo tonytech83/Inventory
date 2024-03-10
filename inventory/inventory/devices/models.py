@@ -3,12 +3,26 @@ from django.core.validators import MinLengthValidator
 from django.db import models
 from datetime import datetime
 from inventory.business.models import Business
+from inventory.core.model_mixins import TimeStampedModel
 from inventory.suppliers.models import Supplier
 
 UserModel = get_user_model()
 
 
 class Support(models.Model):
+    MIN_SUPPORT_LENGTH = 2
+    MAX_SUPPORT_LENGTH = 100
+
+    support_model = models.TextField(
+        max_length=MAX_SUPPORT_LENGTH,
+        validators=(
+            MinLengthValidator(MIN_SUPPORT_LENGTH),
+        ),
+        help_text='Short description of support model',
+        null=True,
+        blank=True,
+    )
+
     purchase_order_number = models.IntegerField(
         # TODO: to validate length of PO ?
         null=True,
@@ -21,11 +35,20 @@ class Support(models.Model):
         blank=True,
     )
 
-    sos = models.DateField()
+    sos = models.DateField(
+        null=True,
+        blank=True,
+    )
 
-    eos = models.DateField()
+    eos = models.DateField(
+        null=True,
+        blank=True,
+    )
 
-    eol = models.DateField()
+    eol = models.DateField(
+        null=True,
+        blank=True,
+    )
 
     @property
     def days_under_support(self):
@@ -33,26 +56,17 @@ class Support(models.Model):
 
 
 class Risk(models.Model):
-    MIN_SUPPORT_LENGTH = 2
-    MAX_SUPPORT_LENGTH = 100
-
     MIN_BUSINESS_LENGTH = 2
     MAX_BUSINESS_LENGTH = 50
-
-    support_model = models.TextField(
-        max_length=MAX_SUPPORT_LENGTH,
-        validators=(
-            MinLengthValidator(MIN_SUPPORT_LENGTH),
-        ),
-        help_text='Short description of support model',
-    )
 
     business_processes_at_risk = models.TextField(
         max_length=MAX_BUSINESS_LENGTH,
         validators=(
             MinLengthValidator(MIN_BUSINESS_LENGTH),
         ),
-        help_text='Identify the business process that is at risk'
+        help_text='Identify the business process that is at risk',
+        null=True,
+        blank=True,
     )
     impact = models.IntegerField(
         choices=[(i, i) for i in range(1, 6)],
@@ -123,7 +137,7 @@ class Status(models.TextChoices):
     EXCEPTION = 'Exception', 'Exception'
 
 
-class Device(models.Model):
+class Device(TimeStampedModel, models.Model):
     MIN_NAME_LENGTH = 2
     MAX_NAME_LENGTH = 100
 
@@ -238,17 +252,27 @@ class Device(models.Model):
         blank=True,
     )
 
+    building = models.CharField(
+        max_length=20,
+        null=True,
+        blank=True,
+    )
+
     owner_name = models.CharField(
         max_length=MAX_NAME_LENGTH,
         validators=(
             MinLengthValidator(MIN_OWNER_NAME_LENGTH),
         ),
         default='Unknown',
+        null=True,
+        blank=True,
     )
 
     support = models.OneToOneField(
         to=Support,
         on_delete=models.CASCADE,
+        null=True,
+        blank=True,
     )
 
     risk = models.OneToOneField(
@@ -256,6 +280,7 @@ class Device(models.Model):
         on_delete=models.CASCADE,
         # TODO: should be null=False
         null=True,
+        blank=True,
     )
 
     supplier = models.ForeignKey(

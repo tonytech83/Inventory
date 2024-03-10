@@ -27,6 +27,3 @@ class HomeView(views.ListView):
         context['all_devices'] = Device.objects.all().count()
 
         return context
-
-
-

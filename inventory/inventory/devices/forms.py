@@ -29,7 +29,9 @@ class DeviceCreateForm(DeviceBaseForm):
 
 
 class DeviceEditForm(DeviceBaseForm):
-    pass
+    class Meta:
+        model = Device
+        exclude = ('support', 'risk', 'supplier')
 
 
 class DeviceDeleteForm(ReadOnlyFieldsFormMixin, DeviceBaseForm):
@@ -48,4 +50,4 @@ class CSVUploadForm(forms.Form):
     """
     CSV upload form
     """
-    csv_file = forms.FileField(label='CSV file')
+    csv_file = forms.FileField()
