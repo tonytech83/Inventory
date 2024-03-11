@@ -1,11 +1,18 @@
 <div class="business-card" onclick="window.location.href='{% url "business" pk=business.pk %}';">
-    {% if business.owner.pk == request.user.pk %}
-        {# TODO: to try made owned in upper right angle #}
-        {# TODO: to move styles in css #}
-        <span style="color: green;">owned</span>
-        {% if business.is_visible == False %}
-            <span style="color: crimson;">hidden</span>
+    <div class="business-icon">
+        <i class="fa-solid fa-industry"></i>
+    </div>
+    <div class="business-name">
+        <p class="business-link">{{ business.business_name }}</p>
+    </div>
+    <div class="business-ownership">
+        {% if business.owner.pk == request.user.pk %}
+            {# TODO: to try made owned in upper right angle #}
+            {# TODO: to move styles in css #}
+            <span style="color: green;">owned</span>
+            {% if business.is_visible == False %}
+                <span style="color: crimson;">hidden</span>
+            {% endif %}
         {% endif %}
-    {% endif %}
-    <p class="business-link">{{ business.business_name }}</p>
+    </div>
 </div>

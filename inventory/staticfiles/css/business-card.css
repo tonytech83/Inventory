@@ -1,3 +1,18 @@
+/*==================== GOOGLE FONTS ====================*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+
+/*==================== VARIABLES CSS ====================*/
+:root {
+    /*========== Colors ==========*/
+    --text-color: #000000;
+    --bg-color: #282828;
+
+    /*========== Font and typography ==========*/
+    --body-font: 'Poppins', sans-serif;
+    --normal-font-size: 1rem;
+
+}
+
 #catalogue {
     display: flex;
     flex-direction: row;
@@ -6,13 +21,14 @@
 }
 
 .business-card {
+    position: relative;
     display: flex;
     justify-content: center; /* Aligns horizontally */
     align-items: center; /* Aligns vertically */
     flex-direction: column;
     font-weight: bold;
-    width: 150px;
-    height: 150px;
+    width: 200px;
+    height: 200px;
     padding: 20px 20px;
     /*border: 2px solid black;*/
     border-radius: 10px;
@@ -24,6 +40,17 @@
 .business-card:hover {
     background: lightgray;
     color: var(--background-color);
+}
+
+.business-icon {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+.fa-solid, .fas {
+    font-size: 2em;
+    font-weight: 900;
 }
 
 .business-link {
