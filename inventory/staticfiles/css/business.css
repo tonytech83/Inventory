@@ -1,0 +1,17 @@
+.table_my {
+    width: 100%;
+}
+
+
+.table_my th {
+    font-size: 1em;
+    font-weight: bold;
+}
+
+
+tbody .row__my {
+    border: 1px solid black;
+    font-size: 0.9em;
+    font-weight: 400;
+}
+

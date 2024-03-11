@@ -48,7 +48,7 @@
     left: 20px;
 }
 
-.fa-solid, .fas {
+.fa-industry {
     font-size: 2em;
     font-weight: 900;
 }
@@ -56,6 +56,26 @@
 .business-link {
     font-size: 1.5em;
     margin: 0;
+}
+
+.business-ownership {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+}
+
+.hidden {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+.green {
+    color: green;
+}
+
+.red {
+    color: red;
 }
 
 .plus {

@@ -5,6 +5,7 @@
 @import "profile.css";
 @import "stats.css";
 @import "button.css";
+@import "business.css";
 
 :root {
     --background-color: #373737;
