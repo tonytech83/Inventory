@@ -1,0 +1,12 @@
+{% extends 'base/base.html' %}
+
+{% block main_content %}
+    <form action="{% url 'edit-supplier' pk=object.pk %}" method="POST">
+        {{ form.as_p }}
+
+        {% csrf_token %}
+
+        <button>Save</button>
+
+    </form>
+{% endblock %}

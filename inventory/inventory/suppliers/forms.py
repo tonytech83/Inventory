@@ -11,3 +11,9 @@ class SupplierBaseForm(forms.ModelForm):
 
 class CreateSupplierForm(SupplierBaseForm):
     pass
+
+
+class EditSupplierForm(SupplierBaseForm):
+    class Meta:
+        model = Supplier
+        exclude = ('name',)

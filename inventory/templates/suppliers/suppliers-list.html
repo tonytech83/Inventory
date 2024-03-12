@@ -1,36 +1,71 @@
 {% extends 'base/base.html' %}
 
 {% block main_content %}
-    <h1>Suppliers</h1>
-    <div class="button-container">
-        <a class="button" href="{% url 'create-supplier' %}">Create Supplier</a>
-    </div>
 
-    <div class="table">
+    <!-- Handsontable JS Script-->
 
+    <h3>Suppliers</h3>
+    <div id="data-container"></div>
+    <script src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var suppliersData = JSON.parse('{{ suppliers_json|safe }}');
 
-        <table class="table table-dark table-hover table-striped">
-            <thead>
-            <tr>
-                <th></th>
-                <th>SUPPLIER</th>
-                <th>CONTACT</th>
-                <th>PHONE</th>
-                <th>EMAIL</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for supplier in object_list %}
-                <tr>
-                    <td><a href="#"><i class="fa-solid fa-pen-to-square"></i></a></td>
-                    <td>{{ supplier.name }}</td>
-                    <td>{{ supplier.contact_name }}</td>
-                    <td>{{ supplier.phone_number }}</td>
-                    <td>{{ supplier.email }}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </div>
+            var data = suppliersData.map(function (item) {
+                return [
+                    '<a href="' + item.edit_url + '"><i class="fa-solid fa-pen-to-square"></a>',
+                    item.name,
+                    item.contact_name,
+                    item.phone_number,
+                    item.email,
+                ];
+            });
+
+            var container = document.getElementById('data-container');
+            var hot = new Handsontable(container, {
+                data: data,
+                columns: [
+                    {renderer: "html"},  // Ensure the first column renders HTML for the link
+                    {},
+                    {},
+                    {},
+                    {}
+                ],
+
+                width: '100%', {# size of the table #}
+                {#customBorders: true,#}
+
+                {# columns #}
+                columnSorting: true,
+                {# remove `dropdownMenu` from first column #}
+                afterGetColHeader(col, TH) {
+                    if (col < 1) {
+                        const button = TH.querySelector('.changeType');
+
+                        if (!button) {
+                            return;
+                        }
+
+                        button.parentElement.removeChild(button);
+                    }
+                },
+                stretchH: 'all', {# stretch horizontally table #}
+                colHeaders: ['', 'Name', 'Contact name', 'Phone number', 'Email'],
+                colWidths: [3.5],
+
+                {# rows #}
+                rowHeaders: false,
+
+                {# filters #}
+                filters: true,
+                {# dropdownMenu: true, #}
+                dropdownMenu: ['filter_by_value', 'filter_action_bar'],
+
+                readOnly: true,
+                {#beforeRefreshDimensions() { return false; },#}
+                licenseKey: 'non-commercial-and-evaluation',
+            });
+        });
+    </script>
 
 {% endblock %}

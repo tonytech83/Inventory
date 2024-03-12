@@ -6,6 +6,7 @@
 @import "stats.css";
 @import "button.css";
 @import "business.css";
+@import "suppliers.css";
 
 :root {
     --background-color: #373737;

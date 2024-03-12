@@ -1,0 +1,31 @@
+.handsontable {
+    font-size: 1em;
+    font-weight: normal;
+    color: black;
+}
+
+#data-container {
+    font-size: 2em;
+    border: 2px solid black;
+}
+
+.handsontable a {
+    color: red;
+}
+
+.handsontable .changeType {
+    /*display: none;*/
+}
+
+.handsontable span.colHeader {
+    font-size: 0.6em;
+    font-weight: bold;
+    color: var(--background-color);
+}
+
+.handsontable .htDimmed {
+    color: black;
+    font-size: 0.6em;
+}
+
+
