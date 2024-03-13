@@ -11,8 +11,8 @@ UserModel = get_user_model()
 
 
 class LoginView(auth_views.LoginView):
-    template_name = 'accounts/login-page.html'
     form_class = LoginUserForm
+    template_name = 'accounts/login-page.html'
 
     def get_success_url(self):
         user = self.request.user
@@ -54,6 +54,7 @@ class DetailsProfileView(views.DetailView):
 class EditProfileView(OwnerRequiredMixin, views.UpdateView):
     queryset = (Profile.objects.all()
                 .prefetch_related('account'))
+
     form_class = ProfileEditForm
     template_name = 'accounts/edit-profile.html'
 

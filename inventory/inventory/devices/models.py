@@ -165,6 +165,8 @@ class Device(TimeStampedModel, models.Model):
     MIN_OS_LENGTH = 2
     MAX_OS_LENGTH = 100
 
+    MAX_BUILDING_LENGTH = 30
+
     device_name = models.CharField(
         max_length=MAX_NAME_LENGTH,
         validators=(
@@ -253,7 +255,7 @@ class Device(TimeStampedModel, models.Model):
     )
 
     building = models.CharField(
-        max_length=20,
+        max_length=MAX_BUILDING_LENGTH,
         null=True,
         blank=True,
     )

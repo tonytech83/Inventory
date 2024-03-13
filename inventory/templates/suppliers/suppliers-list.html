@@ -2,16 +2,20 @@
 
 {% block main_content %}
 
-    <!-- Handsontable JS Script-->
-
     <h3>Suppliers</h3>
     <div id="data-container"></div>
+
+    <div class="controls">
+        <button class="button" id="export-file">Download CSV</button>
+    </div>
+
+    <!-- Handsontable JS Script-->
     <script src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            var suppliersData = JSON.parse('{{ suppliers_json|safe }}');
+            const suppliersData = JSON.parse('{{ suppliers_json|safe }}');
 
-            var data = suppliersData.map(function (item) {
+            const data = suppliersData.map(function (item) {
                 return [
                     '<a href="' + item.edit_url + '"><i class="fa-solid fa-pen-to-square"></a>',
                     item.name,
@@ -21,8 +25,10 @@
                 ];
             });
 
-            var container = document.getElementById('data-container');
-            var hot = new Handsontable(container, {
+            const container = document.getElementById('data-container');
+            const button = document.querySelector('#export-file');
+            {# button for downloading #}
+            const hot = new Handsontable(container, {
                 data: data,
                 columns: [
                     {renderer: "html"},  // Ensure the first column renders HTML for the link
@@ -32,11 +38,15 @@
                     {}
                 ],
 
+                <!-- Start General settings -->
                 width: '100%', {# size of the table #}
                 {#customBorders: true,#}
+                stretchH: 'all', {# stretch horizontally table #}
+                <!-- End General settings -->
 
-                {# columns #}
+                <!-- Start Columns settings -->
                 columnSorting: true,
+
                 {# remove `dropdownMenu` from first column #}
                 afterGetColHeader(col, TH) {
                     if (col < 1) {
@@ -49,22 +59,47 @@
                         button.parentElement.removeChild(button);
                     }
                 },
-                stretchH: 'all', {# stretch horizontally table #}
                 colHeaders: ['', 'Name', 'Contact name', 'Phone number', 'Email'],
-                colWidths: [3.5],
+                colWidths: [3.5], {# size of first cell #}
+                <!-- End Columns settings -->
 
-                {# rows #}
+                <!-- Start Rows settings -->
                 rowHeaders: false,
+                <!-- End Rows settings -->
 
-                {# filters #}
+                <!-- Start Filters settings -->
                 filters: true,
                 {# dropdownMenu: true, #}
                 dropdownMenu: ['filter_by_value', 'filter_action_bar'],
+                {# Disable cell selection #}
+                disableVisualSelection: true,
+                <!-- End Filters settings -->
 
+                <!-- Start Other settings -->
                 readOnly: true,
-                {#beforeRefreshDimensions() { return false; },#}
                 licenseKey: 'non-commercial-and-evaluation',
+                <!-- End Other settings -->
             });
+
+            {# Download data to CSV  #}
+            const exportPlugin = hot.getPlugin('exportFile');
+
+            button.addEventListener('click', () => {
+                exportPlugin.downloadFile('csv', {
+                    bom: false,
+                    columnDelimiter: ',',
+                    columnHeaders: false,
+                    exportHiddenColumns: true,
+                    exportHiddenRows: true,
+                    fileExtension: 'csv',
+                    filename: 'Handsontable-CSV-file_[YYYY]-[MM]-[DD]', {# TODO: Change file name #}
+                    mimeType: 'text/csv',
+                    rowDelimiter: '\r\n',
+                    rowHeaders: true,
+                    range: [2, 5, 3, 5] {# TODO: to check how is working `range` #}
+                });
+            });
+
         });
     </script>
 

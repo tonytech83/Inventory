@@ -15,81 +15,124 @@
                     <a class="button" href="{% url 'upload-csv' business_id=object.pk %}">Import device from .csv</a>
                     <a class="button" href="{% url 'edit-business' pk=object.pk %}">Edit Business</a>
                 </div>
-                <div>
-                    <a class="button" href="#">Search</a>
+                <div class="controls">
+                    <button class="button" id="export-file">Download CSV</button>
                 </div>
             </div>
         {% else %}
             <p></p>
         {% endif %}
-        {#        <table class="table table-dark table-hover table-striped">#}
-        <table class="table_my">
-            <thead>
-            <tr>
-                <th></th>
-                <th>HOSTNAME</th>
-                <th>STATUS</th>
-                <th>VENDOR</th>
-                <th>MODEL</th>
-                <th>CATEGORY</th>
-                <th>SUB-CATEGORY</th>
-                <th>SERIAL NUMBER</th>
-                <th>OWNER</th>
-                <th>SUPPLIER</th>
-            </tr>
-
-            </thead>
-            <tbody>
-            <tr class="row__my">
-                <td>
-
-                </td>
-                <td>
-                    <input type="text">
-                </td>
-                <td>
-                    <input type="text">
-                </td>
-                <td>
-                    <input type="text">
-                </td>
-                <td>
-                    <input type="text">
-                </td>
-                <td>
-                    <input type="text">
-                </td>
-                <td>
-                    <input type="text">
-                </td>
-                <td>
-                    <input type="text">
-                </td>
-                <td>
-                    <input type="text">
-                </td>
-                <td>
-                    <input type="text">
-                </td>
-            </tr>
 
 
-            {% for device in devices %}
-                <tr class="row__my">
-                    <td><a href="{% url 'edit-device' pk=device.pk %}"><i class="fa-solid fa-pen-to-square"></i></a>
-                    </td>
-                    <td>{{ device.device_name }}</td>
-                    <td>{{ device.status }}</td>
-                    <td>{{ device.manufacturer }}</td>
-                    <td>{{ device.model }}</td>
-                    <td>{{ device.category }}</td>
-                    <td>{{ device.sub_category }}</td>
-                    <td>{{ device.serial_number }}</td>
-                    <td>{{ device.owner_name }}</td>
-                    <td>{{ device.supplier }}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+        <!-- Handsontable data container -->
+        <div id="data-container"></div>
+
+
+        <!-- Handsontable JS Script-->
+        <script src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const devicesData = JSON.parse('{{ devices_json|safe }}');
+
+                const data = devicesData.map(function (item) {
+                    return [
+                        '<a href="' + item.edit_url + '"><i class="fa-solid fa-pen-to-square"></a>',
+                        item.device_name,
+                        item.status,
+                        item.manufacturer,
+                        item.model,
+                        item.category,
+                        item.sub_category,
+                        item.serial_number,
+                        item.owner_name,
+                        item.supplier_name,
+                    ];
+                });
+
+                const container = document.getElementById('data-container');
+                const button = document.querySelector('#export-file');
+                {# button for downloading #}
+                const hot = new Handsontable(container, {
+                    data: data,
+                    minCols: 10,
+                    columns: [
+                        {renderer: "html"},  // Ensure the first column renders HTML for the link
+                        {type: 'text'},
+                        {type: 'text'},
+                        {type: 'text'},
+                        {type: 'text'},
+                        {type: 'text'},
+                        {type: 'text'},
+                        {type: 'text'},
+                        {type: 'text'},
+                        {type: 'text'},
+                    ],
+
+                    <!-- Start General settings -->
+                    width: '100%', {# size of the table #}
+                    {#customBorders: true,#}
+                    stretchH: 'all', {# stretch horizontally table #}
+                    <!-- End General settings -->
+
+                    <!-- Start Columns settings -->
+                    columnSorting: true,
+
+                    {# remove `dropdownMenu` from first column #}
+                    afterGetColHeader(col, TH) {
+                        if (col < 1) {
+                            const button = TH.querySelector('.changeType');
+
+                            if (!button) {
+                                return;
+                            }
+
+                            button.parentElement.removeChild(button);
+                        }
+                    },
+                    colHeaders: ['', 'Hostname', 'Status', 'Manufacturer', 'Model', 'Category', 'Sub-category', 'Serial number', 'Owner', 'Supplier'],
+                    colWidths: [8], {# size of first cell #}
+                    <!-- End Columns settings -->
+
+                    <!-- Start Rows settings -->
+                    rowHeaders: false,
+                    <!-- End Rows settings -->
+
+                    <!-- Start Filters settings -->
+                    filters: true,
+                    {# dropdownMenu: true, #}
+                    dropdownMenu: ['filter_by_value', 'filter_action_bar'],
+                    
+                    {# Disable cell selection #}
+                    disableVisualSelection: true,
+                    <!-- End Filters settings -->
+
+                    <!-- Start Other settings -->
+                    readOnly: true,
+                    licenseKey: 'non-commercial-and-evaluation',
+                    <!-- End Other settings -->
+                });
+
+                {# Download data to CSV  #}
+                const exportPlugin = hot.getPlugin('exportFile');
+
+                button.addEventListener('click', () => {
+                    exportPlugin.downloadFile('csv', {
+                        bom: false,
+                        columnDelimiter: ',',
+                        columnHeaders: false,
+                        exportHiddenColumns: true,
+                        exportHiddenRows: true,
+                        fileExtension: 'csv',
+                        filename: 'Handsontable-CSV-file_[YYYY]-[MM]-[DD]', {# TODO: Change file name #}
+                        mimeType: 'text/csv',
+                        rowDelimiter: '\r\n',
+                        rowHeaders: false,
+                        range: [0, 1, devicesData.length, 10] {# TODO: to check how is working `range`  #}
+                    });
+                });
+
+            });
+        </script>
+
     </section>
 {% endblock %}
