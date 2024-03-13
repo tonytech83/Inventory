@@ -26,7 +26,7 @@
     color: var(--text-color);
     background: var(--background-color);
     border-radius: 4px;
-    padding: 2px 8px;
+    padding: 3px 12px;
     margin: 6px 0;
     font-size: 1em;
 }

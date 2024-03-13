@@ -16,7 +16,7 @@
                     <a class="button" href="{% url 'edit-business' pk=object.pk %}">Edit Business</a>
                 </div>
                 <div class="controls">
-                    <button class="button" id="export-file">Download CSV</button>
+                    <button class="button reset-button-style" id="export-file">Download CSV</button>
                 </div>
             </div>
         {% else %}
@@ -29,7 +29,8 @@
 
 
         <!-- Handsontable JS Script-->
-        <script src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>
+        {# <script src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>#}
+        <script src="https://cdn.jsdelivr.net/npm/handsontable@13.1.0/dist/handsontable.full.min.js"></script>
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 const devicesData = JSON.parse('{{ devices_json|safe }}');
@@ -101,7 +102,16 @@
                     filters: true,
                     {# dropdownMenu: true, #}
                     dropdownMenu: ['filter_by_value', 'filter_action_bar'],
-                    
+                    {# Remove all selections #}
+                    afterDropdownMenuShow(instance) {
+                        var filters = instance.hot.getPlugin('filters');
+                        console.log(filters.components.get('filter_by_value').elements[0])
+                        filters.components.get('filter_by_value').elements[0].onClearAllClick({
+                            preventDefault: function () {
+                            }
+                        });
+                    },
+
                     {# Disable cell selection #}
                     disableVisualSelection: true,
                     <!-- End Filters settings -->
@@ -111,6 +121,15 @@
                     licenseKey: 'non-commercial-and-evaluation',
                     <!-- End Other settings -->
                 });
+
+                {# Start part of the `Remove all selection` #}
+                var filters = hot.getPlugin('filters');
+
+                window.hot = hot;
+                window.filters = filters;
+
+                hot.render();
+                {# End part of the `Remove all selection` #}
 
                 {# Download data to CSV  #}
                 const exportPlugin = hot.getPlugin('exportFile');
