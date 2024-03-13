@@ -27,10 +27,6 @@
         <!-- Handsontable data container -->
         <div id="data-container"></div>
 
-
-        <!-- Handsontable JS Script-->
-        {# <script src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>#}
-        <script src="https://cdn.jsdelivr.net/npm/handsontable@13.1.0/dist/handsontable.full.min.js"></script>
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 const devicesData = JSON.parse('{{ devices_json|safe }}');
