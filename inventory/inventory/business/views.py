@@ -1,4 +1,10 @@
 import json
+from datetime import timedelta
+
+from django.db.models import Case, When, Value, IntegerField, ExpressionWrapper, F
+from django.db.models.functions import Now
+from django.forms import DurationField, BooleanField
+from django.utils.timezone import now
 
 from django.urls import reverse_lazy, reverse
 from django.views import generic as views
@@ -8,22 +14,35 @@ from inventory.business.models import Business
 
 
 class BusinessView(views.DetailView):
-    queryset = Business.objects.all().prefetch_related(
-        'device_set',
-        'device_set__support',
-        'device_set__risk',
-    )
-
     template_name = 'business/business.html'
+
+    def get_queryset(self):
+        return Business.objects.all().prefetch_related(
+            'device_set',
+            'device_set__support',
+            'device_set__risk',
+        )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # Get the business from context
-        business = context['business']
+        business = context['object']
+        no_support = self.request.GET.get('no_support', None)
+        no_reviewed = self.request.GET.get('no_reviewed', None)
+
+        device_queryset = business.device_set.all()
+
+        if no_support == 'true':
+            device_queryset = device_queryset.filter(support__eos__lt=now().date())
+
+        if no_reviewed == 'true':
+            one_year_ago = now() - timedelta(days=365)
+            device_queryset = device_queryset.filter(updated_at__lte=one_year_ago)
+
         device_list = []
 
-        for device in business.device_set.all():
+        for device in device_queryset:
             device_dict = {
+                'is_reviewed': device.is_reviewed,
                 'edit_url': reverse('edit-device', kwargs={'pk': device.pk}),  # Generate edit URL
                 'device_name': device.device_name,
                 'status': device.status,
@@ -34,6 +53,7 @@ class BusinessView(views.DetailView):
                 'serial_number': device.serial_number,
                 'owner_name': device.owner_name,
                 'supplier_name': device.supplier.name,
+                'eos': str(device.support.eos),
             }
             device_list.append(device_dict)
 

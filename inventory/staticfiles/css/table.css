@@ -6,7 +6,7 @@
 
 #data-container {
     font-size: 1.5em;
-    border: 2px solid black;
+    /*border: 2px solid black;*/
 }
 
 .handsontable a {
@@ -27,5 +27,3 @@
     color: black;
     font-size: 0.6em;
 }
-
-

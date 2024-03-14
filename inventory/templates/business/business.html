@@ -1,153 +1,158 @@
 {% extends 'base/base.html' %}
 
 {% block main_content %}
-    <section>
-        <div class="stats">
-            <p>Business: {{ object.business_name }}</p>
-            <p>Country: {{ object.country }}</p>
-            <p>Business owner: {{ object.owner.profile.full_name }}</p>
-            <p>Total devices: {{ object.device_set.count }}</p>
-        </div>
-        {% if request.user.pk == object.owner_id %}
-            <div class="button-container">
-                <div>
-                    <a class="button" href="{% url 'create-device' business_id=business.pk %}">Create device</a>
-                    <a class="button" href="{% url 'upload-csv' business_id=object.pk %}">Import device from .csv</a>
-                    <a class="button" href="{% url 'edit-business' pk=object.pk %}">Edit Business</a>
-                </div>
-                <div class="controls">
-                    <button class="button reset-button-style" id="export-file">Download CSV</button>
-                </div>
+
+    <!-- Start Stats -->
+    {% include 'business/partials/stats.html' %}
+    <!-- End Stats -->
+
+    {% if request.user.pk == object.owner_id %}
+        <div class="button-container">
+            <div>
+                <a class="button" href="{% url 'create-device' business_id=business.pk %}">Create device</a>
+                <a class="button" href="{% url 'upload-csv' business_id=object.pk %}">Import device from .csv</a>
+                <a class="button" href="{% url 'edit-business' pk=object.pk %}">Edit Business</a>
             </div>
-        {% else %}
-            <p></p>
-        {% endif %}
+            <div class="controls">
+                <button class="button reset-button-style" id="export-file">Download CSV</button>
+            </div>
+        </div>
+    {% else %}
+        <p></p>
+    {% endif %}
 
 
-        <!-- Handsontable data container -->
-        <div id="data-container"></div>
+    <!-- Handsontable data container -->
+    <div id="data-container"></div>
 
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const devicesData = JSON.parse('{{ devices_json|safe }}');
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const devicesData = JSON.parse('{{ devices_json|safe }}');
 
-                const data = devicesData.map(function (item) {
-                    return [
-                        '<a href="' + item.edit_url + '"><i class="fa-solid fa-pen-to-square"></a>',
-                        item.device_name,
-                        item.status,
-                        item.manufacturer,
-                        item.model,
-                        item.category,
-                        item.sub_category,
-                        item.serial_number,
-                        item.owner_name,
-                        item.supplier_name,
-                    ];
-                });
+            const data = devicesData.map(function (item) {
+                return [
 
-                const container = document.getElementById('data-container');
-                const button = document.querySelector('#export-file');
-                {# button for downloading #}
-                const hot = new Handsontable(container, {
-                    data: data,
-                    minCols: 10,
-                    columns: [
-                        {renderer: "html"},  // Ensure the first column renders HTML for the link
-                        {type: 'text'},
-                        {type: 'text'},
-                        {type: 'text'},
-                        {type: 'text'},
-                        {type: 'text'},
-                        {type: 'text'},
-                        {type: 'text'},
-                        {type: 'text'},
-                        {type: 'text'},
-                    ],
-
-                    <!-- Start General settings -->
-                    width: '100%', {# size of the table #}
-                    {#customBorders: true,#}
-                    stretchH: 'all', {# stretch horizontally table #}
-                    <!-- End General settings -->
-
-                    <!-- Start Columns settings -->
-                    columnSorting: true,
-
-                    {# remove `dropdownMenu` from first column #}
-                    afterGetColHeader(col, TH) {
-                        if (col < 1) {
-                            const button = TH.querySelector('.changeType');
-
-                            if (!button) {
-                                return;
-                            }
-
-                            button.parentElement.removeChild(button);
-                        }
-                    },
-                    colHeaders: ['', 'Hostname', 'Status', 'Manufacturer', 'Model', 'Category', 'Sub-category', 'Serial number', 'Owner', 'Supplier'],
-                    colWidths: [8], {# size of first cell #}
-                    <!-- End Columns settings -->
-
-                    <!-- Start Rows settings -->
-                    rowHeaders: false,
-                    <!-- End Rows settings -->
-
-                    <!-- Start Filters settings -->
-                    filters: true,
-                    {# dropdownMenu: true, #}
-                    dropdownMenu: ['filter_by_value', 'filter_action_bar'],
-                    {# Remove all selections #}
-                    afterDropdownMenuShow(instance) {
-                        var filters = instance.hot.getPlugin('filters');
-                        console.log(filters.components.get('filter_by_value').elements[0])
-                        filters.components.get('filter_by_value').elements[0].onClearAllClick({
-                            preventDefault: function () {
-                            }
-                        });
-                    },
-
-                    {# Disable cell selection #}
-                    disableVisualSelection: true,
-                    <!-- End Filters settings -->
-
-                    <!-- Start Other settings -->
-                    readOnly: true,
-                    licenseKey: 'non-commercial-and-evaluation',
-                    <!-- End Other settings -->
-                });
-
-                {# Start part of the `Remove all selection` #}
-                var filters = hot.getPlugin('filters');
-
-                window.hot = hot;
-                window.filters = filters;
-
-                hot.render();
-                {# End part of the `Remove all selection` #}
-
-                {# Download data to CSV  #}
-                const exportPlugin = hot.getPlugin('exportFile');
-
-                button.addEventListener('click', () => {
-                    exportPlugin.downloadFile('csv', {
-                        bom: false,
-                        columnDelimiter: ',',
-                        columnHeaders: false,
-                        exportHiddenColumns: true,
-                        exportHiddenRows: true,
-                        fileExtension: 'csv',
-                        filename: 'Handsontable-CSV-file_[YYYY]-[MM]-[DD]', {# TODO: Change file name #}
-                        mimeType: 'text/csv',
-                        rowDelimiter: '\r\n',
-                        rowHeaders: false,
-                        range: [0, 1, devicesData.length, 10] {# TODO: to check how is working `range`  #}
-                    });
-                });
-
+                    item.is_reviewed,
+                    '<a href="' + item.edit_url + '"><i class="fa-solid fa-pen-to-square"></a>',
+                    {#{edit_url: item.edit_url, device_name: item.device_name},#}
+                    item.device_name,
+                    item.status,
+                    item.manufacturer,
+                    item.model,
+                    item.category,
+                    item.sub_category,
+                    item.serial_number,
+                    item.owner_name,
+                    item.supplier_name,
+                    item.eos,
+                ];
             });
-        </script>
 
-    </section>
+            const container = document.getElementById('data-container');
+            const button = document.querySelector('#export-file');
+            {# button for downloading #}
+            const hot = new Handsontable(container, {
+                data: data,
+                {#minCols: 10,#}
+                columns: [
+                    {type: 'checkbox'},
+                    {renderer: "html"},  // Ensure the first column renders HTML for the link
+                    {type: 'text'},
+                    {type: 'text'},
+                    {type: 'text'},
+                    {type: 'text'},
+                    {type: 'text'},
+                    {type: 'text'},
+                    {type: 'text'},
+                    {type: 'text'},
+                    {type: 'text'},
+                    {type: 'text'}
+                ],
+
+                <!-- Start General settings -->
+                width: '100%', {# size of the table #}
+                stretchH: 'all', {# stretch horizontally table #}
+                height: '65vh',
+                overflow: 'hidden',
+                <!-- End General settings -->
+
+                <!-- Start Columns settings -->
+                columnSorting: true,
+
+                {# remove `dropdownMenu` from first column #}
+                afterGetColHeader(col, TH) {
+                    if (col < 2) {
+                        const button = TH.querySelector('.changeType');
+
+                        if (!button) {
+                            return;
+                        }
+
+                        button.parentElement.removeChild(button);
+                    }
+                },
+                colHeaders: ['', ' ', 'Hostname', 'Status', 'Manufacturer', 'Model', 'Category', 'Sub-category', 'Serial number', 'Owner', 'Supplier', 'EOS'],
+                colWidths: [6, 6], {# size of first cell #}
+                <!-- End Columns settings -->
+
+                <!-- Start Rows settings -->
+                rowHeaders: false,
+                <!-- End Rows settings -->
+
+                <!-- Start Filters settings -->
+                filters: true,
+                {# dropdownMenu: true, #}
+                dropdownMenu: ['filter_by_value', 'filter_action_bar'],
+                {# Remove all selections #}
+                afterDropdownMenuShow(instance) {
+                    var filters = instance.hot.getPlugin('filters');
+                    console.log(filters.components.get('filter_by_value').elements[0])
+                    filters.components.get('filter_by_value').elements[0].onClearAllClick({
+                        preventDefault: function () {
+                        }
+                    });
+                },
+
+                {# Disable cell selection #}
+                disableVisualSelection: true,
+                <!-- End Filters settings -->
+
+                <!-- Start Other settings -->
+                readOnly: true,
+                licenseKey: 'non-commercial-and-evaluation',
+                <!-- End Other settings -->
+            });
+
+            {# Start part of the `Remove all selection in dropdown menu` #}
+            var filters = hot.getPlugin('filters');
+
+            window.hot = hot;
+            window.filters = filters;
+
+            hot.render();
+            {# End part of the `Remove all selection` #}
+
+            {# Download data to CSV  #}
+            const exportPlugin = hot.getPlugin('exportFile');
+
+            button.addEventListener('click', () => {
+                exportPlugin.downloadFile('csv', {
+                    bom: false,
+                    columnDelimiter: ',',
+                    columnHeaders: false,
+                    exportHiddenColumns: true,
+                    exportHiddenRows: true,
+                    fileExtension: 'csv',
+                    filename: 'Handsontable-CSV-file_[YYYY]-[MM]-[DD]', {# TODO: Change file name #}
+                    mimeType: 'text/csv',
+                    rowDelimiter: '\r\n',
+                    rowHeaders: false,
+                    range: [0, 1, devicesData.length, 10] {# TODO: to check how is working `range`  #}
+                });
+            });
+
+        });
+    </script>
+
+
 {% endblock %}

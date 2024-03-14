@@ -1,0 +1,66 @@
+{% load business_tags %}
+
+<div class="stats">
+    <div class="box business-info">
+        <h5>Business information</h5>
+        <table>
+            <tr>
+                <td>Business:</td>
+                <td>{{ object.business_name }}</td>
+            </tr>
+            <tr>
+                <td>Country:</td>
+                <td>{{ object.country }}</td>
+            </tr>
+            <tr>
+                <td>Business owner:</td>
+                <td>{{ object.owner.profile.full_name }}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="box devices-stats">
+        <h5>Support</h5>
+        <table>
+            <tr>
+                <td>Total devices:</td>
+                <td class="value"><a href="?no_support=false">{{ object.device_set.count }}</a></td>
+            </tr>
+            <tr>
+                <td>No Support:</td>
+                <td><a href="?no_support=true">{% count_no_support_devices object %}</a></td>
+            </tr>
+            <tr>
+                <td>No Reviewed:</td>
+                <td><a href="?no_reviewed=true">{% count_no_reviewed_devices object %}</a></td>
+            </tr>
+        </table>
+        {# TODO: Soon support expire #}
+    </div>
+    <div class="box">
+        <h5>Risk</h5>
+        <table>
+            <tr>
+                <td>Risk below 5:</td>
+                <td>10</td>
+            </tr>
+            <tr>
+                <td>Risk 5-10:</td>
+                <td>10</td>
+            </tr>
+            <tr>
+                <td>Risk above 10:</td>
+                <td>10</td>
+            </tr>
+            <tr>
+                <td>TBC:</td>
+                <td>1</td>
+            </tr>
+        </table>
+    </div>
+    <div class="box">
+    </div>
+    <div class="box">
+    </div>
+    <div class="box">
+    </div>
+</div>

@@ -6,6 +6,8 @@ from inventory.business.models import Business
 from inventory.core.model_mixins import TimeStampedModel
 from inventory.suppliers.models import Supplier
 
+from datetime import date
+
 UserModel = get_user_model()
 
 
@@ -294,3 +296,11 @@ class Device(TimeStampedModel, models.Model):
         to=Business,
         on_delete=models.DO_NOTHING,
     )
+
+    @property
+    def days_since_update(self):
+        return (date.today() - self.updated_at).days
+
+    @property
+    def is_reviewed(self):
+        return True if self.days_since_update < 365 else False
