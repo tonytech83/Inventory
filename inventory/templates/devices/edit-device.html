@@ -18,11 +18,10 @@
             {% csrf_token %}
 
             {% if request.user.pk == object.business.owner.pk %}
-                <button>Save</button>
-                {# TODO: fix the `Cancel` button #}
-                <a href="{% url 'delete-device' pk=object.pk %}">Delete</a>
+                <button class="reset-button-style button btn-create">Save</button>
+                <a class="button btn-delete" href="{% url 'delete-device' pk=object.pk %}">Delete</a>
             {% endif %}
-            <a href="#">Cancel</a>
+            <a class="button btn-cancel" href="{% url 'business' pk=object.business.pk %}">Cancel</a>
         </form>
     </div>
 {% endblock %}

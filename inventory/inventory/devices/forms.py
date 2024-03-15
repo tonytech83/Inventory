@@ -31,7 +31,7 @@ class DeviceCreateForm(DeviceBaseForm):
 class DeviceEditForm(DeviceBaseForm):
     class Meta:
         model = Device
-        exclude = ('support', 'risk', 'supplier')
+        exclude = ('support', 'risk',)
 
 
 class DeviceDeleteForm(ReadOnlyFieldsFormMixin, DeviceBaseForm):

@@ -1,3 +1,21 @@
+:root {
+    --create-bg: #198754;
+    --create-hover-bg: #157347;
+    --crete-color: #000;
+
+    --cancel-bg: #6c757d;
+    --cancel-hover-bg: #5c636a;
+    --cancel-color: #fff;
+
+    --donwload-bg: #f8f9fa;
+    --donwload-hover-bg: #d3d4d5;
+    --donwload-color: #000;
+
+    --delete-bg: #dc3545;
+    --delete-hover-bg: #bb2d3b;
+    --delete-color: #fff;
+}
+
 .reset-button-style {
     border: none;
     margin: 0;
@@ -23,11 +41,45 @@
 
 .button {
     text-decoration: none;
-    color: var(--text-color);
-    background: var(--background-color);
     border-radius: 4px;
     padding: 3px 12px;
     margin: 6px 0;
     font-size: 1em;
 }
 
+.btn-create {
+    background: var(--create-bg);
+    color: var(--crete-color);
+}
+
+.btn-create:hover {
+    background: var(--create-hover-bg);
+    /*color: var(--crete-color);*/
+}
+
+.btn-cancel {
+    background: var(--cancel-bg);
+    color: var(--cancel-color);
+}
+
+.btn-cancel:hover {
+    background: var(--cancel-hover-bg);
+}
+
+.btn-download {
+    background: var(--donwload-bg);
+    color: var(--donwload-color)
+}
+
+.btn-download:hover {
+    background: var(--donwload-hover-bg);
+}
+
+.btn-delete {
+    background: var(--delete-bg);
+    color: var(--delete-color);
+}
+
+.btn-delete:hover {
+    background: var(--delete-hover-bg);
+}

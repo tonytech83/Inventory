@@ -52,7 +52,7 @@ class BusinessView(views.DetailView):
                 'sub_category': device.sub_category,
                 'serial_number': device.serial_number,
                 'owner_name': device.owner_name,
-                'supplier_name': device.supplier.name,
+                'supplier_name': device.supplier_display,
                 'eos': str(device.support.eos),
             }
             device_list.append(device_dict)

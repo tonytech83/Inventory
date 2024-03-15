@@ -6,7 +6,9 @@
 
         {% csrf_token %}
 
-        <button>Save</button>
-
+        <button class="reset-button-style button">Save</button>
+        <a class="button" href="{% url 'delete-supplier' pk=object.pk %}">Delete</a>
+        {# TODO: Fix Cancel button #}
+        <a class="button" href="#">Cancel</a>
     </form>
 {% endblock %}

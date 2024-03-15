@@ -18,7 +18,6 @@ from inventory.devices.models import Device, Support, Risk
 from inventory.suppliers.models import Supplier
 
 
-# TODO: Should check if there way to fix the device creation url
 class DeviceCreateView(views.CreateView):
     model = Device
     form_class = DeviceCreateForm
@@ -193,7 +192,7 @@ class CSVUploadView(FormView):
                     support=support,
                     risk=risk,
                     business=business,
-                    supplier=Supplier.objects.all().first(),
+                    # supplier=Supplier.objects.all().first(),
                 )
             except Exception as e:
                 print(e)

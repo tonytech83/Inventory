@@ -289,7 +289,9 @@ class Device(TimeStampedModel, models.Model):
 
     supplier = models.ForeignKey(
         to=Supplier,
-        on_delete=models.DO_NOTHING,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
     )
 
     business = models.ForeignKey(
@@ -304,3 +306,7 @@ class Device(TimeStampedModel, models.Model):
     @property
     def is_reviewed(self):
         return True if self.days_since_update < 365 else False
+
+    @property
+    def supplier_display(self):
+        return self.supplier.name if self.supplier else "not set"

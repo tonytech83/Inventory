@@ -9,9 +9,9 @@
 
             {% csrf_token %}
 
-            <button>Save</button>
+            <button class="reset-button-style button btn-create">Save</button>
             {# TODO: Back to current profile #}
-            <a href="#">Cancel</a>
+            <a class="button btn-cancel" href="{% url 'home-page' %}">Cancel</a>
         </form>
     </div>
 

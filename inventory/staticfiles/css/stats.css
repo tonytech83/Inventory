@@ -3,6 +3,10 @@
     flex-direction: row;
     justify-content: space-between;
 }
+h5 {
+    text-align: center;
+    margin-bottom: 20px;
+}
 
 .box {
     height: 18vh; /* This will make .stats take up 30% of the viewport height */
