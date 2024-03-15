@@ -10,8 +10,8 @@
         <div class="button-container">
             <div>
                 <a class="button btn-create" href="{% url 'create-device' business_id=business.pk %}">Create device</a>
-                <a class="button" href="{% url 'upload-csv' business_id=object.pk %}">Import device from .csv</a>
-                <a class="button" href="{% url 'edit-business' pk=object.pk %}">Edit Business</a>
+                <a class="button btn-download" href="{% url 'upload-csv' business_id=object.pk %}">Import devices</a>
+                <a class="button btn-edit" href="{% url 'edit-business' pk=object.pk %}">Edit Business</a>
             </div>
             <div class="controls">
                 <button class=" reset-button-style button btn-download" id="export-file">Download CSV</button>

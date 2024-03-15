@@ -7,8 +7,8 @@
 
             {% csrf_token %}
 
-            <button>Save</button>
-            <a href="{% url 'business' pk=object.pk %}"></a>
+            <button class="reset-button-style button btn-create">Save</button>
+            <a class="button btn-cancel" href="{% url 'business' pk=object.pk %}">Cancel</a>
         </form>
     </div>
 {% endblock %}

@@ -6,6 +6,7 @@
 
         {% csrf_token %}
 
-        <button>Create</button>
+        <button class="reset-button-style button btn-create">Create</button>
+        <a class="button btn-cancel" href="{% url 'supplier-list' %}">Cancel</a>
     </form>
 {% endblock %}

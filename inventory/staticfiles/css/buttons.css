@@ -1,0 +1,93 @@
+:root {
+    --create-border: #198754;
+    --create-border-hover: #157347;
+
+    --cancel-border: #ffc107;
+    --cancel-border-hover: #ffca2e;
+
+    --donwload-border: #f8f9fa;
+    --donwload-border-hover: #d3d4d5;
+
+    --delete-border: #dc3545;
+    --delete-border-hover: #bb2d3b;
+
+    --edit-border: #0d6efd;
+    --edit-border-hover: #0a58ca;
+}
+
+.reset-button-style {
+    border: none;
+    margin: 0;
+    padding: 0;
+    width: auto;
+    overflow: visible;
+    background: transparent;
+
+    /* inherit font & color from ancestor */
+    color: inherit;
+    font: inherit;
+
+    /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */
+    line-height: normal;
+}
+
+.button-container {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.button {
+    background: var(--background-color);
+    text-decoration: none;
+    border-radius: 4px;
+    padding: 3px 12px;
+    margin: 6px 0;
+    font-size: 1em;
+}
+
+.btn-create {
+    border: 3px solid var(--create-border);
+    color: var(--text-color);
+}
+
+.btn-create:hover {
+    border: 3px solid var(--create-border-hover);
+}
+
+.btn-cancel {
+    border: 3px solid var(--cancel-border);
+    color: var(--text-color);
+}
+
+.btn-cancel:hover {
+    border: 3px solid var(--cancel-border-hover);
+}
+
+.btn-download {
+    border: 3px solid var(--donwload-border);
+    color: var(--text-color)
+}
+
+.btn-download:hover {
+    border: 3px solid var(--donwload-border-hover);
+}
+
+.btn-delete {
+    border: 3px solid var(--delete-border);
+    color: var(--text-color);
+}
+
+.btn-delete:hover {
+    border: 3px solid var(--delete-border-hover);
+}
+
+.btn-edit {
+    border: 3px solid var(--edit-border);
+    color: var(--text-color);
+}
+
+.btn-edit:hover {
+    border: 3px solid var(--edit-border-hover);
+}

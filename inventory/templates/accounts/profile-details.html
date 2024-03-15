@@ -11,7 +11,7 @@
         <p>Phone Number: {{ object.phone_number }}</p>
     </div>
     <div class="buttons-container">
-        <a class="button" href="{% url 'edit-profile' pk=request.user.pk %}">Edit Profile</a>
+        <a class="button btn-edit" href="{% url 'edit-profile' pk=request.user.pk %}">Edit Profile</a>
         <a class="button btn-cancel" href="{% url 'home-page' %}">Back to Home</a>
     </div>
 {% endblock %}
