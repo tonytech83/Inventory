@@ -4,13 +4,7 @@
 
     <h3>Suppliers</h3>
 
-    <div class="controls">
-        <button class="reset-button-style button btn-download" id="export-file">Download CSV</button>
-    </div>
-
     <div id="data-container"></div>
-
-
 
     <!-- Handsontable JS Script-->
     <script src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>
@@ -105,5 +99,15 @@
 
         });
     </script>
+
+    <div class="button-container">
+        <div class="controls">
+            <button class="reset-button-style button btn-download" id="export-file">Download CSV</button>
+
+        </div>
+        <div class="action-buttons">
+            <a class="button btn-create" href="{% url 'create-supplier' %}">Add Supplier</a>
+        </div>
+    </div>
 
 {% endblock %}

@@ -32,62 +32,89 @@
 }
 
 .button-container {
+    border: 2px solid var(--background-color);
+    padding: 0 10px;
     margin-bottom: 10px;
     margin-top: 10px;
     display: flex;
     justify-content: space-between;
 }
 
+.control-buttons {
+    display: flex;
+    gap: 5px;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 5px;
+}
+
 .button {
     background: var(--background-color);
     text-decoration: none;
     border-radius: 4px;
-    padding: 3px 12px;
+    padding: 0 12px;
     margin: 6px 0;
     font-size: 1em;
 }
 
 .btn-create {
-    border: 3px solid var(--create-border);
+    background: var(--create-border);
+    border: 2px solid var(--create-border);
+    transition: border-color 0.3s;
     color: var(--text-color);
+    font-weight: bold;
 }
 
 .btn-create:hover {
-    border: 3px solid var(--create-border-hover);
+    background: var(--create-border-hover);
 }
 
 .btn-cancel {
-    border: 3px solid var(--cancel-border);
-    color: var(--text-color);
+    border: 2px solid transparent;
+    transition: border-color 0.3s;
+    background: darkgrey;
+    color: var(--background-color);
+    font-weight: bold;
 }
 
 .btn-cancel:hover {
-    border: 3px solid var(--cancel-border-hover);
+    border: 2px solid var(--cancel-border-hover);
 }
 
 .btn-download {
-    border: 3px solid var(--donwload-border);
-    color: var(--text-color)
+    border: 2px solid transparent;
+    transition: border-color 0.3s;
+    background: darkgrey;
+    color: var(--background-color);
+    font-weight: bold;
 }
 
 .btn-download:hover {
-    border: 3px solid var(--donwload-border-hover);
+    border: 2px solid var(--donwload-border);
 }
 
 .btn-delete {
-    border: 3px solid var(--delete-border);
-    color: var(--text-color);
+    border: 2px solid transparent;
+    transition: border-color 0.3s;
+    background: darkgrey;
+    color: var(--background-color);
+    font-weight: bold;
 }
 
 .btn-delete:hover {
-    border: 3px solid var(--delete-border-hover);
+    border: 2px solid var(--delete-border-hover);
 }
 
 .btn-edit {
-    border: 3px solid var(--edit-border);
-    color: var(--text-color);
+    border: 2px solid transparent;
+    transition: border-color 0.3s;
+    background: darkgrey;
+    color: var(--background-color);
+    font-weight: bold;
 }
 
 .btn-edit:hover {
-    border: 3px solid var(--edit-border-hover);
+    border: 2px solid var(--edit-border-hover);
 }

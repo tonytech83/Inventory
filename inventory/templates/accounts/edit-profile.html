@@ -1,18 +1,21 @@
 {% extends 'base/base.html' %}
 
 {% block main_content %}
-    <div class="profile-container">
-        <h1>Edit Profile</h1>
-        <p>for: {{ object.account.email }}</p>
-        <form action="{% url 'edit-profile' pk=request.user.pk %}" method="POST">
-            {{ form.as_p }}
 
-            {% csrf_token %}
+    <h1>Edit Profile</h1>
+    <p>for: {{ object.account.email }}</p>
+    <form action="{% url 'edit-profile' pk=request.user.pk %}" method="POST">
+        {{ form.as_p }}
 
-            <button class="reset-button-style button btn-create">Save</button>
-            {# TODO: Back to current profile #}
-            <a class="button btn-cancel" href="{% url 'details-profile' %}">Cancel</a>
-        </form>
-    </div>
+        {% csrf_token %}
 
+        <div class="button-container">
+            <div class="control-buttons"></div>
+            <div class="action-buttons">
+                <button class="reset-button-style button btn-create">Save</button>
+                <a class="button btn-cancel" href="{% url 'details-profile' %}">Cancel</a>
+            </div>
+        </div>
+    </form>
+    
 {% endblock %}

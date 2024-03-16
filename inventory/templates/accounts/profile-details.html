@@ -10,8 +10,11 @@
         <p>Last Name: {{ object.last_name }}</p>
         <p>Phone Number: {{ object.phone_number }}</p>
     </div>
-    <div class="buttons-container">
-        <a class="button btn-edit" href="{% url 'edit-profile' pk=request.user.pk %}">Edit Profile</a>
-        <a class="button btn-cancel" href="{% url 'home-page' %}">Back to Home</a>
+    <div class="button-container">
+        <div class="control-buttons"></div>
+        <div class="action-buttons">
+            <a class="button btn-edit" href="{% url 'edit-profile' pk=request.user.pk %}">Edit Profile</a>
+            <a class="button btn-cancel" href="{% url 'home-page' %}">Back to Home</a>
+        </div>
     </div>
 {% endblock %}

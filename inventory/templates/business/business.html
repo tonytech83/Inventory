@@ -6,24 +6,8 @@
     {% include 'business/partials/stats.html' %}
     <!-- End Stats -->
 
-    {% if request.user.pk == object.owner_id %}
-        <div class="button-container">
-            <div>
-                <a class="button btn-create" href="{% url 'create-device' business_id=business.pk %}">Create device</a>
-                <a class="button btn-download" href="{% url 'upload-csv' business_id=object.pk %}">Import devices</a>
-                <a class="button btn-edit" href="{% url 'edit-business' pk=object.pk %}">Edit Business</a>
-            </div>
-            <div class="controls">
-                <button class=" reset-button-style button btn-download" id="export-file">Download CSV</button>
-            </div>
-        </div>
-    {% else %}
-        <p></p>
-    {% endif %}
-
-
     <!-- Handsontable data container -->
-    <div id="data-container"></div>
+    <div id="data-container" data-theme="dark"></div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -153,6 +137,21 @@
 
         });
     </script>
+
+    {% if request.user.pk == object.owner_id %}
+        <div class="button-container" >
+            <div class="control-buttons">
+                <button class="reset-button-style button btn-download" id="export-file">Download CSV</button>
+            </div>
+            <div class="action-buttons">
+                <a class="button btn-create" href="{% url 'create-device' business_id=business.pk %}">Create device</a>
+                <a class="button btn-download" href="{% url 'upload-csv' business_id=object.pk %}">Import devices</a>
+                <a class="button btn-edit" href="{% url 'edit-business' pk=object.pk %}">Edit Business</a>
+            </div>
+        </div>
+    {% else %}
+        <p></p>
+    {% endif %}
 
 
 {% endblock %}

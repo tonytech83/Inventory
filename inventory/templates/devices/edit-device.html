@@ -17,11 +17,17 @@
 
             {% csrf_token %}
 
-            {% if request.user.pk == object.business.owner.pk %}
-                <button class="reset-button-style button btn-create">Save</button>
-                <a class="button btn-delete" href="{% url 'delete-device' pk=object.pk %}">Delete</a>
-            {% endif %}
-            <a class="button btn-cancel" href="{% url 'business' pk=object.business.pk %}">Cancel</a>
+            <div class="button-container">
+                <div class="control-buttons"></div>
+                <div class="action-buttons">
+                    {% if request.user.pk == object.business.owner.pk %}
+                        <button class="reset-button-style button btn-create">Save</button>
+                        <a class="button btn-delete" href="{% url 'delete-device' pk=object.pk %}">Delete</a>
+                    {% endif %}
+                    <a class="button btn-cancel" href="{% url 'business' pk=object.business.pk %}">Cancel</a>
+                </div>
+            </div>
+
         </form>
     </div>
 {% endblock %}

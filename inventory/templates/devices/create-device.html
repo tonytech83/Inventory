@@ -18,8 +18,12 @@
         </div>
 
         {% csrf_token %}
-
-        <button class="reset-button-style button btn-create">Create</button>
-        <a class="button btn-cancel" href="{% url 'business' pk=business_id %}">Cancel</a>
+        <div class="button-container">
+            <div class="control-buttons"></div>
+            <div class="action-buttons">
+                <button class="reset-button-style button btn-create">Create</button>
+                <a class="button btn-cancel" href="{% url 'business' pk=business_id %}">Cancel</a>
+            </div>
+        </div>
     </form>
 {% endblock %}
