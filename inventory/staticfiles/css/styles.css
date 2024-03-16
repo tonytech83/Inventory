@@ -7,6 +7,8 @@
 @import "buttons.css";
 @import "business.css";
 @import "table.css";
+@import "supplier-edit-form.css";
+@import "suppliers.css";
 
 :root {
     --background-color: #373737;
@@ -32,6 +34,12 @@ html, body {
     display: flex;
     flex-direction: column;
     min-height: 100vh; /* Make sure container takes up at least the height of the viewport */
+}
+
+.content {
+    flex: 1; /* Makes the content area grow to occupy the available space */
+    display: flex;
+    flex-direction: column; /* Optional: Depends on your layout */
 }
 
 

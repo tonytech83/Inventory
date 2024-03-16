@@ -11,13 +11,15 @@
 
         <p>{{ form.username|placeholder:'Email' }}</p>
         <p>{{ form.password|placeholder:'Password' }}</p>
-
-        <button class="reset-button-style button">Log In</button>
-
-        <p class="sign-up-new-account">
-            <span>Don't have an account?: </span>
-            <span><a class="button" href="{% url 'register-user' %}">Sign Up</a></span>
-        </p>
+        
+        {# TODO: To figure out how should looks the buttons  #}
+        <div class="button-container">
+            <div class="control-buttons"></div>
+            <div class="action-buttons ">
+                <button class="reset-button-style button btn-create">Log In</button>
+                <a class="button btn-download" href="{% url 'register-user' %}">Sign Up</a>
+            </div>
+        </div>
 
     </form>
 {% endblock %}

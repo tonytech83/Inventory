@@ -2,7 +2,33 @@
 
 {% block main_content %}
 
-    <h3>Suppliers</h3>
+    <div class="backdrop" style="display:none;" onclick="hideEditForm()"></div>
+
+    <!-- Hidden form for editing -->
+    <div id="editForm" style="display:none;">
+        <div class="title-container">
+            <h2 class="suppliers-title">Edit Supplier</h2>
+        </div>
+        <form id="supplierEditForm">
+            <input type="hidden" id="supplierId" name="supplierId">
+            Name: <input type="text" id="supplierName" name="name"><br>
+            Contact Name: <input type="text" id="supplierContactName" name="contact_name"><br>
+            Phone number: <input type="text" id="supplierPhoneNumber" name="phone_number"><br>
+            Eimal: <input type="text" id="supplierEmail" name="email"><br>
+            <div class="button-container form-style">
+                <div class="control-buttons"></div>
+                <div class="action-buttons">
+                    <button class="reset-button-style button btn-create" type="submit">Save</button>
+                    <button class="reset-button-style button btn-cancel" type="button" onclick="hideEditForm()">Cancel</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <div class="title-container">
+        <h3>Suppliers</h3>
+    </div>
 
     <div id="data-container"></div>
 
@@ -14,7 +40,7 @@
 
             const data = suppliersData.map(function (item) {
                 return [
-                    '<a href="' + item.edit_url + '"><i class="fa-solid fa-pen-to-square"></a>',
+                    '<a href="#" onclick="showEditForm(' + item.id + ', \'' + item.name.replace(/'/g, "\\'") + '\', \'' + item.contact_name.replace(/'/g, "\\'") + '\', \'' + item.phone_number + '\', \'' + item.email + '\')"><i class="fa-solid fa-pen-to-square"></i></a>',
                     item.name,
                     item.contact_name,
                     item.phone_number,
@@ -97,6 +123,64 @@
                 });
             });
 
+        });
+    </script>
+
+    <script>
+        function showEditForm(supplierId, supplierName, supplierContactName, supplierPhoneNumber, supplierEmail) {
+            // Populate the form fields
+            document.getElementById('supplierId').value = supplierId;
+            document.getElementById('supplierName').value = supplierName;
+            document.getElementById('supplierContactName').value = supplierContactName;
+            document.getElementById('supplierPhoneNumber').value = supplierPhoneNumber;
+            document.getElementById('supplierEmail').value = supplierEmail;
+
+            // Show the form and the backdrop
+            document.getElementById('editForm').style.display = 'block';
+            document.querySelector('.backdrop').style.display = 'block';
+        }
+
+        function hideEditForm() {
+            // Hide the form and the backdrop
+            document.getElementById('editForm').style.display = 'none';
+            document.querySelector('.backdrop').style.display = 'none';
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("supplierEditForm").addEventListener("submit", function (e) {
+                e.preventDefault(); // Prevent the default form submission
+
+                const supplierId = document.getElementById('supplierId').value;
+                const supplierName = document.getElementById('supplierName').value;
+                const supplierContactName = document.getElementById('supplierContactName').value;
+                const supplierPhoneNumber = document.getElementById('supplierPhoneNumber').value;
+                const supplierEmail = document.getElementById('supplierEmail').value;
+
+
+                const csrftoken = '{{ csrf_token }}';
+
+                fetch("{% url 'edit-supplier' pk=0 %}".replace('0', supplierId), {
+                    method: 'PATCH',
+                    body: JSON.stringify({
+                        id: supplierId,
+                        name: supplierName,
+                        contact_name: supplierContactName,
+                        phone_number: supplierPhoneNumber,
+                        email: supplierEmail
+                    }),
+                    headers: {
+                        'X-CSRFToken': csrftoken,
+                        'Content-Type': 'application/json',
+                    },
+                }).then(response => {
+                    if (response.ok) {
+                        hideEditForm(); // Use the hideEditForm function to close the form
+                        // Reload the page to reflect the updated data
+                        window.location.reload();
+                    }
+                }).catch(error => console.error('Error:', error));
+            });
+            
         });
     </script>
 

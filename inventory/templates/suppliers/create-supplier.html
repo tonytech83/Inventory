@@ -1,7 +1,8 @@
 {% extends 'base/base.html' %}
 
 {% block main_content %}
-    <div style="width: 50%; margin: auto">
+
+    <div>
         <form action="{% url 'create-supplier' %}" method="POST">
             {{ form }}
 
@@ -16,4 +17,5 @@
             </div>
         </form>
     </div>
+
 {% endblock %}

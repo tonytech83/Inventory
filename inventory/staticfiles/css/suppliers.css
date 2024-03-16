@@ -1,0 +1,8 @@
+.title-container {
+    border: 2px solid var(--background-color);
+    margin-bottom:10px;
+}
+
+.title-container h3 {
+    text-align: center;
+}

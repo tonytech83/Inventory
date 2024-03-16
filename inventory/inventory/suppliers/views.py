@@ -1,11 +1,15 @@
 import json
+
+from rest_framework import generics as api_views
+
+from .serializers import SupplierSerializer
+
 from django.urls import reverse
 
-from django.core.serializers import serialize
 from django.urls import reverse_lazy
 from django.views import generic as views
 
-from inventory.suppliers.forms import CreateSupplierForm, EditSupplierForm, DeviceSupplierForm
+from inventory.suppliers.forms import CreateSupplierForm, DeviceSupplierForm
 from inventory.suppliers.models import Supplier
 
 
@@ -19,7 +23,8 @@ class SupplierListView(views.ListView):
 
         for supplier in self.get_queryset():
             supplier_dict = {
-                "edit_url": reverse('edit-supplier', kwargs={'pk': supplier.pk}),  # Generate edit URL
+                "id": supplier.id,
+                "edit_url": reverse('edit-supplier', kwargs={'pk': supplier.pk}),
                 "name": supplier.name,
                 "contact_name": supplier.contact_name,
                 "phone_number": supplier.phone_number,
@@ -33,17 +38,14 @@ class SupplierListView(views.ListView):
         return context
 
 
+class SupplierUpdateView(api_views.UpdateAPIView):
+    queryset = Supplier.objects.all()
+    serializer_class = SupplierSerializer
+
+
 class SupplierCreateView(views.CreateView):
     form_class = CreateSupplierForm
     template_name = 'suppliers/create-supplier.html'
-
-    success_url = reverse_lazy('supplier-list')
-
-
-class SupplierEditView(views.UpdateView):
-    queryset = Supplier.objects.all()
-    form_class = EditSupplierForm
-    template_name = 'suppliers/edit-supplier.html'
 
     success_url = reverse_lazy('supplier-list')
 
