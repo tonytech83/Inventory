@@ -11,7 +11,8 @@
 }
 
 /* Edit form styles */
-#editForm {
+#editForm,
+#saveForm {
     width: 80%;
     height: 50%;
 
