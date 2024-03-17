@@ -1,0 +1,19 @@
+<div id="deleteForm" style="display:none;">
+    <div class="title-container">
+        <h2 class="suppliers-title">Delete Supplier</h2>
+    </div>
+    <form id="supplierDeleteForm">
+        <input type="hidden" id="deleteSupplierId" name="supplierId">
+        <h3 id="deleteConfirmationText">Are you sure you want to delete "<span id="deleteSupplierName"></span>"?</h3>
+        <div class="button-container form-style">
+            <div class="control-buttons"></div>
+            <div class="action-buttons">
+                <button class="reset-button-style button btn-delete" type="button" onclick="confirmDelete()">
+                    Confirm Delete
+                </button>
+                <button class="reset-button-style button btn-cancel" type="button" onclick="hideDeleteForm()">Cancel
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

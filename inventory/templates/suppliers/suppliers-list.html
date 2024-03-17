@@ -1,247 +1,174 @@
 {% extends 'base/base.html' %}
+{% load static %}
 
 {% block main_content %}
 
+    <!-- Forms container-->
     <div class="backdrop" style="display:none;" onclick="hideForm()"></div>
 
     <!-- Hidden form for editing -->
-    <div id="editForm" style="display:none;">
-        <div class="title-container">
-            <h2 class="suppliers-title">Edit Supplier</h2>
-        </div>
-        <form id="supplierEditForm">
-            <input type="hidden" id="supplierId" name="supplierId">
-            Name: <input type="text" id="supplierName" name="name"><br>
-            Contact Name: <input type="text" id="supplierContactName" name="contact_name"><br>
-            Phone number: <input type="text" id="supplierPhoneNumber" name="phone_number"><br>
-            Eimal: <input type="text" id="supplierEmail" name="email"><br>
-            <div class="button-container form-style">
-                <div class="control-buttons"></div>
-                <div class="action-buttons">
-                    <button class="reset-button-style button btn-create" type="submit">Save</button>
-                    <button class="reset-button-style button btn-cancel" type="button" onclick="hideForm()">Cancel
-                    </button>
-                </div>
-            </div>
-
-        </form>
-    </div>
+    {% include 'suppliers/partials/edit-form.html' %}
 
     <!-- Hidden form for saving -->
-    <div id="saveForm" style="display: none">
-        <div class="title-container">
-            <h2 class="suppliers-title">Create Supplier</h2>
-        </div>
-        <form id="supplierCreateForm">
-            Name: <input type="text" id="supplierName" name="name"><br>
-            Contact Name: <input type="text" id="supplierContactName" name="contact_name"><br>
-            Phone number: <input type="text" id="supplierPhoneNumber" name="phone_number"><br>
-            Eimal: <input type="text" id="supplierEmail" name="email"><br>
+    {% include 'suppliers/partials/save-form.html' %}
 
-            <div class="button-container form-style">
-                <div class="control-buttons"></div>
-                <div class="action-buttons">
-                    <button class="reset-button-style button btn-create" type="submit">Create</button>
-                    <button class="reset-button-style button btn-cancel" type="button" onclick="hideForm()">Cancel
-                    </button>
-                </div>
-            </div>
-        </form>
-
-    </div>
+    <!-- Hidden form for deleting -->
+    {% include 'suppliers/partials/delete-form.html' %}
 
     <div class="title-container">
         <h3>Suppliers</h3>
     </div>
+    
+    <!-- define the URLs as data attributes -->
+    <div data-create-supplier-url="{% url 'create-supplier' %}" data-edit-supplier-url="{% url 'edit-supplier' pk=0 %}" data-delete-supplier-url="{% url 'delete-supplier' pk=0 %}" hidden id="supplierUrls"></div>
 
-    <div id="data-container"></div>
+    <!-- Handsontable container-->
+    <div id="data-container" data-suppliers='{{ suppliers_json|safe }}'></div>
 
     <!-- Handsontable JS Script-->
     <script src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const suppliersData = JSON.parse('{{ suppliers_json|safe }}');
-
-            const data = suppliersData.map(function (item) {
-                return [
-                    item.name,
-                    item.contact_name,
-                    item.phone_number,
-                    item.email,
-                ];
-            });
-
-            const container = document.getElementById('data-container');
-            const button = document.querySelector('#export-file');
-            {# button for downloading #}
-            const hot = new Handsontable(container, {
-                data: data,
-                columns: [
-                    {data: 0, renderer: "html"},  // Ensure the first column renders HTML for the link
-                    {},
-                    {},
-                    {},
-
-                ],
-
-                <!-- Start General settings -->
-                width: '100%', {# size of the table #}
-                {#customBorders: true,#}
-                stretchH: 'all', {# stretch horizontally table #}
-                <!-- End General settings -->
-
-                <!-- Start Columns settings -->
-                columnSorting: true,
-
-                colHeaders: ['Name', 'Contact name', 'Phone number', 'Email'],
-                {# Make first column link to edit #}
-                afterRenderer: function (TD, row, col, prop, value, cellProperties) {
-                    if (col === 0) {
-                        TD.innerHTML = `<span onclick="showEditForm(
-                            ${suppliersData[row].id},
-                             '${suppliersData[row].name}',
-                              '${suppliersData[row].contact_name}',
-                               '${suppliersData[row].phone_number}',
-                                '${suppliersData[row].email}'
-                                )">${value}</span>`;
-                    }
-                },
-                <!-- End Columns settings -->
-
-                <!-- Start Rows settings -->
-                rowHeaders: false,
-                <!-- End Rows settings -->
-
-                <!-- Start Filters settings -->
-                filters: true,
-                {# dropdownMenu: true, #}
-                dropdownMenu: ['filter_by_value', 'filter_action_bar'],
-                {# Disable cell selection #}
-                disableVisualSelection: true,
-                <!-- End Filters settings -->
-
-                <!-- Start Other settings -->
-                readOnly: true,
-                licenseKey: 'non-commercial-and-evaluation',
-                <!-- End Other settings -->
-            });
-
-            {# Download data to CSV  #}
-            const exportPlugin = hot.getPlugin('exportFile');
-
-            button.addEventListener('click', () => {
-                exportPlugin.downloadFile('csv', {
-                    bom: false,
-                    columnDelimiter: ',',
-                    columnHeaders: true,
-                    exportHiddenColumns: true,
-                    exportHiddenRows: true,
-                    fileExtension: 'csv',
-                    filename: 'suppliers_[YYYY]-[MM]-[DD]',
-                    mimeType: 'text/csv',
-                    rowDelimiter: '\r\n',
-                    rowHeaders: false,
-                });
-            });
-
-        });
-    </script>
-
-    <script>
-        function showCreateForm() {
-            // Show the form and the backdrop
-            document.getElementById('saveForm').style.display = 'block';
-            document.querySelector('.backdrop').style.display = 'block';
-        }
-
-        function showEditForm(supplierId, supplierName, supplierContactName, supplierPhoneNumber, supplierEmail) {
-            // Populate the form fields
-            document.getElementById('supplierId').value = supplierId;
-            document.getElementById('supplierName').value = supplierName;
-            document.getElementById('supplierContactName').value = supplierContactName;
-            document.getElementById('supplierPhoneNumber').value = supplierPhoneNumber;
-            document.getElementById('supplierEmail').value = supplierEmail;
-
-            // Show the form and the backdrop
-            document.getElementById('editForm').style.display = 'block';
-            document.querySelector('.backdrop').style.display = 'block';
-        }
-
-        function hideForm() {
-            // Hide the form and the backdrop
-            document.getElementById('editForm').style.display = 'none';
-            document.getElementById('saveForm').style.display = 'none';
-            document.querySelector('.backdrop').style.display = 'none';
-        }
-
+    <script src="{% static 'js/supplier-handsontable.js' %}"></script>
+   
+    <!-- CRUD script -->
+    <script src="{% static 'js/supplier-crud.js' %}"></script>
+    {#    function showCreateForm() {#}
+    {#    // Show the form and the backdrop#}
+    {#    document.getElementById('saveForm').style.display = 'block';#}
+    {#    document.querySelector('.backdrop').style.display = 'block';#}
+    {# }#}
+    {##}
+    {#    function showEditForm(supplierId, supplierName, supplierContactName, supplierPhoneNumber, supplierEmail) {#}
+    {#    // Populate the form fields#}
+    {#    document.getElementById('supplierId').value = supplierId;#}
+    {#    document.getElementById('supplierName').value = supplierName;#}
+    {#    document.getElementById('supplierContactName').value = supplierContactName;#}
+    {#    document.getElementById('supplierPhoneNumber').value = supplierPhoneNumber;#}
+    {#    document.getElementById('supplierEmail').value = supplierEmail;#}
+    {##}
+    {#    // Show the form and the backdrop#}
+    {#    document.getElementById('editForm').style.display = 'block';#}
+    {#    document.querySelector('.backdrop').style.display = 'block';#}
+    {# }#}
+    {##}
+    {#    function showDeleteForm(supplierId, supplierName) {#}
+    {#    document.getElementById('deleteSupplierId').value = supplierId;#}
+    {#    document.getElementById('deleteSupplierName').innerText = supplierName;#}
+    {##}
+    {#    // Show the form and the backdrop#}
+    {#    document.getElementById('deleteForm').style.display = 'block';#}
+    {#    document.querySelector('.backdrop').style.display = 'block'#}
+    {##}
+    {#    // Hide the edit form if it's shown#}
+    {#    document.getElementById('editForm').style.display = 'none'#}
+    {# }#}
+    {##}
+    {#    function hideForm() {#}
+    {#    // Hide the form and the backdrop#}
+    {#    document.getElementById('editForm').style.display = 'none';#}
+    {#    document.getElementById('saveForm').style.display = 'none';#}
+    {#    document.getElementById('deleteForm').style.display = 'none';#}
+    {#    document.querySelector('.backdrop').style.display = 'none';#}
+    {# }#}
+    {##}
+    {#    function hideDeleteForm() {#}
+    {#    // Hide the delete form and backdrop#}
+    {#    document.getElementById('deleteForm').style.display = 'none';#}
+    {#    document.querySelector('.backdrop').style.display = 'none';#}
+    {# }#}
+    {##}
+    {#    function confirmDelete() {#}
+    {#    // Get the supplier ID#}
+    {#    const supplierId = document.getElementById('deleteSupplierId').value;#}
+    {##}
+    {#    const csrftoken = '{{ csrf_token }}';#}
+    {##}
+    {#    fetch(`{% url 'delete-supplier' pk=0 %}`.replace('0', supplierId), {#}
+    {#    method: 'DELETE',#}
+    {#    headers: {#}
+    {#    'X-CSRFToken': csrftoken,#}
+    {# },#}
+    {# })#}
+    {#    .then(response => {#}
+    {#    if (!response.ok) {#}
+    {#    throw new Error('Network response was not ok');#}
+    {# }#}
+    {#    hideDeleteForm();#}
+    {#    window.location.reload();#}
+    {# })#}
+    {#    .catch(error => {#}
+    {#    console.error('Error:', error);#}
+    {# });#}
+    {##}
+    {# }#}
+    {##}
         {# Save #}
-        document.addEventListener("DOMContentLoaded", function () {
-            document.getElementById("supplierCreateForm").addEventListener("submit", function (e) {
-                e.preventDefault(); // Prevent the default form submission
-
-                const formData = new FormData(this);
-                const data = Object.fromEntries(formData.entries());
-
-
-                const csrftoken = '{{ csrf_token }}';
-
-                fetch("{% url 'create-supplier' %}", {
-                    method: 'POST',
-                    body: JSON.stringify(data),
-                    headers: {
-                        'X-CSRFToken': csrftoken,
-                        'Content-Type': 'application/json',
-                    },
-                }).then(response => {
-                    if (response.ok) {
-                        hideForm(); // Use the hideEditForm function to close the form
-                        window.location.reload();
-                    } else {
-                        console.error('Failed to create supplier.');
-                    }
-                }).catch(error => console.error('Error:', error));
-            });
-
-        });
-
+    {#    document.addEventListener("DOMContentLoaded", function () {#}
+    {#    document.getElementById("supplierCreateForm").addEventListener("submit", function (e) {#}
+    {#        e.preventDefault(); // Prevent the default form submission#}
+    {##}
+    {#        const formData = new FormData(this);#}
+    {#        const data = Object.fromEntries(formData.entries());#}
+    {##}
+    {##}
+    {#        const csrftoken = '{{ csrf_token }}';#}
+    {##}
+    {#        fetch("{% url 'create-supplier' %}", {#}
+    {#            method: 'POST',#}
+    {#            body: JSON.stringify(data),#}
+    {#            headers: {#}
+    {#                'X-CSRFToken': csrftoken,#}
+    {#                'Content-Type': 'application/json',#}
+    {#            },#}
+    {#        }).then(response => {#}
+    {#            if (response.ok) {#}
+    {#                hideForm(); // Use the hideEditForm function to close the form#}
+    {#                window.location.reload();#}
+    {#            } else {#}
+    {#                console.error('Failed to create supplier.');#}
+    {#            }#}
+    {#        }).catch(error => console.error('Error:', error));#}
+    {#    });#}
+    {##}
+    {# });#}
+    {##}
         {# Edit #}
-        document.addEventListener("DOMContentLoaded", function () {
-            document.getElementById("supplierEditForm").addEventListener("submit", function (e) {
-                e.preventDefault(); // Prevent the default form submission
+    {#    document.addEventListener("DOMContentLoaded", function () {#}
+    {#    document.getElementById("supplierEditForm").addEventListener("submit", function (e) {#}
+    {#        e.preventDefault(); // Prevent the default form submission#}
+    {##}
+    {#        const supplierId = document.getElementById('supplierId').value;#}
+    {#        const supplierName = document.getElementById('supplierName').value;#}
+    {#        const supplierContactName = document.getElementById('supplierContactName').value;#}
+    {#        const supplierPhoneNumber = document.getElementById('supplierPhoneNumber').value;#}
+    {#        const supplierEmail = document.getElementById('supplierEmail').value;#}
+    {##}
+    {##}
+    {#        const csrftoken = '{{ csrf_token }}';#}
+    {##}
+    {#        fetch("{% url 'edit-supplier' pk=0 %}".replace('0', supplierId), {#}
+    {#            method: 'PATCH',#}
+    {#            body: JSON.stringify({#}
+    {#                id: supplierId,#}
+    {#                name: supplierName,#}
+    {#                contact_name: supplierContactName,#}
+    {#                phone_number: supplierPhoneNumber,#}
+    {#                email: supplierEmail#}
+    {#            }),#}
+    {#            headers: {#}
+    {#                'X-CSRFToken': csrftoken,#}
+    {#                'Content-Type': 'application/json',#}
+    {#            },#}
+    {#        }).then(response => {#}
+    {#            if (response.ok) {#}
+    {#                hideForm();#}
+    {#                // Reload the page to reflect the updated data#}
+    {#                window.location.reload();#}
+    {#            }#}
+    {#        }).catch(error => console.error('Error:', error));#}
+    {#    });#}
+    {##}
+    {# });#}
 
-                const supplierId = document.getElementById('supplierId').value;
-                const supplierName = document.getElementById('supplierName').value;
-                const supplierContactName = document.getElementById('supplierContactName').value;
-                const supplierPhoneNumber = document.getElementById('supplierPhoneNumber').value;
-                const supplierEmail = document.getElementById('supplierEmail').value;
-
-
-                const csrftoken = '{{ csrf_token }}';
-
-                fetch("{% url 'edit-supplier' pk=0 %}".replace('0', supplierId), {
-                    method: 'PATCH',
-                    body: JSON.stringify({
-                        id: supplierId,
-                        name: supplierName,
-                        contact_name: supplierContactName,
-                        phone_number: supplierPhoneNumber,
-                        email: supplierEmail
-                    }),
-                    headers: {
-                        'X-CSRFToken': csrftoken,
-                        'Content-Type': 'application/json',
-                    },
-                }).then(response => {
-                    if (response.ok) {
-                        hideForm();
-                        // Reload the page to reflect the updated data
-                        window.location.reload();
-                    }
-                }).catch(error => console.error('Error:', error));
-            });
-
-        });
-    </script>
 
     <div class="button-container">
         <div class="controls">

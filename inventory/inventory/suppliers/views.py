@@ -5,16 +5,15 @@ from rest_framework.permissions import IsAuthenticated
 
 from .serializers import SupplierSerializer
 
-from django.urls import reverse_lazy
 from django.views import generic as views
 
-from inventory.suppliers.forms import DeviceSupplierForm
 from inventory.suppliers.models import Supplier
 
 
 class SupplierListView(views.ListView):
     model = Supplier
     template_name = 'suppliers/suppliers-list.html'
+    permission_classes = [IsAuthenticated]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -44,26 +43,13 @@ class SupplierUpdateApiView(api_views.UpdateAPIView):
 class SupplierCreateApiView(api_views.CreateAPIView):
     queryset = Supplier.objects.all()
     serializer_class = SupplierSerializer
+    # TODO: Check which other permissions classes I need
     permission_classes = [IsAuthenticated]  # Optional: If you require authentication
 
 
-# class SupplierCreateView(views.CreateView):
-#     form_class = CreateSupplierForm
-#     template_name = 'suppliers/create-supplier.html'
-#
-#     success_url = reverse_lazy('supplier-list')
-
-
-class SupplierDeleteView(views.DeleteView):
+class SupplierDeleteApiView(api_views.DestroyAPIView):
     queryset = Supplier.objects.all()
-    form_class = DeviceSupplierForm
-    template_name = 'suppliers/delete-supplier.html'
+    serializer_class = SupplierSerializer
+    # TODO: Check which other permissions classes I need
+    permission_classes = [IsAuthenticated]
 
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs['instance'] = self.object
-
-        return kwargs
-
-    def get_success_url(self):
-        return reverse_lazy('supplier-list')

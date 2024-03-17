@@ -1,0 +1,28 @@
+<div id="editForm" style="display:none;">
+    <div class="title-container">
+        <h2 class="suppliers-title">Edit Supplier</h2>
+    </div>
+    <form id="supplierEditForm">
+        <input type="hidden" id="supplierId" name="supplierId">
+        Name: <input type="text" id="supplierName" name="name"><br>
+        Contact Name: <input type="text" id="supplierContactName" name="contact_name"><br>
+        Phone number: <input type="text" id="supplierPhoneNumber" name="phone_number"><br>
+        Eimal: <input type="text" id="supplierEmail" name="email"><br>
+        <div class="button-container form-style">
+            <div class="control-buttons"></div>
+            <div class="action-buttons">
+                <button class="reset-button-style button btn-create" type="submit">Save</button>
+                <button class="reset-button-style button btn-delete" type="button"
+                        onclick="showDeleteForm(
+                            document.getElementById('supplierId').value,
+                             document.getElementById('supplierName').value
+                             )">
+                    Delete
+                </button>
+                <button class="reset-button-style button btn-cancel" type="button" onclick="hideForm()">Cancel
+                </button>
+            </div>
+        </div>
+
+    </form>
+</div>
