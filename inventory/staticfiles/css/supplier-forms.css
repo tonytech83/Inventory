@@ -13,7 +13,8 @@
 /* Edit and Save form styles */
 #editForm,
 #createForm,
-#deleteForm {
+#deleteForm,
+#uploadCSVForm {
     width: 80%;
     height: 50%;
 
@@ -21,7 +22,7 @@
     top: 50%; /* Center vertically */
     left: 50%; /* Center horizontally */
     transform: translate(-50%, -50%); /* Adjust the centering */
-    z-index: 11; /* Above the backdrop */
+    z-index: 1000; /* Above the backdrop */
     background-color: darkgrey; /* Ensure the form is visible against the backdrop */
     padding: 20px; /* Add some padding */
     /*border-radius: 5px; !* Optional: Adds rounded corners *!*/

@@ -1,7 +1,7 @@
 from django.urls import path
 
 from inventory.business.views import BusinessView, EditBusinessView, CreateBusinessApiView
-from inventory.devices.views import DeviceCreateView, CSVUploadView
+from inventory.devices.views import DeviceCreateView, CSVUploadApiView
 
 urlpatterns = (
     path('<int:pk>/', BusinessView.as_view(), name='business'),
@@ -9,5 +9,5 @@ urlpatterns = (
     path('edit/<int:pk>/', EditBusinessView.as_view(), name='edit-business'),
 
     path('<int:business_id>/device/create/', DeviceCreateView.as_view(), name='create-device'),
-    path('<int:business_id>/upload-csv/', CSVUploadView.as_view(), name='upload-csv'),
+    path('<int:business_id>/upload-csv/', CSVUploadApiView.as_view(), name='upload-csv'),
 )

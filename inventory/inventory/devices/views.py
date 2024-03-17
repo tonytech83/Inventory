@@ -8,14 +8,17 @@ from django.db import transaction
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import generic as views
-from django.views.generic.edit import FormView
-from django.contrib import messages
+
+from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework import status
 
 from inventory.business.models import Business
-from inventory.devices.forms import DeviceCreateForm, RiskForm, SupportForm, DeviceEditForm, DeviceDeleteForm, \
-    CSVUploadForm
+from inventory.devices.forms import DeviceCreateForm, RiskForm, SupportForm, DeviceEditForm, DeviceDeleteForm
+
 from inventory.devices.models import Device, Support, Risk
-from inventory.suppliers.models import Supplier
+from inventory.devices.serializers import CSVUploadSerializer
 
 
 class DeviceCreateView(views.CreateView):
@@ -132,74 +135,141 @@ class DeviceDeleteView(views.DeleteView):
         return reverse_lazy('business', kwargs={'pk': self.object.business_id})
 
 
-class CSVUploadView(FormView):
-    template_name = 'business/upload-devices.html'
-    form_class = CSVUploadForm
+# class CSVUploadView(FormView):
+#     template_name = 'business/upload-devices.html'
+#     form_class = CSVUploadForm
+#
+#     def get_success_url(self):
+#         # Redirect to the business page
+#         return reverse_lazy('business', kwargs={'pk': self.kwargs.get('business_id')})
+#
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['business_id'] = self.kwargs.get('business_id')
+#
+#         return context
+#
+#     def form_valid(self, form):
+#         # Handle the uploaded file
+#         uploaded_file = form.cleaned_data['csv_file']
+#         wb = openpyxl.load_workbook(uploaded_file)
+#         sheet = wb.active
+#         business_id = self.kwargs.get('business_id')
+#         business = get_object_or_404(Business, pk=business_id)
+#
+#         for row in sheet.iter_rows(min_row=3):  # Skip the first two header rows
+#             try:
+#                 # Create a new Support object for every device
+#                 support = Support.objects.create(
+#                     support_model=row[14].value if row[14].value else "Default Support Model",
+#                     purchase_order_number=row[15].value,
+#                     invoice_img=row[16].value or 'Not set',
+#                     # TODO: Fix this dates
+#                     sos=row[17].value or '2024-03-10',
+#                     eos=row[18].value or '2024-03-10',
+#                     eol=row[19].value or '2024-03-10',
+#                 )
+#
+#                 # Create a new Risk object for every device
+#                 risk = Risk.objects.create(
+#                     business_processes_at_risk=row[20].value if row[20].value else "Default Risk",
+#                     impact=row[21].value or 1,
+#                     likelihood=row[22].value or 1,
+#                 )
+#
+#                 Device.objects.create(
+#                     device_name=row[0].value,
+#                     domain=row[1].value,
+#                     description=row[2].value,
+#                     status=row[3].value,
+#                     category=row[4].value,
+#                     sub_category=row[5].value,
+#                     manufacturer=row[6].value,
+#                     model=row[7].value,
+#                     ip_address=row[8].value,
+#                     ip_address_sec=row[9].value,
+#                     serial_number=row[10].value,
+#                     operating_system=row[11].value,
+#                     building=row[12].value,
+#                     owner_name=row[13].value,
+#                     support=support,
+#                     risk=risk,
+#                     business=business,
+#                     # supplier=Supplier.objects.all().first(),
+#                 )
+#             except Exception as e:
+#                 print(e)
+#                 continue
+#
+#         messages.success(self.request, "Devices imported successfully.")
+#         return super().form_valid(form)
 
-    def get_success_url(self):
-        # Redirect to the business page
-        return reverse_lazy('business', kwargs={'pk': self.kwargs.get('business_id')})
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['business_id'] = self.kwargs.get('business_id')
+class CSVUploadApiView(APIView):
+    parser_classes = [MultiPartParser, FormParser]
 
-        return context
+    def post(self, request, business_id, *args, **kwargs):
+        serializer = CSVUploadSerializer(data=request.data)
 
-    def form_valid(self, form):
-        # Handle the uploaded file
-        uploaded_file = form.cleaned_data['csv_file']
-        wb = openpyxl.load_workbook(uploaded_file)
-        sheet = wb.active
-        business_id = self.kwargs.get('business_id')
-        business = get_object_or_404(Business, pk=business_id)
+        if serializer.is_valid():
+            uploaded_file = serializer.validated_data['csv_file']
+            wb = openpyxl.load_workbook(uploaded_file)
+            sheet = wb.active
+            business = get_object_or_404(Business, pk=business_id)
 
-        for row in sheet.iter_rows(min_row=3):  # Skip the first two header rows
-            try:
-                # Create a new Support object for every device
-                support = Support.objects.create(
-                    support_model=row[14].value if row[14].value else "Default Support Model",
-                    purchase_order_number=row[15].value,
-                    invoice_img=row[16].value or 'Not set',
-                    # TODO: Fix this dates
-                    sos=row[17].value or '2024-03-10',
-                    eos=row[18].value or '2024-03-10',
-                    eol=row[19].value or '2024-03-10',
-                )
+            results = []
 
-                # Create a new Risk object for every device
-                risk = Risk.objects.create(
-                    business_processes_at_risk=row[20].value if row[20].value else "Default Risk",
-                    impact=row[21].value or 1,
-                    likelihood=row[22].value or 1,
-                )
+            for row in sheet.iter_rows(min_row=3):  # Skip the first two header rows
+                try:
+                    # Create a new Support object for every device
+                    support = Support.objects.create(
+                        support_model=row[14].value if row[14].value else "Default Support Model",
+                        purchase_order_number=row[15].value,
+                        invoice_img=row[16].value or 'Not set',
+                        # TODO: Fix this dates
+                        sos=row[17].value or '2024-03-10',
+                        eos=row[18].value or '2024-03-10',
+                        eol=row[19].value or '2024-03-10',
+                    )
 
-                Device.objects.create(
-                    device_name=row[0].value,
-                    domain=row[1].value,
-                    description=row[2].value,
-                    status=row[3].value,
-                    category=row[4].value,
-                    sub_category=row[5].value,
-                    manufacturer=row[6].value,
-                    model=row[7].value,
-                    ip_address=row[8].value,
-                    ip_address_sec=row[9].value,
-                    serial_number=row[10].value,
-                    operating_system=row[11].value,
-                    building=row[12].value,
-                    owner_name=row[13].value,
-                    support=support,
-                    risk=risk,
-                    business=business,
-                    # supplier=Supplier.objects.all().first(),
-                )
-            except Exception as e:
-                print(e)
-                continue
+                    # Create a new Risk object for every device
+                    risk = Risk.objects.create(
+                        business_processes_at_risk=row[20].value if row[20].value else "Default Risk",
+                        impact=row[21].value or 1,
+                        likelihood=row[22].value or 1,
+                    )
 
-        messages.success(self.request, "Devices imported successfully.")
-        return super().form_valid(form)
+                    Device.objects.create(
+                        device_name=row[0].value,
+                        domain=row[1].value,
+                        description=row[2].value,
+                        status=row[3].value,
+                        category=row[4].value,
+                        sub_category=row[5].value,
+                        manufacturer=row[6].value,
+                        model=row[7].value,
+                        ip_address=row[8].value,
+                        ip_address_sec=row[9].value,
+                        serial_number=row[10].value,
+                        operating_system=row[11].value,
+                        building=row[12].value,
+                        owner_name=row[13].value,
+                        support=support,
+                        risk=risk,
+                        business=business,
+                    )
+                    results.append({'device_name': row[0].value, 'status': 'success'})
+                except Exception as e:
+                    results.append({'device_name': row[0].value, 'status': 'error', 'error': str(e)})
+                    continue
+            return Response(
+                {'message': 'Devices imported successfully.',
+                 'results': results},
+                status=status.HTTP_200_OK
+            )
+            # return Response({'message': 'Devices imported successfully.'}, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 def download_template(request):

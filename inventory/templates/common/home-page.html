@@ -7,7 +7,9 @@
     <div class="backdrop" style="display:none;" onclick="hideForm()"></div>
 
     <!-- Hidden form for creating -->
-    {% include 'business/partials/create-form.html' %}
+    <div id="businessFormContainer" data-create-url="{% url 'create-business' %}">
+        {% include 'business/partials/create-form.html' %}
+    </div>
 
     <div class="box">
         <p>Total business: {{ object_list.count }}</p>

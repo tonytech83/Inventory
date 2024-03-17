@@ -1,6 +1,13 @@
 {% extends 'base/base.html' %}
+{% load static %}
 
 {% block main_content %}
+
+    <!-- Forms container-->
+    <div class="backdrop" style="display:none;" onclick="hideForm()"></div>
+
+    <!-- Hidden form for uploading -->
+    {% include 'devices/partials/upload-form.html' with business_id=object.pk %}
 
     <!-- Start Stats -->
     {% include 'business/partials/stats.html' %}
@@ -15,8 +22,6 @@
 
             const data = devicesData.map(function (item) {
                 return [
-
-                    item.is_reviewed,
                     '<a href="' + item.edit_url + '"><i class="fa-solid fa-pen-to-square"></a>',
                     {#{edit_url: item.edit_url, device_name: item.device_name},#}
                     item.device_name,
@@ -28,7 +33,6 @@
                     item.serial_number,
                     item.owner_name,
                     item.supplier_name,
-                    item.eos,
                 ];
             });
 
@@ -39,7 +43,6 @@
                 data: data,
                 {#minCols: 10,#}
                 columns: [
-                    {type: 'checkbox'},
                     {renderer: "html"},  // Ensure the first column renders HTML for the link
                     {type: 'text'},
                     {type: 'text'},
@@ -50,7 +53,6 @@
                     {type: 'text'},
                     {type: 'text'},
                     {type: 'text'},
-                    {type: 'text'}
                 ],
 
                 <!-- Start General settings -->
@@ -75,8 +77,7 @@
                         button.parentElement.removeChild(button);
                     }
                 },
-                colHeaders: ['', ' ', 'Hostname', 'Status', 'Manufacturer', 'Model', 'Category', 'Sub-category', 'Serial number', 'Owner', 'Supplier', 'EOS'],
-                colWidths: [6, 6], {# size of first cell #}
+                colHeaders: ['', 'Hostname', 'Status', 'Manufacturer', 'Model', 'Category', 'Sub-category', 'Serial number', 'Owner', 'Supplier', 'EOS'],
                 <!-- End Columns settings -->
 
                 <!-- Start Rows settings -->
@@ -139,13 +140,13 @@
     </script>
 
     {% if request.user.pk == object.owner_id %}
-        <div class="button-container" >
+        <div class="button-container">
             <div class="control-buttons">
                 <button class="reset-button-style button btn-download" id="export-file">Download CSV</button>
             </div>
             <div class="action-buttons">
                 <a class="button btn-create" href="{% url 'create-device' business_id=business.pk %}">Create device</a>
-                <a class="button btn-download" href="{% url 'upload-csv' business_id=object.pk %}">Import devices</a>
+                <button class="button btn-download" onclick="showUploadForm({{ object.pk }})">Import devices</button>
                 <a class="button btn-edit" href="{% url 'edit-business' pk=object.pk %}">Edit Business</a>
             </div>
         </div>
@@ -153,5 +154,7 @@
         <p></p>
     {% endif %}
 
+    <!-- Upload CSV scripts -->
+    <script src="{% static 'js/device-upload.js' %}"></script>
 
 {% endblock %}

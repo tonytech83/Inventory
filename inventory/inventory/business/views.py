@@ -3,16 +3,13 @@ from datetime import timedelta
 
 from rest_framework import generics as api_views
 
-from django.db.models import Case, When, Value, IntegerField, ExpressionWrapper, F
-from django.db.models.functions import Now
-from django.forms import DurationField, BooleanField
 from django.utils.timezone import now
 
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse
 from django.views import generic as views
 from rest_framework.permissions import IsAuthenticated
 
-from inventory.business.forms import CreateBusinessForm, EditBusinessForm
+from inventory.business.forms import EditBusinessForm
 from inventory.business.models import Business
 from inventory.business.serializers import BusinessSerializer
 
@@ -46,7 +43,6 @@ class BusinessView(views.DetailView):
 
         for device in device_queryset:
             device_dict = {
-                'is_reviewed': device.is_reviewed,
                 'edit_url': reverse('edit-device', kwargs={'pk': device.pk}),  # Generate edit URL
                 'device_name': device.device_name,
                 'status': device.status,
@@ -57,7 +53,6 @@ class BusinessView(views.DetailView):
                 'serial_number': device.serial_number,
                 'owner_name': device.owner_name,
                 'supplier_name': device.supplier_display,
-                'eos': str(device.support.eos),
             }
             device_list.append(device_dict)
 
@@ -67,17 +62,6 @@ class BusinessView(views.DetailView):
         return context
 
 
-# class CreateBusinessView(views.CreateView):
-#     queryset = Business.objects.all()
-#     template_name = 'business/create-business.html'
-#     form_class = CreateBusinessForm
-#
-#     success_url = reverse_lazy('home-page')
-#
-#     def form_valid(self, form):
-#         form.instance.owner = self.request.user
-#         return super().form_valid(form)
-
 class CreateBusinessApiView(api_views.CreateAPIView):
     queryset = Business.objects.all()
     serializer_class = BusinessSerializer
@@ -85,8 +69,6 @@ class CreateBusinessApiView(api_views.CreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
-
-
 
 
 class EditBusinessView(views.UpdateView):

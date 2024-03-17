@@ -1,0 +1,15 @@
+<form id="uploadCSVForm" enctype="multipart/form-data" data-business-id="{{ business_id }}">
+    <input type="file" name="csv_file" accept=".csv">
+    <div id="importResults" style="display:none;">
+        <h3>Import Results</h3>
+        <ul id="importResultsList"></ul>
+    </div>
+    <div class="button-container">
+        <div class="control-buttons"></div>
+        <div class="action-buttons">
+            <button class="reset-button-style button btn-create" type="submit">Upload</button>
+            <button class="reset-button-style button btn-cancel" type="button" onclick="hideUploadForm()">Cancel
+            </button>
+        </div>
+    </div>
+</form>
