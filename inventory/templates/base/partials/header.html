@@ -14,26 +14,30 @@
                 {% if request.user.is_authenticated %}
                     <li class="nav-item">
                         <!-- Link to Home Page -->
-                        <a href="{% url 'home-page' %}">Home </a>
+                        <a href="{% url 'home-page' %}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <div class="dropdown" data-bs-theme="dark">
-                            <a
-                                    class="dropdown-toggle"
-                                    href="#"
-                                    role="button"
-                                    id="dropdownMenuLink"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false"
-
-                            >Suppliers</a>
-
-                            <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="dropdownMenuLink">
-                                <li><a class="dropdown-item" href="{% url 'supplier-list' %}">List</a></li>
-                                <li><a class="dropdown-item" href="{% url 'create-supplier' %}">Add Supplier</a></li>
-                            </ul>
-                        </div>
+                        <!-- Link to Home Page -->
+                        <a href="{% url 'supplier-list' %}">Suppliers</a>
                     </li>
+                    {#                    <li class="nav-item">#}
+                    {#                        <div class="dropdown" data-bs-theme="dark">#}
+                    {#                            <a#}
+                    {#                                    class="dropdown-toggle"#}
+                    {#                                    href="#"#}
+                    {#                                    role="button"#}
+                    {#                                    id="dropdownMenuLink"#}
+                    {#                                    data-bs-toggle="dropdown"#}
+                    {#                                    aria-expanded="false"#}
+                    {##}
+                    {#                            >Suppliers</a>#}
+                    {##}
+                    {#                            <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="dropdownMenuLink">#}
+                    {#                                <li><a class="dropdown-item" href="{% url 'supplier-list' %}">List</a></li>#}
+                    {#                                <li><a class="dropdown-item" href="{% url 'create-supplier' %}">Add Supplier</a></li>#}
+                    {#                            </ul>#}
+                    {#                        </div>#}
+                    {#                    </li>#}
                     <li class="nav-item">
                         <div class="dropdown" data-bs-theme="dark">
                             <a

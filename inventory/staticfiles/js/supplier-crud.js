@@ -22,7 +22,7 @@ function getCookie(name) {
 
 function showCreateForm() {
     // Show the form and the backdrop
-    document.getElementById('saveForm').style.display = 'block';
+    document.getElementById('createForm').style.display = 'block';
     document.querySelector('.backdrop').style.display = 'block';
 }
 
@@ -54,7 +54,7 @@ function showDeleteForm(supplierId, supplierName) {
 function hideForm() {
     // Hide the form and the backdrop
     document.getElementById('editForm').style.display = 'none';
-    document.getElementById('saveForm').style.display = 'none';
+    document.getElementById('createForm').style.display = 'none';
     document.getElementById('deleteForm').style.display = 'none';
     document.querySelector('.backdrop').style.display = 'none';
 }

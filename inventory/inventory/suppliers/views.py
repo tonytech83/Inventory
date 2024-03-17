@@ -13,7 +13,6 @@ from inventory.suppliers.models import Supplier
 class SupplierListView(views.ListView):
     model = Supplier
     template_name = 'suppliers/suppliers-list.html'
-    permission_classes = [IsAuthenticated]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -52,4 +51,3 @@ class SupplierDeleteApiView(api_views.DestroyAPIView):
     serializer_class = SupplierSerializer
     # TODO: Check which other permissions classes I need
     permission_classes = [IsAuthenticated]
-

@@ -13,12 +13,6 @@
 
 }
 
-#catalogue {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 20px;
-}
 
 .business-card {
     position: relative;
@@ -35,6 +29,10 @@
     background: var(--background-color);
     color: var(--text-color);
     cursor: pointer;
+}
+
+.create-business {
+    background: green;
 }
 
 .business-card:hover {
@@ -58,20 +56,10 @@
     margin: 0;
 }
 
-.business-ownership {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-}
-
 .hidden {
     position: absolute;
     bottom: 20px;
     right: 20px;
-}
-
-.green {
-    color: green;
 }
 
 .red {

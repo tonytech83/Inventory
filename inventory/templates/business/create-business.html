@@ -7,8 +7,13 @@
 
         {% csrf_token %}
 
-        <button class="reset-button-style button">Create</button>
-        <a class="button" href="{% url 'home-page' %}">Cancel</a>
+        <div class="button-container">
+            <div class="control-buttons"></div>
+            <div class="action-buttons">
+                <button class="reset-button-style button btn-create">Create</button>
+                <a class="button btn-cancel" href="{% url 'home-page' %}">Cancel</a>
+            </div>
+        </div>
     </form>
 
 {% endblock %}

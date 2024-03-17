@@ -1,0 +1,11 @@
+#catalogue {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.owned {
+    display: flex;
+    gap: 20px;
+}

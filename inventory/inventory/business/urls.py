@@ -1,11 +1,11 @@
 from django.urls import path
 
-from inventory.business.views import CreateBusinessView, BusinessView, EditBusinessView
+from inventory.business.views import BusinessView, EditBusinessView, CreateBusinessApiView
 from inventory.devices.views import DeviceCreateView, CSVUploadView
 
 urlpatterns = (
     path('<int:pk>/', BusinessView.as_view(), name='business'),
-    path('create/', CreateBusinessView.as_view(), name='create-business'),
+    path('create/', CreateBusinessApiView.as_view(), name='create-business'),
     path('edit/<int:pk>/', EditBusinessView.as_view(), name='edit-business'),
 
     path('<int:business_id>/device/create/', DeviceCreateView.as_view(), name='create-device'),

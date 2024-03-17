@@ -9,8 +9,8 @@
     <!-- Hidden form for editing -->
     {% include 'suppliers/partials/edit-form.html' %}
 
-    <!-- Hidden form for saving -->
-    {% include 'suppliers/partials/save-form.html' %}
+    <!-- Hidden form for creating -->
+    {% include 'suppliers/partials/create-form.html' %}
 
     <!-- Hidden form for deleting -->
     {% include 'suppliers/partials/delete-form.html' %}
@@ -18,9 +18,12 @@
     <div class="title-container">
         <h3>Suppliers</h3>
     </div>
-    
+
     <!-- define the URLs as data attributes -->
-    <div data-create-supplier-url="{% url 'create-supplier' %}" data-edit-supplier-url="{% url 'edit-supplier' pk=0 %}" data-delete-supplier-url="{% url 'delete-supplier' pk=0 %}" hidden id="supplierUrls"></div>
+    <div data-create-supplier-url="{% url 'create-supplier' %}"
+         data-edit-supplier-url="{% url 'edit-supplier' pk=0 %}"
+         data-delete-supplier-url="{% url 'delete-supplier' pk=0 %}"
+         hidden id="supplierUrls"></div>
 
     <!-- Handsontable container-->
     <div id="data-container" data-suppliers='{{ suppliers_json|safe }}'></div>
@@ -28,147 +31,9 @@
     <!-- Handsontable JS Script-->
     <script src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>
     <script src="{% static 'js/supplier-handsontable.js' %}"></script>
-   
-    <!-- CRUD script -->
-    <script src="{% static 'js/supplier-crud.js' %}"></script>
-    {#    function showCreateForm() {#}
-    {#    // Show the form and the backdrop#}
-    {#    document.getElementById('saveForm').style.display = 'block';#}
-    {#    document.querySelector('.backdrop').style.display = 'block';#}
-    {# }#}
-    {##}
-    {#    function showEditForm(supplierId, supplierName, supplierContactName, supplierPhoneNumber, supplierEmail) {#}
-    {#    // Populate the form fields#}
-    {#    document.getElementById('supplierId').value = supplierId;#}
-    {#    document.getElementById('supplierName').value = supplierName;#}
-    {#    document.getElementById('supplierContactName').value = supplierContactName;#}
-    {#    document.getElementById('supplierPhoneNumber').value = supplierPhoneNumber;#}
-    {#    document.getElementById('supplierEmail').value = supplierEmail;#}
-    {##}
-    {#    // Show the form and the backdrop#}
-    {#    document.getElementById('editForm').style.display = 'block';#}
-    {#    document.querySelector('.backdrop').style.display = 'block';#}
-    {# }#}
-    {##}
-    {#    function showDeleteForm(supplierId, supplierName) {#}
-    {#    document.getElementById('deleteSupplierId').value = supplierId;#}
-    {#    document.getElementById('deleteSupplierName').innerText = supplierName;#}
-    {##}
-    {#    // Show the form and the backdrop#}
-    {#    document.getElementById('deleteForm').style.display = 'block';#}
-    {#    document.querySelector('.backdrop').style.display = 'block'#}
-    {##}
-    {#    // Hide the edit form if it's shown#}
-    {#    document.getElementById('editForm').style.display = 'none'#}
-    {# }#}
-    {##}
-    {#    function hideForm() {#}
-    {#    // Hide the form and the backdrop#}
-    {#    document.getElementById('editForm').style.display = 'none';#}
-    {#    document.getElementById('saveForm').style.display = 'none';#}
-    {#    document.getElementById('deleteForm').style.display = 'none';#}
-    {#    document.querySelector('.backdrop').style.display = 'none';#}
-    {# }#}
-    {##}
-    {#    function hideDeleteForm() {#}
-    {#    // Hide the delete form and backdrop#}
-    {#    document.getElementById('deleteForm').style.display = 'none';#}
-    {#    document.querySelector('.backdrop').style.display = 'none';#}
-    {# }#}
-    {##}
-    {#    function confirmDelete() {#}
-    {#    // Get the supplier ID#}
-    {#    const supplierId = document.getElementById('deleteSupplierId').value;#}
-    {##}
-    {#    const csrftoken = '{{ csrf_token }}';#}
-    {##}
-    {#    fetch(`{% url 'delete-supplier' pk=0 %}`.replace('0', supplierId), {#}
-    {#    method: 'DELETE',#}
-    {#    headers: {#}
-    {#    'X-CSRFToken': csrftoken,#}
-    {# },#}
-    {# })#}
-    {#    .then(response => {#}
-    {#    if (!response.ok) {#}
-    {#    throw new Error('Network response was not ok');#}
-    {# }#}
-    {#    hideDeleteForm();#}
-    {#    window.location.reload();#}
-    {# })#}
-    {#    .catch(error => {#}
-    {#    console.error('Error:', error);#}
-    {# });#}
-    {##}
-    {# }#}
-    {##}
-        {# Save #}
-    {#    document.addEventListener("DOMContentLoaded", function () {#}
-    {#    document.getElementById("supplierCreateForm").addEventListener("submit", function (e) {#}
-    {#        e.preventDefault(); // Prevent the default form submission#}
-    {##}
-    {#        const formData = new FormData(this);#}
-    {#        const data = Object.fromEntries(formData.entries());#}
-    {##}
-    {##}
-    {#        const csrftoken = '{{ csrf_token }}';#}
-    {##}
-    {#        fetch("{% url 'create-supplier' %}", {#}
-    {#            method: 'POST',#}
-    {#            body: JSON.stringify(data),#}
-    {#            headers: {#}
-    {#                'X-CSRFToken': csrftoken,#}
-    {#                'Content-Type': 'application/json',#}
-    {#            },#}
-    {#        }).then(response => {#}
-    {#            if (response.ok) {#}
-    {#                hideForm(); // Use the hideEditForm function to close the form#}
-    {#                window.location.reload();#}
-    {#            } else {#}
-    {#                console.error('Failed to create supplier.');#}
-    {#            }#}
-    {#        }).catch(error => console.error('Error:', error));#}
-    {#    });#}
-    {##}
-    {# });#}
-    {##}
-        {# Edit #}
-    {#    document.addEventListener("DOMContentLoaded", function () {#}
-    {#    document.getElementById("supplierEditForm").addEventListener("submit", function (e) {#}
-    {#        e.preventDefault(); // Prevent the default form submission#}
-    {##}
-    {#        const supplierId = document.getElementById('supplierId').value;#}
-    {#        const supplierName = document.getElementById('supplierName').value;#}
-    {#        const supplierContactName = document.getElementById('supplierContactName').value;#}
-    {#        const supplierPhoneNumber = document.getElementById('supplierPhoneNumber').value;#}
-    {#        const supplierEmail = document.getElementById('supplierEmail').value;#}
-    {##}
-    {##}
-    {#        const csrftoken = '{{ csrf_token }}';#}
-    {##}
-    {#        fetch("{% url 'edit-supplier' pk=0 %}".replace('0', supplierId), {#}
-    {#            method: 'PATCH',#}
-    {#            body: JSON.stringify({#}
-    {#                id: supplierId,#}
-    {#                name: supplierName,#}
-    {#                contact_name: supplierContactName,#}
-    {#                phone_number: supplierPhoneNumber,#}
-    {#                email: supplierEmail#}
-    {#            }),#}
-    {#            headers: {#}
-    {#                'X-CSRFToken': csrftoken,#}
-    {#                'Content-Type': 'application/json',#}
-    {#            },#}
-    {#        }).then(response => {#}
-    {#            if (response.ok) {#}
-    {#                hideForm();#}
-    {#                // Reload the page to reflect the updated data#}
-    {#                window.location.reload();#}
-    {#            }#}
-    {#        }).catch(error => console.error('Error:', error));#}
-    {#    });#}
-    {##}
-    {# });#}
 
+    <!-- Supplier CRUD script -->
+    <script src="{% static 'js/supplier-crud.js' %}"></script>
 
     <div class="button-container">
         <div class="controls">

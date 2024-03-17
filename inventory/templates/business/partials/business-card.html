@@ -5,13 +5,6 @@
     <div class="business-name">
         <p class="business-link">{{ business.business_name }}</p>
     </div>
-    <div class="business-ownership">
-        {% if business.owner.pk == request.user.pk %}
-            {# TODO: to try made owned in upper right angle #}
-            {# TODO: to move styles in css #}
-            <span class="green">owned</span>
-        {% endif %}
-    </div>
     <div class="hidden">
         {% if business.is_visible == False %}
             <span class="red">hidden</span>

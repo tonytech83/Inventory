@@ -12,7 +12,7 @@
 
 /* Edit and Save form styles */
 #editForm,
-#saveForm,
+#createForm,
 #deleteForm {
     width: 80%;
     height: 50%;

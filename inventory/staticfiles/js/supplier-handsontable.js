@@ -12,8 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     const container = document.getElementById('data-container');
-    const button = document.querySelector('#export-file');
-    // button for downloading
+
     const hot = new Handsontable(container, {
             data: data,
             columns: [
@@ -26,7 +25,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
             <!-- Start General settings -->
             width: '100%', // size of the table
-            // customBorders: true,
             stretchH: 'all', // stretch horizontally table
             <!-- End General settings -->
 
@@ -35,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
             colHeaders: ['Name', 'Contact name', 'Phone number', 'Email'],
             // Make first column link to edit
             afterRenderer: function (TD, row, col, prop, value, cellProperties) {
-                if (col === 0) {
+                if (col === 0 || col === 1 || col === 2 || col === 3) {
                     TD.innerHTML = `<span onclick="showEditForm(
                             ${suppliersData[row].id},
                              '${suppliersData[row].name}',
@@ -69,11 +67,11 @@ document.addEventListener('DOMContentLoaded', function () {
         })
     ;
 
-    // Download data to CSV
-    const exportPlugin = hot.getPlugin('exportFile');
+    // Set up CSV download button
+    const button = document.querySelector('#export-file');
 
     button.addEventListener('click', () => {
-        exportPlugin.downloadFile('csv', {
+        hot.getPlugin('exportFile').downloadFile('csv', {
             bom: false,
             columnDelimiter: ',',
             columnHeaders: true,
