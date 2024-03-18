@@ -10,7 +10,7 @@
     {% include 'devices/partials/upload-form.html' with business_id=object.pk %}
 
     <!-- Start Stats -->
-    {% include 'business/partials/stats.html' %}
+    {% include 'business/partials/business-stats.html' %}
     <!-- End Stats -->
 
     <!-- Handsontable data container -->
@@ -139,8 +139,9 @@
         });
     </script>
 
-    {% if request.user.pk == object.owner_id %}
-        <div class="button-container">
+
+    <div class="button-container">
+        {% if request.user.pk == object.owner_id %}
             <div class="control-buttons">
                 <button class="reset-button-style button btn-download" id="export-file">Download CSV</button>
             </div>
@@ -149,10 +150,13 @@
                 <button class="button btn-download" onclick="showUploadForm({{ object.pk }})">Import devices</button>
                 <a class="button btn-edit" href="{% url 'edit-business' pk=object.pk %}">Edit Business</a>
             </div>
-        </div>
-    {% else %}
-        <p></p>
-    {% endif %}
+        {% else %}
+            <div class="control-buttons">
+                <button class="reset-button-style button btn-download" id="export-file">Download CSV</button>
+            </div>
+        {% endif %}
+
+    </div>
 
     <!-- Upload CSV scripts -->
     <script src="{% static 'js/device-upload.js' %}"></script>

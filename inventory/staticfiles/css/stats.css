@@ -2,21 +2,27 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
 }
+
 h5 {
     text-align: center;
     margin-bottom: 20px;
 }
 
 .box {
-    height: 18vh; /* This will make .stats take up 30% of the viewport height */
-    width: 15vw;
+    /*height: 18vh; !* This will make .stats take up 30% of the viewport height *!*/
+    /*width: 15vw;*/
+    height: 230px;
+    width: 260px;
 
     box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
     background: var(--background-color);
     padding: 10px;
     color: var(--text-color);
-    margin-bottom: 20px;
+
 }
 
 

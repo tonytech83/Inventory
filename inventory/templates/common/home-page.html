@@ -11,9 +11,11 @@
         {% include 'business/partials/create-form.html' %}
     </div>
 
-    <div class="box">
-        <p>Total business: {{ object_list.count }}</p>
-        <p>Total devices: {{ all_devices }}</p>
+    <div class="stats">
+        <div class="box">
+            <p>Total business: {{ object_list.count }}</p>
+            <p>Total devices: {{ all_devices }}</p>
+        </div>
     </div>
 
     <section id="catalogue">
@@ -24,8 +26,8 @@
                 {% include 'business/partials/business-card.html' with business=owned_business %}
             {% endfor %}
         </div>
+        <h3>Other Business</h3>
         <div class="other">
-            <h3>Other Business</h3>
             {% for not_owned_business in not_owned_businesses %}
                 {% include 'business/partials/business-card.html' with business=not_owned_business %}
             {% endfor %}

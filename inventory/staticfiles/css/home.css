@@ -5,7 +5,9 @@
     gap: 20px;
 }
 
-.owned {
+.owned,
+.other {
     display: flex;
     gap: 20px;
+    flex-wrap: wrap;
 }

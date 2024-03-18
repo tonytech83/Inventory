@@ -2,7 +2,11 @@
 
 <div class="stats">
     <div class="box business-info">
-        <h5>Business information</h5>
+        <div class="box-icon" style="display: flex; justify-content: space-between; align-items: center;margin-bottom: 20px">
+            <i class="fa-solid fa-industry"></i>
+            <h5 style="display: inline; margin-bottom: 0">Business</h5>
+        </div>
+
         <table>
             <tr>
                 <td>Business:</td>
@@ -13,7 +17,7 @@
                 <td>{{ object.country }}</td>
             </tr>
             <tr>
-                <td>Business owner:</td>
+                <td>Owner:</td>
                 <td>{{ object.owner.profile.full_name }}</td>
             </tr>
         </table>
