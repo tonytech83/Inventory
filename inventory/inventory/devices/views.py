@@ -260,13 +260,11 @@ class CSVUploadApiView(APIView):
                     )
                     results.append({'device_name': row[0].value, 'status': 'success'})
                 except Exception as e:
-                    results.append({'device_name': row[0].value, 'status': 'error', 'error': str(e)})
+                    results.append({'device_name': row[0].value, 'status': 'Error', 'error': str(e)})
                     continue
-            return Response(
-                {'message': 'Devices imported successfully.',
-                 'results': results},
-                status=status.HTTP_200_OK
-            )
+
+            return Response({'message': 'Devices imported successfully.', 'results': results},
+                            status=status.HTTP_200_OK)
             # return Response({'message': 'Devices imported successfully.'}, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

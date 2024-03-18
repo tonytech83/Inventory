@@ -4,7 +4,7 @@
 {% block main_content %}
 
     <!-- Forms container-->
-    <div class="backdrop" style="display:none;" onclick="hideForm()"></div>
+    <div class="backdrop" style="display:none;" onclick="hideUploadForm()"></div>
 
     <!-- Hidden form for uploading -->
     {% include 'devices/partials/upload-form.html' with business_id=object.pk %}
