@@ -43,6 +43,7 @@
     display: flex;
     justify-content: space-between;
     border: 2px solid var(--background-color); /* Example border */
+    box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
 }
 
 .form-style {

@@ -1,9 +1,11 @@
 <form id="uploadCSVForm" enctype="multipart/form-data" data-business-id="{{ business_id }}">
-    <input id="inputFieldId" type="file" name="csv_file" accept=".xlsx">
-    <div id="importResults" style="display:none;">
-        <h3>Import Results</h3>
+    <div style="border: 2px solid var(--background-color); padding: 4px 12px;margin-bottom: 10px">
+        <input id="inputFieldId" type="file" name="csv_file" accept=".xlsx">
+    </div>
+    
+    <div id="importResults" style="display:none; overflow-y: auto; width: 80%; height: 80%; margin: auto;">
+        <h5>Import Results</h5>
         <ul id="importResultsList"></ul>
-        console.log text + variable
     </div>
     <div class="button-container">
         <div class="control-buttons"></div>

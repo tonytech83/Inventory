@@ -48,10 +48,15 @@ function displayImportResults(results) {
     results.forEach(results => {
         const li = document.createElement('li');
         li.textContent = `${results.device_name}: ${results.status}`;
+        // console.log(`${results.device_name}: ${results.error}`)
         if (results.status === 'Error') {
             let message = '';
             if (results.error.includes("UNIQUE constraint failed: devices_device.device_name")) {
                 message = "The device name should be unique."
+            } else if (results.error.includes("UNIQUE constraint failed: devices_device.serial_number")){
+                message = "The serial number of device should be unique."
+            } else if (results.device_name === null) {
+                message = 'Please provide name of the device.'
             }
             li.textContent += ` - Message: ${message}`;
             li.style.color = 'red';
@@ -95,9 +100,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 uploadButton.style.visibility = 'hidden';
                 cancelButton.style.visibility = 'hidden';
                 closeButton.style.display = 'inline-block';
-                // hideUploadForm();
-                // Consider if you really need to reload the page
-                // window.location.reload();
+
             })
             .catch(error => {
                 console.error('Error:', error);

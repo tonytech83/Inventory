@@ -6,6 +6,7 @@
     justify-content: center;
     background: var(--background-color);
     padding: 0;
+    box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
 }
 
 .logo img {

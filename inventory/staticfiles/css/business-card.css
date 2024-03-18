@@ -24,8 +24,9 @@
     width: 200px;
     height: 200px;
     padding: 20px 20px;
-    /*border: 2px solid black;*/
-    border-radius: 10px;
+
+    box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
+
     background: var(--background-color);
     color: var(--text-color);
     cursor: pointer;
@@ -38,6 +39,31 @@
 .business-card:hover {
     background: lightgray;
     color: var(--background-color);
+    transition: background 0.3s;
+    /* Shake animation */
+    animation: shake 0.82s cubic-bezier(.36, .07, .19, .97) both;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+/* Shake animation */
+@keyframes shake {
+    10%, 90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    20%, 80% {
+        transform: translate3d(2px, 0, 0);
+    }
+
+    30%, 50%, 70% {
+        transform: translate3d(-2px, 0, 0);
+    }
+
+    40%, 60% {
+        transform: translate3d(2px, 0, 0);
+    }
 }
 
 .business-icon {

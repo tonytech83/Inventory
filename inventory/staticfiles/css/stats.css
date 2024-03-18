@@ -11,17 +11,14 @@ h5 {
 .box {
     height: 18vh; /* This will make .stats take up 30% of the viewport height */
     width: 15vw;
-    border: 1px solid black;
-    border-radius: 10px;
+
+    box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
     background: var(--background-color);
     padding: 10px;
     color: var(--text-color);
     margin-bottom: 20px;
 }
 
-/*.value {*/
-/*    text-align: center;*/
-/*}*/
 
 table {
     width: 100%;

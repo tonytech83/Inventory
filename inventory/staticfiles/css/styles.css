@@ -10,6 +10,7 @@
 @import "table.css";
 @import "supplier-forms.css";
 @import "suppliers.css";
+@import "footer.css";
 
 :root {
     --background-color: #373737;
@@ -44,9 +45,4 @@ html, body {
 }
 
 
-.footer {
-    text-align: center;
-    background: var(--background-color);
-    color: var(--text-color);
-    padding: 10px 0; /* Add some padding for aesthetics */
-}
+
