@@ -1,0 +1,13 @@
+{% load business_tags %}
+
+<td>{{ status }}</td>
+<td>
+    {% url 'business' pk=business.pk as business_url %}
+    <a href="
+        
+            {% if request.GET|get_query_param:query_param == 'true' %}{{ business_url }}{% else %}{{ business_url }}?{{ query_param }}=true{% endif %}">
+<span class="{% if request.GET|get_query_param:query_param == 'true' %}count-no-support{% else %}count-support{% endif %}">
+            {% count_by_status business status %}
+        </span>
+    </a>
+</td>

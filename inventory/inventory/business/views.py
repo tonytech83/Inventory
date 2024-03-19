@@ -28,6 +28,7 @@ class BusinessView(views.DetailView):
         context = super().get_context_data(**kwargs)
         business = context['object']
 
+        # TODO: to made mixin for queries below
         # Support
         no_support = self.request.GET.get('no_support', None)
         no_reviewed = self.request.GET.get('no_reviewed', None)
@@ -35,6 +36,10 @@ class BusinessView(views.DetailView):
         # Status
         in_operation = self.request.GET.get('in_operation', None)
         is_decommissioned = self.request.GET.get('is_decommissioned', None)
+        is_pending_setup = self.request.GET.get('is_pending_setup', None)
+        is_offline = self.request.GET.get('is_offline', None)
+        not_defined = self.request.GET.get('not_defined', None)
+        is_exception = self.request.GET.get('is_exception', None)
 
         device_queryset = business.device_set.all()
 
@@ -50,6 +55,18 @@ class BusinessView(views.DetailView):
 
         if is_decommissioned == 'true':
             device_queryset = device_queryset.filter(status='Decommissioned')
+
+        if is_pending_setup == 'true':
+            device_queryset = device_queryset.filter(status='Pending Setup')
+
+        if is_offline == 'true':
+            device_queryset = device_queryset.filter(status='Offline')
+
+        if not_defined == 'true':
+            device_queryset = device_queryset.filter(status='Not defined yet')
+
+        if is_exception == 'true':
+            device_queryset = device_queryset.filter(status='Exception')
 
         device_list = []
 
