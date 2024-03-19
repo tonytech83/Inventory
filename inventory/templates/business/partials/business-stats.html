@@ -2,7 +2,9 @@
 
 <div class="stats">
     <div class="box business-info">
-        <div class="box-icon" style="display: flex; justify-content: space-between; align-items: center;margin-bottom: 20px">
+        {# TODO: Remove styling from html #}
+        <div class="box-icon"
+             style="display: flex; justify-content: space-between; align-items: center;margin-bottom: 20px">
             <i class="fa-solid fa-industry"></i>
             <h5 style="display: inline; margin-bottom: 0">Business</h5>
         </div>
@@ -22,12 +24,56 @@
             </tr>
         </table>
     </div>
+    <div class="box">
+        <h5>Status</h5>
+        <table>
+            <tr>
+                <td>In Operation</td>
+                <td>
+                    {% url 'business' pk=object.pk as business_ulr %}
+                    <a href="
+                            {% if request.GET.in_operation == 'true' %}{{ business_ulr }}{% else %}{{ business_ulr }}?in_operation=true{% endif %}">
+                        {% count_in_operation_devices object %}
+                    </a>
+                </td>
+
+{#                <td class="value"><a href="?in_operation=true">{% count_in_operation_devices object %}</a></td>#}
+            </tr>
+            <tr>
+                <td>Decommissioned</td>
+                <td class="value"><a href="?is_decommissioned=true">{% count_is_decommissioned_devices object %}</a>
+                </td>
+                {# TODO: Provide numbers  #}
+            </tr>
+            <tr>
+                <td>Pending Setup</td>
+                <td>xxx</td>
+                {# TODO: Provide numbers  #}
+            </tr>
+            <tr>
+                <td>Offline</td>
+                <td>xxx</td>
+                {# TODO: Provide numbers  #}
+            </tr>
+            <tr>
+                <td>Not defined yet</td>
+                <td>xxx</td>
+                {# TODO: Provide numbers  #}
+            </tr>
+            <tr>
+                <td>Exception</td>
+                <td>xxx</td>
+                {# TODO: Provide numbers  #}
+            </tr>
+        </table>
+    </div>
     <div class="box devices-stats">
         <h5>Support</h5>
         <table>
             <tr>
                 <td>Total devices:</td>
-                <td class="value"><a href="?no_support=false">{{ object.device_set.count }}</a></td>
+                {# <td class="value"><a href="?no_support=false">{{ object.device_set.count }}</a></td>#}
+                <td class="value"><a href="{% url 'business' pk=object.pk %}">{{ object.device_set.count }}</a></td>
             </tr>
             <tr>
                 <td>No Support:</td>
@@ -61,8 +107,7 @@
             </tr>
         </table>
     </div>
-    <div class="box">
-    </div>
+
     <div class="box">
     </div>
     <div class="box">

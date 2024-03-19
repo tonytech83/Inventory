@@ -132,7 +132,7 @@ class SubCategory(models.TextChoices):
 
 class Status(models.TextChoices):
     IN_OPERATION = 'In operation', 'In operation'
-    RETIRED = 'Retired', 'Retired'
+    DECOMMISSIONED = 'Decommissioned', 'Decommissioned'
     PENDING_SETUP = 'Pending Setup', 'Pending Setup'
     OFFLINE = 'Offline', 'Offline'
     NOT_DEFINED_YET = 'Not defined yet', 'Not defined yet'

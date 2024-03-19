@@ -27,8 +27,14 @@ class BusinessView(views.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         business = context['object']
+
+        # Support
         no_support = self.request.GET.get('no_support', None)
         no_reviewed = self.request.GET.get('no_reviewed', None)
+
+        # Status
+        in_operation = self.request.GET.get('in_operation', None)
+        is_decommissioned = self.request.GET.get('is_decommissioned', None)
 
         device_queryset = business.device_set.all()
 
@@ -38,6 +44,12 @@ class BusinessView(views.DetailView):
         if no_reviewed == 'true':
             one_year_ago = now() - timedelta(days=365)
             device_queryset = device_queryset.filter(updated_at__lte=one_year_ago)
+
+        if in_operation == 'true':
+            device_queryset = device_queryset.filter(status='In operation')
+
+        if is_decommissioned == 'true':
+            device_queryset = device_queryset.filter(status='Decommissioned')
 
         device_list = []
 
