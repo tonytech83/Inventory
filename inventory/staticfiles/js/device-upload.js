@@ -1,3 +1,9 @@
+import {getCookie} from './get-cookie.js'
+
+window.showUploadForm =showUploadForm;
+window.hideUploadForm = hideUploadForm;
+// window.displayImportResults = displayImportResults;
+
 function showUploadForm(businessId) {
     document.getElementById('uploadCSVForm').style.display = 'block';
     document.querySelector('.backdrop').style.display = 'block';
@@ -25,20 +31,20 @@ function hideUploadForm() {
     window.location.reload();
 }
 
-function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
+// function getCookie(name) {
+//     let cookieValue = null;
+//     if (document.cookie && document.cookie !== '') {
+//         const cookies = document.cookie.split(';');
+//         for (let i = 0; i < cookies.length; i++) {
+//             const cookie = cookies[i].trim();
+//             if (cookie.substring(0, name.length + 1) === (name + '=')) {
+//                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+//                 break;
+//             }
+//         }
+//     }
+//     return cookieValue;
+// }
 
 function displayImportResults(results) {
     const resultsElement = document.getElementById('importResults');
@@ -48,15 +54,20 @@ function displayImportResults(results) {
     results.forEach(results => {
         const li = document.createElement('li');
         li.textContent = `${results.device_name}: ${results.status}`;
+
+        // To handle errors and provide user-friendly output!!!
         // console.log(`${results.device_name}: ${results.error}`)
+
         if (results.status === 'Error') {
             let message = '';
             if (results.error.includes("UNIQUE constraint failed: devices_device.device_name")) {
                 message = "The device name should be unique."
-            } else if (results.error.includes("UNIQUE constraint failed: devices_device.serial_number")){
+            } else if (results.error.includes("UNIQUE constraint failed: devices_device.serial_number")) {
                 message = "The serial number of device should be unique."
             } else if (results.device_name === null) {
                 message = 'Please provide name of the device.'
+            } else if (results.error.includes("NOT NULL constraint failed: devices_device.model")) {
+                message = 'Device model can be empty.'
             }
             li.textContent += ` - Message: ${message}`;
             li.style.color = 'red';

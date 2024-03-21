@@ -1,28 +1,35 @@
+import {getCookie} from './get-cookie.js'
+
+window.showCreateBusinessForm = showCreateBusinessForm;
+window.hideForm = hideForm;
+
 function showCreateBusinessForm() {
     const createForm = document.getElementById('createForm');
     createForm.style.display = 'block';
     document.querySelector('.backdrop').style.display = 'block';
 }
 
+window.showCreateBusinessForm = showCreateBusinessForm;
+
 function hideForm() {
     document.getElementById('createForm').style.display = 'none';
     document.querySelector('.backdrop').style.display = 'none';
 }
 
-function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
+// function getCookie(name) {
+//     let cookieValue = null;
+//     if (document.cookie && document.cookie !== '') {
+//         const cookies = document.cookie.split(';');
+//         for (let i = 0; i < cookies.length; i++) {
+//             const cookie = cookies[i].trim();
+//             if (cookie.substring(0, name.length + 1) === (name + '=')) {
+//                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+//                 break;
+//             }
+//         }
+//     }
+//     return cookieValue;
+// }
 
 document.addEventListener('DOMContentLoaded', function () {
     const createForm = document.getElementById('BusinessCreateForm');

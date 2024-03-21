@@ -1,3 +1,12 @@
+import {getCookie} from './get-cookie.js'
+
+window.showCreateForm = showCreateForm;
+window.showEditForm = showEditForm;
+window.showDeleteForm = showDeleteForm;
+window.hideForm =hideForm;
+window.confirmDelete = confirmDelete;
+window.hideDeleteForm = hideDeleteForm;
+
 const urls = document.getElementById('supplierUrls');
 const createSupplierUrl = urls.getAttribute('data-create-supplier-url');
 const editSupplierUrlTemplate = urls.getAttribute('data-edit-supplier-url');
@@ -5,20 +14,20 @@ const deleteSupplierUrlTemplate = urls.getAttribute('data-delete-supplier-url');
 
 
 // Function to retrieve CSRF token from cookies
-function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
+// function getCookie(name) {
+//     let cookieValue = null;
+//     if (document.cookie && document.cookie !== '') {
+//         const cookies = document.cookie.split(';');
+//         for (let i = 0; i < cookies.length; i++) {
+//             const cookie = cookies[i].trim();
+//             if (cookie.substring(0, name.length + 1) === (name + '=')) {
+//                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+//                 break;
+//             }
+//         }
+//     }
+//     return cookieValue;
+// }
 
 function showCreateForm() {
     // Show the form and the backdrop
@@ -95,7 +104,7 @@ function confirmDelete() {
 // Create
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("supplierCreateForm").addEventListener("submit", function (e) {
-        e.preventDefault(); // Prevent the default form submission
+        e.preventDefault();
 
         const formData = new FormData(this);
         const data = Object.fromEntries(formData.entries());
@@ -112,7 +121,7 @@ document.addEventListener("DOMContentLoaded", function () {
             },
         }).then(response => {
             if (response.ok) {
-                hideForm(); // Use the hideEditForm function to close the form
+                hideForm();
                 window.location.reload();
             } else {
                 console.error('Failed to create supplier.');
@@ -125,9 +134,9 @@ document.addEventListener("DOMContentLoaded", function () {
 // Edit
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("supplierEditForm").addEventListener("submit", function (e) {
-        e.preventDefault(); // Prevent the default form submission
+        e.preventDefault();
 
-        // Assuming this retrieves the correct supplier ID at runtime
+        // Retrieves the supplier ID
         const supplierId = document.getElementById('supplierId').value;
 
         const editUrl = editSupplierUrlTemplate.replace("0", `${supplierId}`);
