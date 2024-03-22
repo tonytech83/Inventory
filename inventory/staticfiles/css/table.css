@@ -31,26 +31,26 @@
 }
 
 
-#data-container .handsontable .wtHolder{
-  background-color: var(--table-header-background);
+#data-container .handsontable .wtHolder {
+    background-color: var(--table-header-background);
 }
 
 /* All headers */
 #data-container .handsontable th {
-  background-color: var(--table-header-background);
-  color: var(--table-header-color);
+    background-color: var(--table-header-background);
+    color: var(--table-header-color);
 }
 
 /* Row headers */
 #data-container .ht_clone_left th {
-  background-color: var(--table-header-background);
-  color: var(--table-header-color);
+    background-color: var(--table-header-background);
+    color: var(--table-header-color);
 }
 
 /* Column headers */
 #data-container .ht_clone_top th {
-  background-color: var(--table-header-background);
-  color: var(--table-header-color);
+    background-color: var(--table-header-background);
+    color: var(--table-header-color);
 }
 
 /* Row headers */
@@ -65,116 +65,118 @@
 
 /* Column headers */
 #data-container .ht_clone_top th {
-  border-top: 1px solid var(--table-border-color);
-  border-right: 1px solid var(--table-border-color);
-  border-bottom: 1px solid var(--table-border-color);
+    border-top: 1px solid var(--table-border-color);
+    border-right: 1px solid var(--table-border-color);
+    border-bottom: 1px solid var(--table-border-color);
 }
 
 #data-container .ht_clone_top_left_corner th {
-  border-right: 1px solid var(--table-border-color);
+    border-right: 1px solid var(--table-border-color);
 }
 
 #data-container .handsontable .changeType {
-  background: inherit;
-  border-color: var(--table-border-color);
+    background: inherit;
+    border-color: var(--table-border-color);
 }
 
 /* Borders */
 #data-container .handsontable th,
 #data-container .handsontable td {
-  border-right: 1px solid var(--table-border-color);
-  border-bottom: 1px solid var(--table-border-color);
+    border-right: 1px solid var(--table-border-color);
+    border-bottom: 1px solid var(--table-border-color);
 }
 
 #data-container .handsontable tr:first-child td,
 #data-container .handsontable tr:first-child th {
-  border-top: 1px solid var(--table-border-color);
+    border-top: 1px solid var(--table-border-color);
 }
 
-#data-container .ht_master tr>td {
-  border-bottom: 1px solid var(--table-border-color);
+#data-container .ht_master tr > td {
+    border-bottom: 1px solid var(--table-border-color);
 }
 
 /* Right */
-#data-container .ht_master tr>td {
-  border-right: 1px solid var(--table-border-color);
+#data-container .ht_master tr > td {
+    border-right: 1px solid var(--table-border-color);
 }
 
-#data-container #data-container .handsontable .htNoFrame+td,
-#data-container .handsontable .htNoFrame+th,
+#data-container #data-container .handsontable .htNoFrame + td,
+#data-container .handsontable .htNoFrame + th,
 #data-container .handsontable.htRowHeaders thead tr th:nth-child(2),
 #data-container .handsontable td:first-of-type,
 #data-container .handsontable th:first-child,
 #data-container .handsontable th:nth-child(2) {
-  border-left: 1px solid var(--table-border-color);
+    border-left: 1px solid var(--table-border-color);
 }
 
 #data-container .ht_clone_top_left_corner thead tr th:nth-last-child(2) {
-  border-right: 1px solid var(--table-border-color);
+    border-right: 1px solid var(--table-border-color);
 }
 
 #data-container .handsontable th:last-child {
-  border-right: 1px solid var(--table-border-color);
-  border-bottom: 1px solid var(--table-border-color);
+    border-right: 1px solid var(--table-border-color);
+    border-bottom: 1px solid var(--table-border-color);
 }
 
 /* Selected cell */
 #data-container tr > td {
-  background-color: var(--cell-color);
+    background-color: var(--cell-color);
 }
 
 /* Selected cell */
 #data-container tr > td.current {
-  background-color: var(--cell-selected-color);
+    background-color: var(--cell-selected-color);
 }
 
 /* Context menu */
 .htContextMenu tr,
 .htDropdownMenu tr,
 .htFiltersConditionsMenu tr {
-  background-color: var(--ctx-background);
+    background-color: var(--ctx-background);
 }
+
 .htContextMenu table tbody tr td,
 .htDropdownMenu table tbody tr td,
 .htFiltersConditionsMenu table tbody tr td {
-  background-color: var(--ctx-background);
+    background-color: var(--ctx-background);
 }
+
 .htContextMenu table tbody tr td.current,
 .htContextMenu table tbody tr td.zeroclipboard-is-hover,
 .htDropdownMenu table tbody tr td.current,
 .htDropdownMenu table tbody tr td.zeroclipboard-is-hover,
 .htFiltersConditionsMenu table tbody tr td.current,
 .htFiltersConditionsMenu table tbody tr td.zeroclipboard-is-hover {
-  background-color: var(--ctx-background-hover);
+    background-color: var(--ctx-background-hover);
 }
 
 
 .htContextMenu .handsontable table td.htCustomMenuRenderer,
 .htDropdownMenu .handsontable table td.htCustomMenuRenderer {
-  background-color: var(--ctx-background);
+    background-color: var(--ctx-background);
 }
 
 .handsontable .htUISelectCaption.
 .handsontable .htUISelectCaption:hover {
-  background-color: var(--ctx-background);
+    background-color: var(--ctx-background);
 }
 
 /* Scroll bar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+    width: 6px;
+    height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--scroll-track);
+    background: var(--scroll-track);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--scroll-thumb);
+    background: var(--scroll-thumb);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--scroll-thumb-hover);
+    background: var(--scroll-thumb-hover);
 }
 
 /*==================================*/
@@ -196,4 +198,11 @@
 .handsontable .htDimmed {
     color: var(--text-color);
     font-size: 0.6em;
+}
+
+.handsontable .htDimmed:nth-child(1) {
+    color: coral;
+    font-weight: 500;
+    font-size: 0.6em;
+    cursor: pointer;
 }

@@ -1,8 +1,11 @@
 .title-container {
     border: 2px solid var(--background-color);
-    margin-bottom:10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
+    margin-bottom: 20px;
 }
 
-.title-container h3 {
+.title-container h4 {
     text-align: center;
+    line-height: 1;
+    margin: 6px 0;
 }

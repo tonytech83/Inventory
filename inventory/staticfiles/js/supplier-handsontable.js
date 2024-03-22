@@ -16,11 +16,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const hot = new Handsontable(container, {
             data: data,
             columns: [
-                {data: 0, renderer: "html"},  // Ensure the first column renders HTML for the link
+                {},
+                // {data: 0, renderer: "html"},  // Ensure the first column renders HTML for the link
                 {},
                 {},
                 {},
-
             ],
 
             <!-- Start General settings -->
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
             colHeaders: ['Name', 'Contact name', 'Phone number', 'Email'],
             // Make first column link to edit
             afterRenderer: function (TD, row, col, prop, value, cellProperties) {
-                if (col === 0 || col === 1 || col === 2 || col === 3) {
+                if (col === 0) {
                     TD.innerHTML = `<span onclick="showEditForm(
                             ${suppliersData[row].id},
                              '${suppliersData[row].name}',
@@ -43,6 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 )">${value}</span>`;
                 }
             },
+            colWidths: [1, 1, 1, 1],
             <!-- End Columns settings -->
 
             <!-- Start Rows settings -->
@@ -50,8 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <!-- End Rows settings -->
 
             <!-- Start Filters settings -->
-            filters:
-                true,
+            filters: true,
             // dropdownMenu: true,
             dropdownMenu: ['filter_by_value', 'filter_action_bar'],
             // Disable cell selection
@@ -59,10 +59,8 @@ document.addEventListener('DOMContentLoaded', function () {
             <!-- End Filters settings -->
 
             <!-- Start Other settings -->
-            readOnly:
-                true,
-            licenseKey:
-                'non-commercial-and-evaluation',
+            readOnly: true,
+            licenseKey: 'non-commercial-and-evaluation',
             <!-- End Other settings -->
         })
     ;

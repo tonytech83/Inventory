@@ -22,23 +22,27 @@ h5 {
     color: var(--text-color);
 }
 
-.box a{
+/*.box-row {*/
+/*    border: 1px solid coral;*/
+/*}*/
+
+.box a {
     text-decoration: none;
 }
 
 /* Styling for links in boxes*/
-.box .count-no-support {
+.box .selected {
     width: 100%;
     padding: 1px 2px;
     background: green;
     color: var(--text-color);
 }
 
-.box .count-support {
+.box .not-selected {
+    padding: 1px 2px;
     color: var(--text-color);
 }
 
 table {
     width: 100%;
 }
-

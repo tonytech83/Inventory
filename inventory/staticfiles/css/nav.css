@@ -4,7 +4,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--background-color);
+    background: coral;
     padding: 0;
     box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
 }
@@ -132,3 +132,6 @@
     --bs-btn-focus-box-shadow: 0 0 0 .25rem rgba(255, 255, 255, .2);
   }
 }
+
+
+
