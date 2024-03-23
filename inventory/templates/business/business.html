@@ -6,139 +6,231 @@
     <!-- Forms container-->
     <div class="backdrop" style="display:none;" onclick="hideUploadForm()"></div>
 
+    <!-- Hidden form for device creation -->
+    {% include 'devices/partials/device-create-form.html' %}
+
+    <!-- Hidden form for device editing -->
+    {% include 'devices/partials/device-edit-form.html' %}
+
+    <!-- Hidden form for deleting -->
+    {% include 'devices/partials/device-delete-form.html' %}
+
     <!-- Hidden form for uploading -->
     {% include 'devices/partials/upload-form.html' with business_id=object.pk %}
+
+    <!-- Suppliers data-->
+    <div id="data-suppliers" data-suppliers='{{ suppliers_json|safe }}'></div>
+
+    <!-- define the URLs as data attributes -->
+    <div data-create-device-url="{% url 'create-device' business_id=object.pk %}"
+         data-edit-device-url="{% url 'edit-device' pk=0 %}"
+         data-delete-device-url="{% url 'delete-device' pk=0 %}"
+         hidden id="devicesUrls"></div>
+
+    <!-- Hider input with businessId for device creation -->
+    <input hidden id="businessId" type="text" value="{{ object.pk }}">
 
     <!-- Start Stats -->
     {% include 'business/partials/business-stats.html' %}
     <!-- End Stats -->
 
     <!-- Handsontable data container -->
-    <div id="data-container" data-theme="dark"></div>
+    <div id="data-container" data-devices='{{ devices_json|safe }}'></div>
 
+    <!-- Handsontable JS Script-->
+    <script src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>
+    <script src="{% static 'js/device-handsontable.js' %}"></script>
+
+    <!-- Devices CRUD script -->
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const devicesData = JSON.parse('{{ devices_json|safe }}');
+        const urls = document.getElementById('devicesUrls');
+        const deleteDeviceUrl = urls.getAttribute('data-delete-device-url');
 
-            const data = devicesData.map(function (item) {
-                return [
-                    '<a href="' + item.edit_url + '"><i class="fa-solid fa-pen-to-square"></a>',
-                    {#{edit_url: item.edit_url, device_name: item.device_name},#}
-                    item.device_name,
-                    item.status,
-                    item.manufacturer,
-                    item.model,
-                    item.category,
-                    item.sub_category,
-                    item.serial_number,
-                    item.owner_name,
-                    item.supplier_name,
-                ];
-            });
+        function showCreateForm() {
+            // Show the form and the backdrop
+            document.getElementById('createForm').style.display = 'block';
+            document.querySelector('.backdrop').style.display = 'block';
+        }
 
-            const container = document.getElementById('data-container');
-            const button = document.querySelector('#export-file');
-            {# button for downloading #}
-            const hot = new Handsontable(container, {
-                data: data,
-                {#minCols: 10,#}
-                columns: [
-                    {renderer: "html"},  // Ensure the first column renders HTML for the link
-                    {type: 'text'},
-                    {type: 'text'},
-                    {type: 'text'},
-                    {type: 'text'},
-                    {type: 'text'},
-                    {type: 'text'},
-                    {type: 'text'},
-                    {type: 'text'},
-                    {type: 'text'},
-                ],
+        function showDeviceEditForm(deviceId, deviceHostName, deviceDomain, deviceDescription, deviceStatus, deviceManufacturer, deviceModel, deviceIpAddress, deviceIpAddressSecondary, deviceOperatingSystem, deviceBuilding, deviceCategory, deviceSubCategory, deviceSerialNumber, deviceOwnerName, deviceSupportModel, devicePurchaseOrderNumber, deviceInvoiceImage, deviceStartOfSupport, deviceEndOfSupport, deviceEndOfLife, deviceBusinessProcessAtRisk, deviceImpact, deviceLikelihood) {
+            document.getElementById('editDeviceId').value = deviceId;
+            document.getElementById('editDeviceHostName').value = deviceHostName;
+            document.getElementById('editDeviceDomain').value = deviceDomain;
+            document.getElementById('editDeviceDescription').value = deviceDescription;
+            document.getElementById('editDeviceStatus').value = deviceStatus;
+            document.getElementById('editDeviceManufacturer').value = deviceManufacturer;
+            document.getElementById('editDeviceModel').value = deviceModel;
+            document.getElementById('editDeviceIpAddress').value = deviceIpAddress !== 'null' ? deviceIpAddress : '';
+            document.getElementById('editDeviceIpAddressSecondary').value = deviceIpAddressSecondary !== 'null' ? deviceIpAddressSecondary : '';
+            document.getElementById('editDeviceOperatingSystem').value = deviceOperatingSystem;
+            document.getElementById('editDeviceBuilding').value = deviceBuilding;
+            document.getElementById('editDeviceCategory').value = deviceCategory;
+            document.getElementById('editDeviceSubCategory').value = deviceSubCategory;
+            document.getElementById('editDeviceSerialNumber').value = deviceSerialNumber;
+            document.getElementById('editDeviceOwnerName').value = deviceOwnerName;
+            // Support
+            document.getElementById('editDeviceSupportModel').value = deviceSupportModel;
+            document.getElementById('editDevicePurchaseOrderNumber').value = devicePurchaseOrderNumber !== 'null' ? devicePurchaseOrderNumber : '';
+            document.getElementById('editDeviceInvoiceImage').value = deviceInvoiceImage;
+            // Check if there's an invoice URL and set up a download link
+            const invoiceDownloadLink = document.getElementById('invoiceDownloadLink');
+            if (deviceInvoiceImage) {
+                const fullPath = deviceInvoiceImage.startsWith('/media/') ? deviceInvoiceImage : `/media/${deviceInvoiceImage}`;
+                invoiceDownloadLink.setAttribute('href', fullPath);
+                invoiceDownloadLink.style.display = 'inline';
+            } else {
+                invoiceDownloadLink.style.display = 'none';
+            }
+            document.getElementById('editDeviceStartOfSupport').value = deviceStartOfSupport;
+            document.getElementById('editDeviceEndOfSupport').value = deviceEndOfSupport;
+            document.getElementById('editDeviceEndOfLife').value = deviceEndOfLife;
+            document.getElementById('editDeviceBusinessProcessAtRisk').value = deviceBusinessProcessAtRisk;
+            document.getElementById('editDeviceImpact').value = deviceImpact;
+            document.getElementById('editDeviceLikelihood').value = deviceLikelihood;
 
-                <!-- Start General settings -->
-                width: '100%', {# size of the table #}
-                stretchH: 'all', {# stretch horizontally table #}
-                height: '64vh',
-                overflow: 'hidden',
-                <!-- End General settings -->
 
-                <!-- Start Columns settings -->
-                columnSorting: true,
+            document.getElementById('editForm').style.display = 'block';
+        }
 
-                {# remove `dropdownMenu` from first column #}
-                afterGetColHeader(col, TH) {
-                    if (col < 2) {
-                        const button = TH.querySelector('.changeType');
+        function showDeleteForm(deviceId, deviceHostName) {
+            document.getElementById('deleteDeviceId').value = deviceId;
+            document.getElementById('deleteDeviceHostName').innerText = deviceHostName;
 
-                        if (!button) {
-                            return;
-                        }
 
-                        button.parentElement.removeChild(button);
+            // Show the form and the backdrop
+            document.getElementById('deleteForm').style.display = 'block';
+            document.querySelector('.backdrop').style.display = 'block'
+
+            // Hide the edit form if it's shown
+            document.getElementById('editForm').style.display = 'none'
+        }
+
+
+        function hideForm() {
+            document.getElementById('createForm').style.display = 'none';
+            document.getElementById('editForm').style.display = 'none';
+            document.getElementById('deleteForm').style.display = 'none';
+            document.querySelector('.backdrop').style.display = 'none';
+        }
+
+        function hideDeleteForm() {
+            // Hide the delete form and backdrop
+            document.getElementById('deleteForm').style.display = 'none';
+            document.querySelector('.backdrop').style.display = 'none';
+        }
+
+        // Create
+        function submitDeviceForm() {
+            event.preventDefault(); // Add this if submitDeviceForm is called on form submit
+
+            const formData = new FormData(document.getElementById('deviceCreateForm'));
+            const csrftoken = '{{ csrf_token }}';
+            const businessId = document.getElementById('businessId').value; // Assuming you have a hidden input for businessId
+            formData.append('business', businessId); // Append business_id to formData
+
+            const createDeviceUrl = document.getElementById('devicesUrls').getAttribute('data-create-device-url'); // Ensure this is correct
+
+            console.log(createDeviceUrl)
+
+            fetch(createDeviceUrl, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrftoken,
+                    'Accept': 'application/json',
+                },
+                body: formData
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
                     }
-                },
-                colHeaders: ['', 'Hostname', 'Status', 'Manufacturer', 'Model', 'Category', 'Sub-category', 'Serial number', 'Owner', 'Supplier', 'EOS'],
-                {#colWidths: [50, 100, 200, 400],#}
-                <!-- End Columns settings -->
-
-                <!-- Start Rows settings -->
-                rowHeaders: false,
-                <!-- End Rows settings -->
-
-                <!-- Start Filters settings -->
-                filters: true,
-                {# dropdownMenu: true, #}
-                dropdownMenu: ['filter_by_value', 'filter_action_bar'],
-                {# Remove all selections #}
-                afterDropdownMenuShow(instance) {
-                    var filters = instance.hot.getPlugin('filters');
-                    console.log(filters.components.get('filter_by_value').elements[0])
-                    filters.components.get('filter_by_value').elements[0].onClearAllClick({
-                        preventDefault: function () {
-                        }
-                    });
-                },
-
-                {# Disable cell selection #}
-                disableVisualSelection: true,
-                <!-- End Filters settings -->
-
-                <!-- Start Other settings -->
-                readOnly: true,
-                licenseKey: 'non-commercial-and-evaluation',
-                <!-- End Other settings -->
-            });
-
-            {# Start part of the `Remove all selection in dropdown menu` #}
-            var filters = hot.getPlugin('filters');
-
-            window.hot = hot;
-            window.filters = filters;
-
-            hot.render();
-            {# End part of the `Remove all selection` #}
-
-            {# Download data to CSV  #}
-            const exportPlugin = hot.getPlugin('exportFile');
-
-            button.addEventListener('click', () => {
-                exportPlugin.downloadFile('csv', {
-                    bom: false,
-                    columnDelimiter: ',',
-                    columnHeaders: true,
-                    exportHiddenColumns: true,
-                    exportHiddenRows: true,
-                    fileExtension: 'csv',
-                    filename: 'Handsontable-CSV-file_[YYYY]-[MM]-[DD]', {# TODO: Change file name #}
-                    mimeType: 'text/csv',
-                    rowDelimiter: '\r\n',
-                    rowHeaders: false,
-                    range: [0, 1, devicesData.length, 10] {# TODO: to check how is working `range`  #}
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Success:', data);
+                    hideForm();
+                    window.location.reload();
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    // Handle errors (e.g., showing an error message)
                 });
-            });
+        }
 
-        });
+        // Edit
+        function submitEditForm() {
+            event.preventDefault(); // Prevent default form submission behavior
+
+
+            // Corrected to use 'deviceEditForm' which is the actual <form> element's ID
+            const formData = new FormData(document.getElementById('deviceEditForm'));
+            const csrftoken = '{{ csrf_token }}'; // Django's CSRF token
+
+            const deviceId = document.getElementById('editDeviceId').value;
+
+            console.log(deviceId)
+
+            const editDeviceUrl = document.getElementById('devicesUrls').getAttribute('data-edit-device-url').replace('0', deviceId);
+
+            console.log(editDeviceUrl)
+
+            const businessId = document.getElementById('businessId').value;
+            formData.append('business', businessId);
+
+            fetch(editDeviceUrl, {
+                method: 'PATCH',
+                headers: {
+                    'X-CSRFToken': csrftoken,
+                    'Accept': 'application/json',
+                },
+                body: formData
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Success:', data);
+                    hideForm(); // Hide the edit form
+                    window.location.reload();
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        }
+
+        // Delete
+        function confirmDelete() {
+            // Get the device ID
+            const supplierId = document.getElementById('deleteDeviceId').value;
+
+
+            const deleteUrl = deleteDeviceUrl.replace("0", `${supplierId}`);
+            const csrftoken = '{{ csrf_token }}';
+
+            fetch(deleteUrl, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRFToken': csrftoken,
+                },
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    hideDeleteForm();
+                    window.location.reload();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
     </script>
+
+    <!-- List suppliers for device creation form -->
+    <script src="{% static 'js/list-suppliers.js' %}"></script>
 
 
     <div class="button-container">
@@ -147,7 +239,7 @@
                 <button class="reset-button-style button btn-download" id="export-file">Download CSV</button>
             </div>
             <div class="action-buttons">
-                <a class="button btn-create" href="{% url 'create-device' business_id=business.pk %}">Create device</a>
+                <a class="button btn-create" type="button" onclick="showCreateForm()">Create device</a>
                 <button class="button btn-download" onclick="showUploadForm({{ object.pk }})">Import devices</button>
                 <a class="button btn-edit" href="{% url 'edit-business' pk=object.pk %}">Edit Business</a>
             </div>

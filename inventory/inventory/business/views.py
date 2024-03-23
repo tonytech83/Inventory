@@ -1,6 +1,7 @@
 import json
 from datetime import timedelta
 
+from django.shortcuts import get_list_or_404
 from rest_framework import generics as api_views
 
 from django.utils.timezone import now
@@ -12,6 +13,7 @@ from rest_framework.permissions import IsAuthenticated
 from inventory.business.forms import EditBusinessForm
 from inventory.business.models import Business
 from inventory.business.serializers import BusinessSerializer
+from inventory.suppliers.models import Supplier
 
 
 class BusinessView(views.DetailView):
@@ -20,8 +22,6 @@ class BusinessView(views.DetailView):
     def get_queryset(self):
         return Business.objects.all().prefetch_related(
             'device_set',
-            'device_set__support',
-            'device_set__risk',
         )
 
     def get_context_data(self, **kwargs):
@@ -44,7 +44,7 @@ class BusinessView(views.DetailView):
         device_queryset = business.device_set.all()
 
         if no_support == 'true':
-            device_queryset = device_queryset.filter(support__eos__lt=now().date())
+            device_queryset = device_queryset.filter(eos__lt=now().date())
 
         if no_reviewed == 'true':
             one_year_ago = now() - timedelta(days=365)
@@ -72,20 +72,49 @@ class BusinessView(views.DetailView):
 
         for device in device_queryset:
             device_dict = {
-                'edit_url': reverse('edit-device', kwargs={'pk': device.pk}),  # Generate edit URL
+                'id': device.id,
                 'device_name': device.device_name,
+                'domain': device.domain,
+                'description': device.description,
                 'status': device.status,
                 'manufacturer': device.manufacturer,
                 'model': device.model,
+                'ip_address': device.ip_address,
+                'ip_address_sec': device.ip_address_sec,
+                'operating_system': device.operating_system,
+                'building': device.building,
                 'category': device.category,
                 'sub_category': device.sub_category,
                 'serial_number': device.serial_number,
                 'owner_name': device.owner_name,
+                # Support
+                'support_model': device.support_model,
+                'purchase_order_number': device.purchase_order_number,
+                'invoice_img': str(device.invoice_img),
+                'sos': str(device.sos),
+                'eos': str(device.eos),
+                'eol': str(device.eol),
+                # Risk
+                'business_processes_at_risk': device.business_processes_at_risk,
+                'impact': device.impact,
+                'likelihood': device.likelihood,
+                # Supplier
                 'supplier_name': device.supplier_display,
             }
+
             device_list.append(device_dict)
 
+        suppliers = get_list_or_404(Supplier)
+        suppliers_list = [{
+            "id": supplier.id,
+            "name": supplier.name,
+            "contact_name": supplier.contact_name,
+            "phone_number": supplier.phone_number,
+            "email": supplier.email,
+        } for supplier in suppliers]
+
         # Convert the list of suppliers to JSON and add it to the context
+        context['suppliers_json'] = json.dumps(suppliers_list)
         context['devices_json'] = json.dumps(device_list)
 
         return context

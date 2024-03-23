@@ -1,0 +1,19 @@
+<div id="deleteForm" style="display:none;">
+    <div class="title-container">
+        <h3 class="suppliers-title">Delete Device</h3>
+    </div>
+    <form id="deviceDeleteForm">
+        <input type="hidden" id="deleteDeviceId" name="deviceId">
+        <h3 id="deleteConfirmationText">Are you sure you want to delete "<span id="deleteDeviceHostName"></span>"?</h3>
+        <div class="button-container form-style">
+            <div class="control-buttons"></div>
+            <div class="action-buttons">
+                <button class="reset-button-style button btn-delete" type="button" onclick="confirmDelete()">
+                    Confirm Delete
+                </button>
+                <button class="reset-button-style button btn-cancel" type="button" onclick="hideDeleteForm()">Cancel
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

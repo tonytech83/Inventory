@@ -36,11 +36,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (col === 0) {
                     TD.innerHTML = `<span onclick="showEditForm(
                             ${suppliersData[row].id},
-                             '${suppliersData[row].name}',
-                              '${suppliersData[row].contact_name}',
-                               '${suppliersData[row].phone_number}',
-                                '${suppliersData[row].email}'
-                                )">${value}</span>`;
+                            '${suppliersData[row].name}',
+                            '${suppliersData[row].contact_name}',
+                            '${suppliersData[row].phone_number}',
+                            '${suppliersData[row].email}'
+                            )">${value}</span>`;
                 }
             },
             colWidths: [1, 1, 1, 1],

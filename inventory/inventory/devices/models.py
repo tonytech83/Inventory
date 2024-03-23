@@ -4,84 +4,12 @@ from django.db import models
 from datetime import datetime
 from inventory.business.models import Business
 from inventory.core.model_mixins import TimeStampedModel
+from inventory.devices.validators import validate_no_special_characters, validate_mime_type
 from inventory.suppliers.models import Supplier
 
 from datetime import date
 
 UserModel = get_user_model()
-
-
-class Support(models.Model):
-    MIN_SUPPORT_LENGTH = 2
-    MAX_SUPPORT_LENGTH = 100
-
-    support_model = models.TextField(
-        max_length=MAX_SUPPORT_LENGTH,
-        validators=(
-            MinLengthValidator(MIN_SUPPORT_LENGTH),
-        ),
-        help_text='Short description of support model',
-        null=True,
-        blank=True,
-    )
-
-    purchase_order_number = models.IntegerField(
-        # TODO: to validate length of PO ?
-        null=True,
-        blank=True,
-    )
-
-    invoice_img = models.ImageField(
-        # TODO: To fix upload of pdf document or pic maybe
-        null=True,
-        blank=True,
-    )
-
-    sos = models.DateField(
-        null=True,
-        blank=True,
-    )
-
-    eos = models.DateField(
-        null=True,
-        blank=True,
-    )
-
-    eol = models.DateField(
-        null=True,
-        blank=True,
-    )
-
-    @property
-    def days_under_support(self):
-        return datetime.now().date() - self.eos
-
-
-class Risk(models.Model):
-    MIN_BUSINESS_LENGTH = 2
-    MAX_BUSINESS_LENGTH = 50
-
-    business_processes_at_risk = models.TextField(
-        max_length=MAX_BUSINESS_LENGTH,
-        validators=(
-            MinLengthValidator(MIN_BUSINESS_LENGTH),
-        ),
-        help_text='Identify the business process that is at risk',
-        null=True,
-        blank=True,
-    )
-    impact = models.IntegerField(
-        choices=[(i, i) for i in range(1, 6)],
-        default=1,
-    )
-    likelihood = models.IntegerField(
-        choices=[(i, i) for i in range(1, 6)],
-        default=1,
-    )
-
-    @property
-    def risk_score(self):
-        return self.impact * self.likelihood
 
 
 class Category(models.TextChoices):
@@ -169,6 +97,13 @@ class Device(TimeStampedModel, models.Model):
 
     MAX_BUILDING_LENGTH = 30
 
+    MIN_BUSINESS_LENGTH = 2
+
+    MAX_BUSINESS_LENGTH = 50
+
+    MIN_SUPPORT_LENGTH = 2
+    MAX_SUPPORT_LENGTH = 100
+
     device_name = models.CharField(
         max_length=MAX_NAME_LENGTH,
         validators=(
@@ -216,6 +151,8 @@ class Device(TimeStampedModel, models.Model):
         validators=(
             MinLengthValidator(MIN_MANUFACTURER_LENGTH),
         ),
+        null=True,
+        blank=True,
     )
 
     model = models.CharField(
@@ -223,6 +160,8 @@ class Device(TimeStampedModel, models.Model):
         validators=(
             MinLengthValidator(MIN_MODEL_LENGTH),
         ),
+        null=True,
+        blank=True,
     )
 
     ip_address = models.GenericIPAddressField(
@@ -251,6 +190,7 @@ class Device(TimeStampedModel, models.Model):
         max_length=MAX_OS_LENGTH,
         validators=(
             MinLengthValidator(MIN_OS_LENGTH),
+            validate_no_special_characters,
         ),
         null=True,
         blank=True,
@@ -262,27 +202,72 @@ class Device(TimeStampedModel, models.Model):
         blank=True,
     )
 
+    business_processes_at_risk = models.TextField(
+        max_length=MAX_BUSINESS_LENGTH,
+        validators=(
+            MinLengthValidator(MIN_BUSINESS_LENGTH),
+        ),
+        help_text='Identify the business process that is at risk',
+        null=True,
+        blank=True,
+    )
+
+    impact = models.IntegerField(
+        choices=[(i, i) for i in range(1, 6)],
+        default=1,
+    )
+
+    likelihood = models.IntegerField(
+        choices=[(i, i) for i in range(1, 6)],
+        default=1,
+    )
+
+    support_model = models.TextField(
+        max_length=MAX_SUPPORT_LENGTH,
+        validators=(
+            MinLengthValidator(MIN_SUPPORT_LENGTH),
+        ),
+        help_text='Short description of support model',
+        null=True,
+        blank=True,
+    )
+
+    purchase_order_number = models.IntegerField(
+        # TODO: to validate length of PO ?
+        null=True,
+        blank=True,
+    )
+
+    invoice_img = models.FileField(
+        upload_to='invoices/',
+        validators=(
+            validate_mime_type,
+        ),
+        null=True,
+        blank=True,
+    )
+
+    sos = models.DateField(
+        null=True,
+        blank=True,
+    )
+
+    eos = models.DateField(
+        null=True,
+        blank=True,
+    )
+
+    eol = models.DateField(
+        null=True,
+        blank=True,
+    )
+
     owner_name = models.CharField(
         max_length=MAX_NAME_LENGTH,
         validators=(
             MinLengthValidator(MIN_OWNER_NAME_LENGTH),
         ),
         default='Unknown',
-        null=True,
-        blank=True,
-    )
-
-    support = models.OneToOneField(
-        to=Support,
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True,
-    )
-
-    risk = models.OneToOneField(
-        to=Risk,
-        on_delete=models.CASCADE,
-        # TODO: should be null=False
         null=True,
         blank=True,
     )
@@ -310,3 +295,11 @@ class Device(TimeStampedModel, models.Model):
     @property
     def supplier_display(self):
         return self.supplier.name if self.supplier else "not set"
+
+    @property
+    def risk_score(self):
+        return self.impact * self.likelihood
+
+    @property
+    def days_under_support(self):
+        return datetime.now().date() - self.eos

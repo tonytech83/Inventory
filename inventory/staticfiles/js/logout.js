@@ -1,6 +1,7 @@
 import {getCookie} from './get-cookie.js'
 
 document.addEventListener('DOMContentLoaded', function () {
+
     const logoutLink = document.querySelector('#logout-link');
     if (logoutLink) {
         logoutLink.addEventListener('click', function (e) {

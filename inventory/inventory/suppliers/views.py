@@ -43,7 +43,7 @@ class SupplierCreateApiView(api_views.CreateAPIView):
     queryset = Supplier.objects.all()
     serializer_class = SupplierSerializer
     # TODO: Check which other permissions classes I need
-    permission_classes = [IsAuthenticated]  # Optional: If you require authentication
+    permission_classes = [IsAuthenticated]
 
 
 class SupplierDeleteApiView(api_views.DestroyAPIView):

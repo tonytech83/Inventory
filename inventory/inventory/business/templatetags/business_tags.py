@@ -6,7 +6,7 @@ register = template.Library()
 
 @register.simple_tag
 def count_no_support_devices(business):
-    return business.device_set.filter(support__eos__lt=now().date()).count()
+    return business.device_set.filter(eos__lt=now().date()).count()
 
 
 @register.simple_tag

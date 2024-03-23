@@ -1,19 +1,19 @@
 from django import forms
 
 from inventory.core.form_mixins import ReadOnlyFieldsFormMixin
-from inventory.devices.models import Device, Risk, Support
+from inventory.devices.models import Device
 
 
-class RiskForm(forms.ModelForm):
-    class Meta:
-        model = Risk
-        fields = '__all__'
-
-
-class SupportForm(forms.ModelForm):
-    class Meta:
-        model = Support
-        fields = '__all__'
+# class RiskForm(forms.ModelForm):
+#     class Meta:
+#         model = Risk
+#         fields = '__all__'
+#
+#
+# class SupportForm(forms.ModelForm):
+#     class Meta:
+#         model = Support
+#         fields = '__all__'
 
 
 class DeviceBaseForm(forms.ModelForm):

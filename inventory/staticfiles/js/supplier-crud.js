@@ -12,23 +12,6 @@ const createSupplierUrl = urls.getAttribute('data-create-supplier-url');
 const editSupplierUrlTemplate = urls.getAttribute('data-edit-supplier-url');
 const deleteSupplierUrlTemplate = urls.getAttribute('data-delete-supplier-url');
 
-
-// Function to retrieve CSRF token from cookies
-// function getCookie(name) {
-//     let cookieValue = null;
-//     if (document.cookie && document.cookie !== '') {
-//         const cookies = document.cookie.split(';');
-//         for (let i = 0; i < cookies.length; i++) {
-//             const cookie = cookies[i].trim();
-//             if (cookie.substring(0, name.length + 1) === (name + '=')) {
-//                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-//                 break;
-//             }
-//         }
-//     }
-//     return cookieValue;
-// }
-
 function showCreateForm() {
     // Show the form and the backdrop
     document.getElementById('createForm').style.display = 'block';
