@@ -1,18 +1,18 @@
-{% extends 'base/base.html' %}
-
-{% block main_content %}
-    <form action="{% url 'edit-supplier' pk=object.pk %}" method="POST">
-        {{ form.as_p }}
-
-        {% csrf_token %}
-
-        <div class="button-container">
-            <div class="control-buttons"></div>
-            <div class="action-buttons">
-                <button class="reset-button-style button btn-create">Save</button>
-                <a class="button btn-delete" href="{% url 'delete-supplier' pk=object.pk %}">Delete</a>
-                <a class="button btn-cancel" href="{% url 'supplier-list' %}">Cancel</a>
-            </div>
-        </div>
-    </form>
-{% endblock %}
+{#{% extends 'base/base.html' %}#}
+{##}
+{#{% block main_content %}#}
+{#    <form action="{% url 'edit-supplier' pk=object.pk %}" method="POST">#}
+{#        {{ form.as_p }}#}
+{##}
+{#        {% csrf_token %}#}
+{##}
+{#        <div class="button-container">#}
+{#            <div class="control-buttons"></div>#}
+{#            <div class="action-buttons">#}
+{#                <button class="reset-button-style button btn-create">Save</button>#}
+{#                <a class="button btn-delete" href="{% url 'delete-supplier' pk=object.pk %}">Delete</a>#}
+{#                <a class="button btn-cancel" href="{% url 'supplier-list' %}">Cancel</a>#}
+{#            </div>#}
+{#        </div>#}
+{#    </form>#}
+{#{% endblock %}#}

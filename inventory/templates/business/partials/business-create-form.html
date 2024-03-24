@@ -1,19 +1,42 @@
-<div id="createForm" style="display: none">
+<div id="createBusinessForm" style="display: none">
+
     <div class="title-container">
-        <h3 class="business-title">Create Business</h3>
+        <h4 class="login-title">Create Business</h4>
     </div>
+
     <form id="BusinessCreateForm" enctype="multipart/form-data">
-        Business name: <input type="text" id="businessName" name="business_name" required minlength="2" maxlength="30"><br>
-        Country: <input type="text" id="businessCountry" name="country" required minlength="3" maxlength="60"><br>
-        Visibility: <input type="checkbox" id="businessIsVisible" name="is_visible" checked><br>
-        
-        <!-- Owner will be set in the backend based on the logged-in user -->
-        
+
+        <div class="inputs">
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default">Business name</span>
+                <input type="text" id="businessName" name="business_name" class="form-control"
+                       aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+                       placeholder="Enter business name">
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default">Country</span>
+                <input type="text" id="businessCountry" name="country" class="form-control"
+                       aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+                       placeholder="Enter the country where the business is located.">
+            </div>
+
+            <div class="form-check form-switch">
+                <label class="form-check-label" for="businessIsVisible">Visibility</label>
+                <input type="checkbox" id="businessIsVisible" name="is_visible" class="form-check-input"
+                       aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+                       placeholder="Enter the country where the business is located." checked>
+            </div>
+            
+        </div>
+
         <div class="button-container form-style">
             <div class="control-buttons"></div>
             <div class="action-buttons">
                 <button class="reset-button-style button btn-create" type="submit">Create</button>
-                <button class="reset-button-style button btn-cancel" type="button" onclick="hideBusinessForm()">Cancel</button>
+                <button class="reset-button-style button btn-cancel" type="button" onclick="hideBusinessCreateForm()">
+                    Cancel
+                </button>
             </div>
         </div>
     </form>

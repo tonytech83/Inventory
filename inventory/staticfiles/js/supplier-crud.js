@@ -14,7 +14,7 @@ const deleteSupplierUrlTemplate = urls.getAttribute('data-delete-supplier-url');
 
 function showCreateForm() {
     // Show the form and the backdrop
-    document.getElementById('createForm').style.display = 'block';
+    document.getElementById('createSupplierForm').style.display = 'block';
     document.querySelector('.backdrop').style.display = 'block';
 }
 
@@ -27,7 +27,7 @@ function showEditForm(supplierId, supplierName, supplierContactName, supplierPho
     document.getElementById('supplierEmail').value = supplierEmail;
 
     // Show the form and the backdrop
-    document.getElementById('editForm').style.display = 'block';
+    document.getElementById('editSupplierForm').style.display = 'block';
     document.querySelector('.backdrop').style.display = 'block';
 }
 
@@ -36,24 +36,24 @@ function showDeleteForm(supplierId, supplierName) {
     document.getElementById('deleteSupplierName').innerText = supplierName;
 
     // Show the form and the backdrop
-    document.getElementById('deleteForm').style.display = 'block';
+    document.getElementById('deleteSupplierForm').style.display = 'block';
     document.querySelector('.backdrop').style.display = 'block'
 
     // Hide the edit form if it's shown
-    document.getElementById('editForm').style.display = 'none'
+    document.getElementById('editSupplierForm').style.display = 'none'
 }
 
 function hideForm() {
     // Hide the form and the backdrop
-    document.getElementById('editForm').style.display = 'none';
-    document.getElementById('createForm').style.display = 'none';
-    document.getElementById('deleteForm').style.display = 'none';
+    document.getElementById('editSupplierForm').style.display = 'none';
+    document.getElementById('createSupplierForm').style.display = 'none';
+    document.getElementById('deleteSupplierForm').style.display = 'none';
     document.querySelector('.backdrop').style.display = 'none';
 }
 
 function hideDeleteForm() {
     // Hide the delete form and backdrop
-    document.getElementById('deleteForm').style.display = 'none';
+    document.getElementById('deleteSupplierForm').style.display = 'none';
     document.querySelector('.backdrop').style.display = 'none';
 }
 

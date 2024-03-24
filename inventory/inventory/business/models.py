@@ -32,7 +32,7 @@ class Business(models.Model):
     )
 
     is_visible = models.BooleanField(
-        default=True
+        default=True,
     )
 
     owner = models.ForeignKey(

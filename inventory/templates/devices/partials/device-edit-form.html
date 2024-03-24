@@ -1,143 +1,353 @@
 <div id="editForm" style="display:none;">
     <div class="title-container">
         {# TODO: Check the name class for title #}
-        <h3 class="suppliers-title">Edit Device</h3>
+        <h4 class="suppliers-title">Edit Device</h4>
     </div>
     <form id="deviceEditForm" enctype="multipart/form-data">
         <div class="device-info" style="display: inline-block">
             <input type="hidden" id="editDeviceId" name="deviceId">
-            <label for="editDeviceHostName">Host Name:</label>
-            <input type="text" id="editDeviceHostName" name="device_name"><br>
 
-            <label for="editDeviceDomain">Domain:</label>
-            <input type="text" id="editDeviceDomain" name="domain"><br>
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Hostname</span>
+                <input type="text" id="editDeviceHostName" name="device_name" class="form-control"
+                       aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-sm" placeholder="Device hostname.">
+            </div>
 
-            <label for="editDeviceDescription">Description:</label>
-            <input type="text" id="editDeviceDescription" name="description"><br>
+            {#            <label for="editDeviceHostName">Host Name:</label>#}
+            {#            <input type="text" id="editDeviceHostName" name="device_name"><br>#}
 
-            <label for="editDeviceStatus">Status:</label>
-            <select id="editDeviceStatus" name="status">
-                {# TODO: Hardcoded options, not a good practise  #}
-                <option value="In operation">In operation</option>
-                <option value="Decommissioned">Decommissioned</option>
-                <option value="Pending Setup">Pending Setup</option>
-                <option value="Offline">Offline</option>
-                <option value="Not defined yet">Not defined yet</option>
-                <option value="Exception">Exception</option>
-            </select><br>
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Domain</span>
+                <input type="text" id="editDeviceDomain" name="domain" class="form-control"
+                       aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-sm" placeholder="Domain if existing.">
+            </div>
 
-            <label for="editDeviceManufacturer">Manufacturer:</label>
-            <input type="text" id="editDeviceManufacturer" name="manufacturer"><br>
+            {#            <label for="editDeviceDomain">Domain:</label>#}
+            {#            <input type="text" id="editDeviceDomain" name="domain"><br>#}
 
-            <label for="editDeviceModel">Model:</label>
-            <input type="text" id="editDeviceModel" name="model"><br>
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Description</span>
+                <input type="text" id="editDeviceDescription" name="description" class="form-control"
+                       aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-sm" placeholder="Short description.">
+            </div>
 
-            <label for="editDeviceIpAddress">IP Address:</label>
-            <input type="text" id="editDeviceIpAddress" name="ip_address"><br>
+            {#            <label for="editDeviceDescription">Description:</label>#}
+            {#            <input type="text" id="editDeviceDescription" name="description"><br>#}
 
-            <label for="editDeviceIpAddressSecondary">IP Address Secondary:</label>
-            <input type="text" id="editDeviceIpAddressSecondary" name="ip_address_sec"><br>
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Status</span>
+                <select id="editDeviceStatus" name="status" class="form-control">
+                    {# TODO: Hardcoded options, not a good practise #}
+                    <option value="In operation">In operation</option>
+                    <option value="Decommissioned">Decommissioned</option>
+                    <option value="Pending Setup">Pending Setup</option>
+                    <option value="Offline">Offline</option>
+                    <option value="Not defined yet">Not defined yet</option>
+                    <option value="Exception">Exception</option>
+                </select><br>
+            </div>
 
-            <label for="editDeviceOperatingSystem">Operating System:</label>
-            <input type="text" id="editDeviceOperatingSystem" name="operating_system"><br>
+            {#            <label for="editDeviceStatus">Status:</label>#}
+            {#            <select id="editDeviceStatus" name="status">#}
+            {# TODO: Hardcoded options, not a good practise  #}
+            {#                <option value="In operation">In operation</option>#}
+            {#                <option value="Decommissioned">Decommissioned</option>#}
+            {#                <option value="Pending Setup">Pending Setup</option>#}
+            {#                <option value="Offline">Offline</option>#}
+            {#                <option value="Not defined yet">Not defined yet</option>#}
+            {#                <option value="Exception">Exception</option>#}
+            {#            </select><br>#}
 
-            <label for="editDeviceBuilding">Building:</label>
-            <input type="text" id="editDeviceBuilding" name="building"><br>
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Manufacturer</span>
+                <input type="text" id="editDeviceManufacturer" name="manufacturer" class="form-control"
+                       aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-sm" placeholder="Device manufacturer.">
+            </div>
 
-            <label for="editDeviceCategory">Category:</label>
-            <select name="category" id="editDeviceCategory">
-                <option value="Network">Network</option>
-                <option value="Server - Virtual">Server - Virtual</option>
-                <option value="Server - Physical">Server - Physical</option>
-                <option value="Server - Platform">Server - Platform</option>
-                <option value="Printer/Scanner">Printer/Scanner</option>
-                <option value="Storage">Storage</option>
-                <option value="Conferencing">Conferencing</option>
-                <option value="End Users Computing">End Users Computing</option>
-                <option value="AirCon">AirCon</option>
-                <option value="UPS">UPS</option>
-                <option value="Other">Other</option>
-            </select><br>
+            {#            <label for="editDeviceManufacturer">Manufacturer:</label>#}
+            {#            <input type="text" id="editDeviceManufacturer" name="manufacturer"><br>#}
 
-            <label for="editDeviceSubCategory">Sub-Category:</label>
-            <select name="sub_category" id="editDeviceSubCategory">
-                <option value="Router">Router</option>
-                <option value="Firewall">Firewall</option>
-                <option value="Firewall/IDS/IPS">Firewall/IDS/IPS</option>
-                <option value="Access Point">Access Point</option>
-                <option value="Switch">Switch</option>
-                <option value="Desktop">Desktop</option>
-                <option value="Laptop">Laptop</option>
-                <option value="Printer/MFP">Printer/MFP</option>
-                <option value="Scanner">Scanner</option>
-                <option value="IP Phone">IP Phone</option>
-                <option value="Teleconferencing/Modem">Teleconferencing/Modem</option>
-                <option value="VoIP System - Cisco CM">VoIP System - Cisco CM</option>
-                <option value="VoIP System - other">VoIP System - other</option>
-                <option value="App and DB Server">App and DB Server</option>
-                <option value="Application Server">Application Server</option>
-                <option value="Database Server">Database Server</option>
-                <option value="File Server">File Server</option>
-                <option value="Other Server">Other Server</option>
-                <option value="Backup device">Backup device</option>
-                <option value="Storage - NAS">Storage - NAS</option>
-                <option value="Storage - SAN">Storage - SAN</option>
-                <option value="Data Historian">Data Historian'</option>
-                <option value="Human Machine Interface (HMI)">Human Machine Interface (HMI)</option>
-                <option value="IDS/IPS Detection">IDS/IPS Detection</option>
-                <option value="Master Terminal Unit (MTU)">Master Terminal Unit (MTU)</option>
-                <option value="Programmable Logic Controller (PLC)">Programmable Logic Controller (PLC)</option>
-                <option value="Remote Access">Remote Access</option>
-                <option value="Remote Terminal Unit (RTU)">Remote Terminal Unit (RTU)</option>
-                <option value="Other hardware">Other hardware</option>
-            </select><br>
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Model</span>
+                <input type="text" id="editDeviceModel" name="model" class="form-control"
+                       aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-sm" placeholder="Device model.">
+            </div>
 
-            <label for="editDeviceSerialNumber">Serial Number:</label>
-            <input type="text" id="editDeviceSerialNumber" name="serial_number"><br>
+            {#            <label for="editDeviceModel">Model:</label>#}
+            {#            <input type="text" id="editDeviceModel" name="model"><br>#}
 
-            <label for="editDeviceOwnerName">Owner:</label>
-            <input type="text" id="editDeviceOwnerName" name="owner_name"><br>
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">IP Address</span>
+                <input type="text" id="editDeviceIpAddress" name="ip_address" class="form-control"
+                       aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-sm" placeholder="Device IP address.">
+            </div>
+
+            {#            <label for="editDeviceIpAddress">IP Address:</label>#}
+            {#            <input type="text" id="editDeviceIpAddress" name="ip_address"><br>#}
+
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">IP Address Second</span>
+                <input type="text" id="editDeviceIpAddressSecondary" name="ip_address_sec" class="form-control"
+                       aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-sm" placeholder="Device second IP address.">
+            </div>
+
+            {#            <label for="editDeviceIpAddressSecondary">IP Address Secondary:</label>#}
+            {#            <input type="text" id="editDeviceIpAddressSecondary" name="ip_address_sec"><br>#}
+
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Operating System</span>
+                <input type="text" id="editDeviceOperatingSystem" name="operating_system" class="form-control"
+                       aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-sm" placeholder="Device operating system.">
+            </div>
+
+            {#            <label for="editDeviceOperatingSystem">Operating System:</label>#}
+            {#            <input type="text" id="editDeviceOperatingSystem" name="operating_system"><br>#}
+
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Building</span>
+                <input type="text" id="editDeviceBuilding" name="building" class="form-control"
+                       aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-sm" placeholder="Location of device.">
+            </div>
+
+            {#            <label for="editDeviceBuilding">Building:</label>#}
+            {#            <input type="text" id="editDeviceBuilding" name="building"><br>#}
+
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Category</span>
+                <select id="editDeviceCategory" name="category" class="form-control">
+                    <option value="Network">Network</option>
+                    <option value="Server - Virtual">Server - Virtual</option>
+                    <option value="Server - Physical">Server - Physical</option>
+                    <option value="Server - Platform">Server - Platform</option>
+                    <option value="Printer/Scanner">Printer/Scanner</option>
+                    <option value="Storage">Storage</option>
+                    <option value="Conferencing">Conferencing</option>
+                    <option value="End Users Computing">End Users Computing</option>
+                    <option value="AirCon">AirCon</option>
+                    <option value="UPS">UPS</option>
+                    <option value="Other">Other</option>
+                </select><br>
+            </div>
+
+            {#            <label for="editDeviceCategory">Category:</label>#}
+            {#            <select name="category" id="editDeviceCategory">#}
+            {#                <option value="Network">Network</option>#}
+            {#                <option value="Server - Virtual">Server - Virtual</option>#}
+            {#                <option value="Server - Physical">Server - Physical</option>#}
+            {#                <option value="Server - Platform">Server - Platform</option>#}
+            {#                <option value="Printer/Scanner">Printer/Scanner</option>#}
+            {#                <option value="Storage">Storage</option>#}
+            {#                <option value="Conferencing">Conferencing</option>#}
+            {#                <option value="End Users Computing">End Users Computing</option>#}
+            {#                <option value="AirCon">AirCon</option>#}
+            {#                <option value="UPS">UPS</option>#}
+            {#                <option value="Other">Other</option>#}
+            {#            </select><br>#}
+
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Category</span>
+                <select name="sub_category" id="editDeviceSubCategory" class="form-control">
+                    <option value="Router">Router</option>
+                    <option value="Firewall">Firewall</option>
+                    <option value="Firewall/IDS/IPS">Firewall/IDS/IPS</option>
+                    <option value="Access Point">Access Point</option>
+                    <option value="Switch">Switch</option>
+                    <option value="Desktop">Desktop</option>
+                    <option value="Laptop">Laptop</option>
+                    <option value="Printer/MFP">Printer/MFP</option>
+                    <option value="Scanner">Scanner</option>
+                    <option value="IP Phone">IP Phone</option>
+                    <option value="Teleconferencing/Modem">Teleconferencing/Modem</option>
+                    <option value="VoIP System - Cisco CM">VoIP System - Cisco CM</option>
+                    <option value="VoIP System - other">VoIP System - other</option>
+                    <option value="App and DB Server">App and DB Server</option>
+                    <option value="Application Server">Application Server</option>
+                    <option value="Database Server">Database Server</option>
+                    <option value="File Server">File Server</option>
+                    <option value="Other Server">Other Server</option>
+                    <option value="Backup device">Backup device</option>
+                    <option value="Storage - NAS">Storage - NAS</option>
+                    <option value="Storage - SAN">Storage - SAN</option>
+                    <option value="Data Historian">Data Historian'</option>
+                    <option value="Human Machine Interface (HMI)">Human Machine Interface (HMI)</option>
+                    <option value="IDS/IPS Detection">IDS/IPS Detection</option>
+                    <option value="Master Terminal Unit (MTU)">Master Terminal Unit (MTU)</option>
+                    <option value="Programmable Logic Controller (PLC)">Programmable Logic Controller (PLC)</option>
+                    <option value="Remote Access">Remote Access</option>
+                    <option value="Remote Terminal Unit (RTU)">Remote Terminal Unit (RTU)</option>
+                    <option value="Other hardware">Other hardware</option>
+                </select><br>
+            </div>
+
+            {#            <label for="editDeviceSubCategory">Sub-Category:</label>#}
+            {#            <select name="sub_category" id="editDeviceSubCategory">#}
+            {#                <option value="Router">Router</option>#}
+            {#                <option value="Firewall">Firewall</option>#}
+            {#                <option value="Firewall/IDS/IPS">Firewall/IDS/IPS</option>#}
+            {#                <option value="Access Point">Access Point</option>#}
+            {#                <option value="Switch">Switch</option>#}
+            {#                <option value="Desktop">Desktop</option>#}
+            {#                <option value="Laptop">Laptop</option>#}
+            {#                <option value="Printer/MFP">Printer/MFP</option>#}
+            {#                <option value="Scanner">Scanner</option>#}
+            {#                <option value="IP Phone">IP Phone</option>#}
+            {#                <option value="Teleconferencing/Modem">Teleconferencing/Modem</option>#}
+            {#                <option value="VoIP System - Cisco CM">VoIP System - Cisco CM</option>#}
+            {#                <option value="VoIP System - other">VoIP System - other</option>#}
+            {#                <option value="App and DB Server">App and DB Server</option>#}
+            {#                <option value="Application Server">Application Server</option>#}
+            {#                <option value="Database Server">Database Server</option>#}
+            {#                <option value="File Server">File Server</option>#}
+            {#                <option value="Other Server">Other Server</option>#}
+            {#                <option value="Backup device">Backup device</option>#}
+            {#                <option value="Storage - NAS">Storage - NAS</option>#}
+            {#                <option value="Storage - SAN">Storage - SAN</option>#}
+            {#                <option value="Data Historian">Data Historian'</option>#}
+            {#                <option value="Human Machine Interface (HMI)">Human Machine Interface (HMI)</option>#}
+            {#                <option value="IDS/IPS Detection">IDS/IPS Detection</option>#}
+            {#                <option value="Master Terminal Unit (MTU)">Master Terminal Unit (MTU)</option>#}
+            {#                <option value="Programmable Logic Controller (PLC)">Programmable Logic Controller (PLC)</option>#}
+            {#                <option value="Remote Access">Remote Access</option>#}
+            {#                <option value="Remote Terminal Unit (RTU)">Remote Terminal Unit (RTU)</option>#}
+            {#                <option value="Other hardware">Other hardware</option>#}
+            {#            </select><br>#}
+
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Serial Number</span>
+                <input type="text" id="editDeviceSerialNumber" name="serial_number" class="form-control"
+                       aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-sm" placeholder="Device unique serial number.">
+            </div>
+
+            {#            <label for="editDeviceSerialNumber">Serial Number:</label>#}
+            {#            <input type="text" id="editDeviceSerialNumber" name="serial_number"><br>#}
+
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Owner</span>
+                <input type="text" id="editDeviceOwnerName" name="owner_name" class="form-control"
+                       aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-sm" placeholder="Person who use/own device.">
+            </div>
+
+            {#            <label for="editDeviceOwnerName">Owner:</label>#}
+            {#            <input type="text" id="editDeviceOwnerName" name="owner_name"><br>#}
         </div>
 
-        <div class="device-support" style="display: inline-block; vertical-align: top;">
-            <label for="editDeviceSupportModel">Support Model:</label>
-            <input type="text" id="editDeviceSupportModel" name="support_model"><br>
+        <div class="device-support">
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Support Model</span>
+                <input type="text" id="editDeviceSupportModel" name="support_model" class="form-control"
+                       aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-sm" placeholder="Short desc of device support model.">
+            </div>
 
-            <label for="editDevicePurchaseOrderNumber">PO Number:</label>
-            <input type="text" id="editDevicePurchaseOrderNumber" name="purchase_order_number"><br>
+            {#            <label for="editDeviceSupportModel">Support Model:</label>#}
+            {#            <input type="text" id="editDeviceSupportModel" name="support_model"><br>#}
 
-            <label for="editDeviceInvoiceImage">Invoice document:</label>
-            <input type="file" id="editDeviceInvoiceImage" name="invoice_img"><br>
-{#            <a id="invoiceDownloadLink" href="#" style="display:none;" download>Download Invoice</a><br>#}
-            <a id="existingInvoiceLink" href="#" style="display:none;" download>Download Invoice</a><br>
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">PO Number</span>
+                <input type="text" id="editDevicePurchaseOrderNumber" name="purchase_order_number" class="form-control"
+                       aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-sm" placeholder="Purchase order number.">
+            </div>
 
-            <label for="editDeviceStartOfSupport">Start Of Support:</label>
-            <input type="date" id="editDeviceStartOfSupport" name="sos"><br>
+            {#            <label for="editDevicePurchaseOrderNumber">PO Number:</label>#}
+            {#            <input type="text" id="editDevicePurchaseOrderNumber" name="purchase_order_number"><br>#}
 
-            <label for="editDeviceEndOfSupport">End Of Support:</label>
-            <input type="date" id="editDeviceEndOfSupport" name="eos"><br>
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Invoice Image</span>
+                <input type="file" id="editDeviceInvoiceImage" name="invoice_img" class="form-control"><br>
+            </div>
 
-            <label for="editDeviceEndOfLife">End Of Life:</label>
-            <input type="date" id="editDeviceEndOfLife" name="eol"><br>
+            {#            <label for="editDeviceInvoiceImage">Invoice document:</label>#}
+            {#            <input type="file" id="editDeviceInvoiceImage" name="invoice_img"><br>#}
+            {#            <a id="invoiceDownloadLink" href="#" style="display:none;" download>Download Invoice</a><br>#}
+            <a id="existingInvoiceLink" class="button btn-download" href="#" style="display:none;" download>Download
+                Invoice</a><br>
+
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Start Of Support</span>
+                <input type="date" id="editDeviceStartOfSupport" name="sos" class="form-control"
+                       aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-sm">
+            </div>
+
+            {#            <label for="editDeviceStartOfSupport">Start Of Support:</label>#}
+            {#            <input type="date" id="editDeviceStartOfSupport" name="sos"><br>#}
+
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">End Of Support</span>
+                <input type="date" id="editDeviceEndOfSupport" name="eos" class="form-control"
+                       aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-sm">
+            </div>
+
+            {#            <label for="editDeviceEndOfSupport">End Of Support:</label>#}
+            {#            <input type="date" id="editDeviceEndOfSupport" name="eos"><br>#}
+
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">End Of Life</span>
+                <input type="date" id="editDeviceEndOfLife" name="eol" class="form-control"
+                       aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-sm">
+            </div>
+
+            {#            <label for="editDeviceEndOfLife">End Of Life:</label>#}
+            {#            <input type="date" id="editDeviceEndOfLife" name="eol"><br>#}
         </div>
 
-        <div class="device-risk" style="display: inline-block; vertical-align: top;">
-            <label for="editDeviceBusinessProcessAtRisk">Business Process At Risk:</label>
-            <input type="text" id="editDeviceBusinessProcessAtRisk" name="business_processes_at_risk"><br>
+        <div class="device-risk">
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Process At Risk</span>
+                <input type="text" id="editDeviceBusinessProcessAtRisk" name="business_processes_at_risk"
+                       class="form-control"
+                       aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-sm" placeholder="Short desc of device support model.">
+            </div>
 
-            <label for="editDeviceImpact">Impact:</label>
-            <select name="impact" id="editDeviceImpact">
-                {% for i in '12345' %}
-                    <option value="{{ i }}">{{ i }}</option>
-                {% endfor %}
-            </select><br>
+            {#            <label for="editDeviceBusinessProcessAtRisk">Business Process At Risk:</label>#}
+            {#            <input type="text" id="editDeviceBusinessProcessAtRisk" name="business_processes_at_risk"><br>#}
 
-            <label for="editDeviceLikelihood">Likelihood:</label>
-            <select name="likelihood" id="editDeviceLikelihood">
-                {% for i in '12345' %}
-                    <option value="{{ i }}">{{ i }}</option>
-                {% endfor %}
-            </select><br>
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Impact</span>
+                <select name="impact" id="editDeviceImpact" class="form-control">
+                    {% for i in '12345' %}
+                        <option value="{{ i }}">{{ i }}</option>
+                    {% endfor %}
+                </select><br>
+            </div>
+
+            {#            <label for="editDeviceImpact">Impact:</label>#}
+            {#            <select name="impact" id="editDeviceImpact">#}
+            {#                {% for i in '12345' %}#}
+            {#                    <option value="{{ i }}">{{ i }}</option>#}
+            {#                {% endfor %}#}
+            {#            </select><br>#}
+
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Likelihood</span>
+                <select name="likelihood" id="editDeviceLikelihood" class="form-control">
+                    {% for i in '12345' %}
+                        <option value="{{ i }}">{{ i }}</option>
+                    {% endfor %}
+                </select><br>
+            </div>
+
+{#            <label for="editDeviceLikelihood">Likelihood:</label>#}
+            {#            <select name="likelihood" id="editDeviceLikelihood">#}
+            {#                {% for i in '12345' %}#}
+            {#                    <option value="{{ i }}">{{ i }}</option>#}
+            {#                {% endfor %}#}
+            {#            </select><br>#}
         </div>
 
 

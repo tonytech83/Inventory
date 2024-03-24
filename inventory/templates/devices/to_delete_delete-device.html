@@ -1,20 +1,20 @@
-{% extends 'base/base.html' %}
-
-{% block main_content %}
-    <div>
-        <form action="{% url 'delete-device' pk=object.pk %}" method="POST">
-            <h1>Please confirm deletion of device {{ object.device_name }} </h1>
-
-            {% csrf_token %}
-
-            <div class="button-container">
-                <div class="control-buttons"></div>
-                <div class="action-buttons">
-                    <button class="reset-button-style button btn-delete">Confirm Delete</button>
-                    <a class="button btn-cancel" href="{% url 'business' pk=object.business.pk %}">Cancel</a>
-                </div>
-            </div>
-
-        </form>
-    </div>
-{% endblock %}
+{#{% extends 'base/base.html' %}#}
+{##}
+{#{% block main_content %}#}
+{#    <div>#}
+{#        <form action="{% url 'delete-device' pk=object.pk %}" method="POST">#}
+{#            <h1>Please confirm deletion of device {{ object.device_name }} </h1>#}
+{##}
+{#            {% csrf_token %}#}
+{##}
+{#            <div class="button-container">#}
+{#                <div class="control-buttons"></div>#}
+{#                <div class="action-buttons">#}
+{#                    <button class="reset-button-style button btn-delete">Confirm Delete</button>#}
+{#                    <a class="button btn-cancel" href="{% url 'business' pk=object.business.pk %}">Cancel</a>#}
+{#                </div>#}
+{#            </div>#}
+{##}
+{#        </form>#}
+{#    </div>#}
+{#{% endblock %}#}

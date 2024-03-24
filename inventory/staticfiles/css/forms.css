@@ -14,10 +14,9 @@
 #editForm,
 #createForm,
 #deleteForm,
-#uploadCSVForm,
-#businessEditFormContainer {
+#uploadCSVForm {
     width: 80%;
-    height: 50%;
+    height: 65%;
 
     position: fixed; /* Position relative to the viewport */
     top: 50%; /* Center vertically */
@@ -31,3 +30,20 @@
     display: none; /* Hidden by default */
 }
 
+.small {
+    width: 40%;
+    height: 40%;
+}
+
+
+.title-container {
+    border: 2px solid var(--background-color);
+    box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
+    margin-bottom: 20px;
+}
+
+.title-container h4 {
+    text-align: center;
+    line-height: 1;
+    margin: 6px 0;
+}

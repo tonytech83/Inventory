@@ -10,7 +10,11 @@
     <div id="businessFormContainer" data-create-url="{% url 'create-business' %}">
         {% include 'business/partials/business-create-form.html' %}
     </div>
-
+    <div data-edit-business-url="{% url 'edit-business' pk=0 %}"
+         data-create-business-url="{% url 'create-business' %}"
+         hidden id="devicesUrls"></div>
+    
+    <!-- Stats -->
     <div class="stats">
         <div class="box">
             <p>Total business: {{ object_list.count }}</p>

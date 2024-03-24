@@ -3,12 +3,14 @@ import {getCookie} from './get-cookie.js'
 window.showCreateBusinessForm = showCreateBusinessForm;
 window.showEditBusinessForm = showEditBusinessForm;
 window.hideBusinessForm = hideBusinessForm;
+window.hideBusinessCreateForm = hideBusinessCreateForm;
 
 const urls = document.getElementById('devicesUrls');
 const editBusinessUrl = urls.getAttribute('data-edit-business-url');
+const createBusinessUrl = urls.getAttribute('data-create-business-url')
 
 function showCreateBusinessForm() {
-    const createForm = document.getElementById('createForm');
+    const createForm = document.getElementById('createBusinessForm');
     createForm.style.display = 'block';
     document.querySelector('.backdrop').style.display = 'block';
 }
@@ -37,6 +39,11 @@ function hideBusinessForm() {
     document.querySelector('.backdrop').style.display = 'none';
 }
 
+function hideBusinessCreateForm() {
+    document.getElementById('createBusinessForm').style.display = 'none';
+    document.querySelector('.backdrop').style.display = 'none';
+}
+
 // Create
 document.addEventListener('DOMContentLoaded', function () {
     const createForm = document.getElementById('BusinessCreateForm');
@@ -45,7 +52,8 @@ document.addEventListener('DOMContentLoaded', function () {
             e.preventDefault();
 
             const businessFormContainer = document.getElementById('businessFormContainer');
-            const createUrl = businessFormContainer.getAttribute('data-create-url');
+            // const createUrl = businessFormContainer.getAttribute('data-create-url');
+            const createUrl = createBusinessUrl;
 
             const formData = new FormData(createForm);
             const csrftoken = getCookie('csrftoken');

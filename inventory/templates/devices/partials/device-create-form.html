@@ -1,155 +1,296 @@
 <div id="createForm" style="display: none">
     <div class="title-container">
-        <h3 class="suppliers-title">Create Device</h3>
+        <h4 class="suppliers-title">Create Device</h4>
     </div>
     <form id="deviceCreateForm" enctype="multipart/form-data">
 
-        <div style="display: inline-block; vertical-align: top;">
+        <div class="device-info">
 
-            <label for="deviceName">Device Name:</label>
-            <input type="text" id="deviceName" name="device_name" required><br>
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Hostname</span>
+                <input type="text" id="deviceName" name="device_name" class="form-control"
+                       aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-sm" placeholder="Device hostname.">
+            </div>
 
-            <label for="deviceDomain">Domain:</label>
-            <input type="text" id="deviceDomain" name="domain"><br>
+            {#            <label for="deviceName">Device Name:</label>#}
+            {#            <input type="text" id="deviceName" name="device_name" required><br>#}
 
-            <label for="deviceDescription">Description:</label>
-            <input type="text" id="deviceDescription" name="description"><br>
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Domain</span>
+                <input type="text" id="deviceDomain" name="domain" class="form-control"
+                       aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-sm" placeholder="Domain if existing.">
+            </div>
 
-            <label for="deviceStatus">Status:</label>
-            <select id="deviceStatus" name="status">
-                {# TODO: Hardcoded options, not a good practise #}
-                <option value="In operation">In operation</option>
-                <option value="Decommissioned">Decommissioned</option>
-                <option value="Pending Setup">Pending Setup</option>
-                <option value="Offline">Offline</option>
-                <option value="Not defined yet">Not defined yet</option>
-                <option value="Exception">Exception</option>
-            </select><br>
+            {#            <label for="deviceDomain">Domain:</label>#}
+            {#            <input type="text" id="deviceDomain" name="domain"><br>#}
 
-            <label for="deviceManufacturer">Manufacturer:</label>
-            <input type="text" id="deviceManufacturer" name="manufacturer"><br>
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Description</span>
+                <input type="text" id="deviceDescription" name="description" class="form-control"
+                       aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-sm" placeholder="Short description.">
+            </div>
 
-            <label for="deviceModel">Model:</label>
-            <input type="text" id="deviceModel" name="model"><br>
+            {#            <label for="deviceDescription">Description:</label>#}
+            {#            <input type="text" id="deviceDescription" name="description"><br>#}
 
-            <label for="deviceIpAddress">IP Address:</label>
-            <input type="text" id="deviceIpAddress" name="ip_address"><br>
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Status</span>
+                <select id="deviceStatus" name="status" class="form-control">
+                    {# TODO: Hardcoded options, not a good practise #}
+                    <option value="In operation">In operation</option>
+                    <option value="Decommissioned">Decommissioned</option>
+                    <option value="Pending Setup">Pending Setup</option>
+                    <option value="Offline">Offline</option>
+                    <option value="Not defined yet">Not defined yet</option>
+                    <option value="Exception">Exception</option>
+                </select><br>
+            </div>
 
-            <label for="deviceIpAddressSecondary">IP Address Second:</label>
-            <input type="text" id="deviceIpAddressSecondary" name="ip_address_sec"><br>
+            {#            <label for="deviceStatus">Status:</label>#}
+            {#            <select id="deviceStatus" name="status">#}
+            {#                <option value="In operation">In operation</option>#}
+            {#                <option value="Decommissioned">Decommissioned</option>#}
+            {#                <option value="Pending Setup">Pending Setup</option>#}
+            {#                <option value="Offline">Offline</option>#}
+            {#                <option value="Not defined yet">Not defined yet</option>#}
+            {#                <option value="Exception">Exception</option>#}
+            {#            </select><br>#}
 
-            <label for="deviceOperatingSystem">Operating System:</label>
-            <input type="text" id="deviceOperatingSystem" name="operating_system"><br>
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Manufacturer</span>
+                <input type="text" id="deviceManufacturer" name="manufacturer" class="form-control"
+                       aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-sm" placeholder="Device manufacturer.">
+            </div>
 
-            <label for="deviceBuilding">Building:</label>
-            <input type="text" id="deviceBuilding" name="building"><br>
+            {#            <label for="deviceManufacturer">Manufacturer:</label>#}
+            {#            <input type="text" id="deviceManufacturer" name="manufacturer"><br>#}
 
-            <label for="deviceCategory">Category:</label>
-            <select name="category" id="deviceCategory">
-                <option value="Network">Network</option>
-                <option value="Server - Virtual">Server - Virtual</option>
-                <option value="Server - Physical">Server - Physical</option>
-                <option value="Server - Platform">Server - Platform</option>
-                <option value="Printer/Scanner">Printer/Scanner</option>
-                <option value="Storage">Storage</option>
-                <option value="Conferencing">Conferencing</option>
-                <option value="End Users Computing">End Users Computing</option>
-                <option value="AirCon">AirCon</option>
-                <option value="UPS">UPS</option>
-                <option value="Other">Other</option>
-            </select><br>
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Model</span>
+                <input type="text" id="deviceModel" name="model" class="form-control"
+                       aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-sm" placeholder="Device model.">
+            </div>
 
-            <label for="deviceSubCategory">Sub-Category:</label>
-            <select name="sub_category" id="deviceSubCategory">
-                <option value="Router">Router</option>
-                <option value="Firewall">Firewall</option>
-                <option value="Firewall/IDS/IPS">Firewall/IDS/IPS</option>
-                <option value="Access Point">Access Point</option>
-                <option value="Switch">Switch</option>
-                <option value="Desktop">Desktop</option>
-                <option value="Laptop">Laptop</option>
-                <option value="Printer/MFP">Printer/MFP</option>
-                <option value="Scanner">Scanner</option>
-                <option value="IP Phone">IP Phone</option>
-                <option value="Teleconferencing/Modem">Teleconferencing/Modem</option>
-                <option value="VoIP System - Cisco CM">VoIP System - Cisco CM</option>
-                <option value="VoIP System - other">VoIP System - other</option>
-                <option value="App and DB Server">App and DB Server</option>
-                <option value="Application Server">Application Server</option>
-                <option value="Database Server">Database Server</option>
-                <option value="File Server">File Server</option>
-                <option value="Other Server">Other Server</option>
-                <option value="Backup device">Backup device</option>
-                <option value="Storage - NAS">Storage - NAS</option>
-                <option value="Storage - SAN">Storage - SAN</option>
-                <option value="Data Historian">Data Historian'</option>
-                <option value="Human Machine Interface (HMI)">Human Machine Interface (HMI)</option>
-                <option value="IDS/IPS Detection">IDS/IPS Detection</option>
-                <option value="Master Terminal Unit (MTU)">Master Terminal Unit (MTU)</option>
-                <option value="Programmable Logic Controller (PLC)">Programmable Logic Controller (PLC)</option>
-                <option value="Remote Access">Remote Access</option>
-                <option value="Remote Terminal Unit (RTU)">Remote Terminal Unit (RTU)</option>
-                <option value="Other hardware">Other hardware</option>
-            </select><br>
+            {#            <label for="deviceModel">Model:</label>#}
+            {#            <input type="text" id="deviceModel" name="model"><br>#}
 
-            <label for="deviceSerialNumber">Serial Number:</label>
-            <input type="text" id="deviceSerialNumber" name="serial_number"><br>
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">IP Address</span>
+                <input type="text" id="deviceIpAddress" name="ip_address" class="form-control"
+                       aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-sm" placeholder="Device IP address.">
+            </div>
 
-            <label for="deviceOwnerName">Owner:</label>
-            <input type="text" id="deviceOwnerName" name="device_owner"><br>
+            {#            <label for="deviceIpAddress">IP Address:</label>#}
+            {#            <input type="text" id="deviceIpAddress" name="ip_address"><br>#}
+
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">IP Address Second</span>
+                <input type="text" id="deviceIpAddressSecondary" name="ip_address_sec" class="form-control"
+                       aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-sm" placeholder="Device second IP address.">
+            </div>
+
+            {#            <label for="deviceIpAddressSecondary">IP Address Second:</label>#}
+            {#            <input type="text" id="deviceIpAddressSecondary" name="ip_address_sec"><br>#}
+
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Operating System</span>
+                <input type="text" id="deviceOperatingSystem" name="operating_system" class="form-control"
+                       aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-sm" placeholder="Device operating system.">
+            </div>
+
+            {#            <label for="deviceOperatingSystem">Operating System:</label>#}
+            {#            <input type="text" id="deviceOperatingSystem" name="operating_system"><br>#}
+
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Building</span>
+                <input type="text" id="deviceBuilding" name="building" class="form-control"
+                       aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-sm" placeholder="Location of device.">
+            </div>
+
+            {#            <label for="deviceBuilding">Building:</label>#}
+            {#            <input type="text" id="deviceBuilding" name="building"><br>#}
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Category</span>
+                <select id="deviceCategory" name="category" class="form-control">
+                    <option value="Network">Network</option>
+                    <option value="Server - Virtual">Server - Virtual</option>
+                    <option value="Server - Physical">Server - Physical</option>
+                    <option value="Server - Platform">Server - Platform</option>
+                    <option value="Printer/Scanner">Printer/Scanner</option>
+                    <option value="Storage">Storage</option>
+                    <option value="Conferencing">Conferencing</option>
+                    <option value="End Users Computing">End Users Computing</option>
+                    <option value="AirCon">AirCon</option>
+                    <option value="UPS">UPS</option>
+                    <option value="Other">Other</option>
+                </select><br>
+            </div>
+
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Category</span>
+                <select name="sub_category" id="deviceSubCategory" class="form-control">
+                    <option value="Router">Router</option>
+                    <option value="Firewall">Firewall</option>
+                    <option value="Firewall/IDS/IPS">Firewall/IDS/IPS</option>
+                    <option value="Access Point">Access Point</option>
+                    <option value="Switch">Switch</option>
+                    <option value="Desktop">Desktop</option>
+                    <option value="Laptop">Laptop</option>
+                    <option value="Printer/MFP">Printer/MFP</option>
+                    <option value="Scanner">Scanner</option>
+                    <option value="IP Phone">IP Phone</option>
+                    <option value="Teleconferencing/Modem">Teleconferencing/Modem</option>
+                    <option value="VoIP System - Cisco CM">VoIP System - Cisco CM</option>
+                    <option value="VoIP System - other">VoIP System - other</option>
+                    <option value="App and DB Server">App and DB Server</option>
+                    <option value="Application Server">Application Server</option>
+                    <option value="Database Server">Database Server</option>
+                    <option value="File Server">File Server</option>
+                    <option value="Other Server">Other Server</option>
+                    <option value="Backup device">Backup device</option>
+                    <option value="Storage - NAS">Storage - NAS</option>
+                    <option value="Storage - SAN">Storage - SAN</option>
+                    <option value="Data Historian">Data Historian'</option>
+                    <option value="Human Machine Interface (HMI)">Human Machine Interface (HMI)</option>
+                    <option value="IDS/IPS Detection">IDS/IPS Detection</option>
+                    <option value="Master Terminal Unit (MTU)">Master Terminal Unit (MTU)</option>
+                    <option value="Programmable Logic Controller (PLC)">Programmable Logic Controller (PLC)</option>
+                    <option value="Remote Access">Remote Access</option>
+                    <option value="Remote Terminal Unit (RTU)">Remote Terminal Unit (RTU)</option>
+                    <option value="Other hardware">Other hardware</option>
+                </select><br>
+            </div>
+
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Serial Number</span>
+                <input type="text" id="deviceSerialNumber" name="serial_number" class="form-control"
+                       aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-sm" placeholder="Device unique serial number.">
+            </div>
+
+            {#            <label for="deviceSerialNumber">Serial Number:</label>#}
+            {#            <input type="text" id="deviceSerialNumber" name="serial_number"><br>#}
+
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Owner</span>
+                <input type="text" id="deviceOwnerName" name="device_owner" class="form-control"
+                       aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-sm" placeholder="Person who use/own device.">
+            </div>
+
+            {#            <label for="deviceOwnerName">Owner:</label>#}
+            {#            <input type="text" id="deviceOwnerName" name="device_owner"><br>#}
         </div>
 
-        <div class="support-info" style="display: inline-block; vertical-align: top;">
-            <label for="deviceSupportModel">Support Model:</label>
-            <input type="text" id="deviceSupportModel" name="support_model"><br>
+        <div class="support-info">
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Support Model</span>
+                <input type="text" id="deviceSupportModel" name="support_model" class="form-control"
+                       aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-sm" placeholder="Short desc of device support model.">
+            </div>
 
-            <label for="devicePurchaseOrderNumber">PO Number:</label>
-            <input type="text" id="devicePurchaseOrderNumber" name="purchase_order_number"><br>
+            {#            <label for="deviceSupportModel">Support Model:</label>#}
+            {#            <input type="text" id="deviceSupportModel" name="support_model"><br>#}
 
-            <label for="deviceStartOfSupport">Start Of Support:</label>
-            <input type="date" id="deviceStartOfSupport" name="sos"><br>
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">PO Number</span>
+                <input type="text" id="devicePurchaseOrderNumber" name="purchase_order_number" class="form-control"
+                       aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-sm" placeholder="Purchase order number.">
+            </div>
 
-            <label for="deviceEndOfSupport">End Of Support:</label>
-            <input type="date" id="deviceEndOfSupport" name="eos"><br>
+            {#            <label for="devicePurchaseOrderNumber">PO Number:</label>#}
+            {#            <input type="text" id="devicePurchaseOrderNumber" name="purchase_order_number"><br>#}
 
-            <label for="deviceEndOfLife">End Of Life:</label>
-            <input type="date" id="deviceEndOfLife" name="eol"><br>
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Start Of Support</span>
+                <input type="date" id="deviceStartOfSupport" name="sos" class="form-control"
+                       aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-sm">
+            </div>
 
-            <label for="deviceSupplier">Supplier:</label>
-            <select name="supplier" id="deviceSupplier">
-            </select><br>
+            {#            <label for="deviceStartOfSupport">Start Of Support:</label>#}
+            {#            <input type="date" id="deviceStartOfSupport" name="sos"><br>#}
 
-            <label for="deviceInvoiceImage">Invoice Image:</label>
-            <input type="file" id="deviceInvoiceImage" name="invoice_img"><br>
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">End Of Support</span>
+                <input type="date" id="deviceEndOfSupport" name="eos" class="form-control"
+                       aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-sm">
+            </div>
+
+            {#            <label for="deviceEndOfSupport">End Of Support:</label>#}
+            {#            <input type="date" id="deviceEndOfSupport" name="eos"><br>#}
+
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">End Of Life</span>
+                <input type="date" id="deviceEndOfLife" name="eol" class="form-control"
+                       aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-sm">
+            </div>
+
+            {#            <label for="deviceEndOfLife">End Of Life:</label>#}
+            {#            <input type="date" id="deviceEndOfLife" name="eol"><br>#}
+
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Supplier</span>
+                <select name="supplier" id="deviceSupplier" class="form-control">
+                </select><br>
+            </div>
+
+            {#            <label for="deviceSupplier">Supplier:</label>#}
+            {#            <select name="supplier" id="deviceSupplier">#}
+            {#            </select><br>#}
+
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Invoice Image</span>
+                <input type="file" id="deviceInvoiceImage" name="invoice_img" class="form-control"><br>
+            </div>
+
+            {#            <label for="deviceInvoiceImage">Invoice Image:</label>#}
+            {#            <input type="file" id="deviceInvoiceImage" name="invoice_img"><br>#}
         </div>
 
-        <div class="risk-info" style="display: inline-block; vertical-align: top;">
-            <label for="deviceBusinessProcessAtRisk">Business Process At Risk:</label>
-            <input type="text" id="deviceBusinessProcessAtRisk" name="business_processes_at_risk"><br>
+        <div class="risk-info">
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Process At Risk</span>
+                <input type="text" id="deviceBusinessProcessAtRisk" name="business_processes_at_risk"
+                       class="form-control"
+                       aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-sm" placeholder="Short desc of device support model.">
+            </div>
 
-            <label for="deviceImpact">Impact:</label>
-            <select name="impact" id="deviceImpact">
-                {% for i in '12345' %}
-                    <option value="{{ i }}">{{ i }}</option>
-                {% endfor %}
-                {#                <option value="1">1</option>#}
-                {#                <option value="2">2</option>#}
-                {#                <option value="3">3</option>#}
-                {#                <option value="4">4</option>#}
-                {#                <option value="5">5</option>#}
-            </select><br>
 
-            <label for="deviceLikelihood">Likelihood:</label>
-            <select name="likelihood" id="deviceLikelihood">
-                {% for i in '12345' %}
-                    <option value="{{ i }}">{{ i }}</option>
-                {% endfor %}
-                {#                <option value="1">1</option>#}
-                {#                <option value="2">2</option>#}
-                {#                <option value="3">3</option>#}
-                {#                <option value="4">4</option>#}
-                {#                <option value="5">5</option>#}
-            </select><br>
+            {#            <label for="deviceBusinessProcessAtRisk">Business Process At Risk:</label>#}
+            {#            <input type="text" id="deviceBusinessProcessAtRisk" name="business_processes_at_risk"><br>#}
+
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Impact</span>
+                <select name="impact" id="deviceImpact" class="form-control">
+                    {% for i in '12345' %}
+                        <option value="{{ i }}">{{ i }}</option>
+                    {% endfor %}
+                </select><br>
+            </div>
+
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Likelihood</span>
+                <select name="likelihood" id="deviceLikelihood" class="form-control">
+                    {% for i in '12345' %}
+                        <option value="{{ i }}">{{ i }}</option>
+                    {% endfor %}
+                </select><br>
+            </div>
         </div>
 
         <div class="button-container form-style">

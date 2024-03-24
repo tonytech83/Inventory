@@ -1,13 +1,47 @@
-<div id="editForm" style="display:none;">
+<div id="editSupplierForm" style="display:none;">
     <div class="title-container">
-        <h3 class="suppliers-title">Edit Supplier</h3>
+        <h4 class="suppliers-title">Edit Supplier</h4>
     </div>
+
     <form id="supplierEditForm">
-        <input type="hidden" id="supplierId" name="supplierId">
-        Name: <input type="text" id="supplierName" name="name"><br>
-        Contact Name: <input type="text" id="supplierContactName" name="contact_name"><br>
-        Phone number: <input type="text" id="supplierPhoneNumber" name="phone_number"><br>
-        Eimal: <input type="text" id="supplierEmail" name="email"><br>
+
+        <div class="inputs">
+            <input type="hidden" id="supplierId" name="supplierId">
+
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default">Supplier name</span>
+                <input type="text" id="supplierName" name="name" class="form-control"
+                       aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+                       placeholder="Enter supplier name">
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default">Contact Name</span>
+                <input type="text" id="supplierContactName" name="contact_name" class="form-control"
+                       aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+                       placeholder="Enter contact name">
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default">Phone number</span>
+                <input type="text" id="supplierPhoneNumber" name="phone_number" class="form-control"
+                       aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+                       placeholder="Enter contact name">
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default">Email</span>
+                <input type="email" id="supplierEmail" name="email" class="form-control"
+                       aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+                       placeholder="Enter contact name">
+            </div>
+
+        </div>
+
+        {#        Name: <input type="text" id="supplierName" name="name"><br>#}
+        {#        Contact Name: <input type="text" id="supplierContactName" name="contact_name"><br>#}
+        {#        Phone number: <input type="text" id="supplierPhoneNumber" name="phone_number"><br>#}
+{#        Eimal: <input type="text" id="supplierEmail" name="email"><br>#}
         <div class="button-container form-style">
             <div class="control-buttons"></div>
             <div class="action-buttons">

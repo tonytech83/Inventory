@@ -1,18 +1,36 @@
 <div id="businessEditFormContainer" style="display:none;">
+
     <div class="title-container">
-        <h3 class="suppliers-title">Edit Business</h3>
+        <h4 class="suppliers-title">Edit Business</h4>
     </div>
+
     <form id="businessEditForm">
-        <input type="hidden" id="editBusinessId" name="businessId">
-        <label for="editBusinessName">Name:</label>
-        <input type="text" id="editBusinessName" name="business_name"><br>
 
-        <label for="editBusinessCountry">Country:</label>
-        <input type="text" id="editBusinessCountry" name="country"><br>
+        <div class="inputs">
+            <input type="hidden" id="editBusinessId" name="businessId">
 
-        <label for="editBusinessIsVisible">Visible:</label>
-        <input type="checkbox" id="editBusinessIsVisible" name="is_visible"><br>
-        
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default">Business name</span>
+                <input type="text" id="editBusinessName" name="business_name" class="form-control"
+                       aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+                       placeholder="Enter business name">
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default">Country</span>
+                <input type="text" id="editBusinessCountry" name="country" class="form-control"
+                       aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+                       placeholder="Enter business name">
+            </div>
+
+            <div class="form-check form-switch">
+                <span class="form-check-label" id="editBusinessIsVisible">Visibility</span>
+                <input type="checkbox" id="editBusinessIsVisible" name="is_visible" class="form-check-input"
+                       aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+            </div>
+
+        </div>
+
         <div class="button-container form-style">
             <div class="control-buttons"></div>
             <div class="action-buttons">
