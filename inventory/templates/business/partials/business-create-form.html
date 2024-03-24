@@ -5,7 +5,6 @@
     <form id="BusinessCreateForm" enctype="multipart/form-data">
         Business name: <input type="text" id="businessName" name="business_name" required minlength="2" maxlength="30"><br>
         Country: <input type="text" id="businessCountry" name="country" required minlength="3" maxlength="60"><br>
-        Business Picture: <input type="file" id="businessPicture" name="business_picture" accept="image/*"><br>
         Visibility: <input type="checkbox" id="businessIsVisible" name="is_visible" checked><br>
         
         <!-- Owner will be set in the backend based on the logged-in user -->
@@ -14,7 +13,7 @@
             <div class="control-buttons"></div>
             <div class="action-buttons">
                 <button class="reset-button-style button btn-create" type="submit">Create</button>
-                <button class="reset-button-style button btn-cancel" type="button" onclick="hideForm()">Cancel</button>
+                <button class="reset-button-style button btn-cancel" type="button" onclick="hideBusinessForm()">Cancel</button>
             </div>
         </div>
     </form>

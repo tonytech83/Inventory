@@ -6,9 +6,9 @@
     <!-- Forms container-->
     <div class="backdrop" style="display:none;" onclick="hideForm()"></div>
 
-    <!-- Hidden form for creating -->
+    <!-- Hidden form for creating Business -->
     <div id="businessFormContainer" data-create-url="{% url 'create-business' %}">
-        {% include 'business/partials/create-form.html' %}
+        {% include 'business/partials/business-create-form.html' %}
     </div>
 
     <div class="stats">

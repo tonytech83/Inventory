@@ -1,21 +1,92 @@
 {% extends 'base/base.html' %}
 
 {% block main_content %}
+    <div class="backdrop"></div>
 
-    <h1>Edit Profile</h1>
-    <p>for: {{ object.account.email }}</p>
-    <form action="{% url 'edit-profile' pk=request.user.pk %}" method="POST">
-        {{ form.as_p }}
+    <div class="edit-profile">
 
-        {% csrf_token %}
-
-        <div class="button-container">
-            <div class="control-buttons"></div>
-            <div class="action-buttons">
-                <button class="reset-button-style button btn-create">Save</button>
-                <a class="button btn-cancel" href="{% url 'details-profile' %}">Cancel</a>
-            </div>
+        <div class="title-container">
+            <h4 class="login-title">Edit Profile</h4>
         </div>
-    </form>
-    
+
+        <form action="{% url 'edit-profile' pk=request.user.pk %}" method="POST">
+
+            <div class="inputs">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">User login</span>
+                    <span type="email" id="id_username" class="form-control"
+                          aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+                    >{{ object.account.email }}</span>
+                </div>
+
+                <hr>
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">First name</span>
+                    <input type="text" id="id_first_name" name="first_name" class="form-control"
+                           aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+                           placeholder="Enter your first name" value="{{ object.first_name }}">
+                </div>
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Last name</span>
+                    <input type="text" id="id_last_name" name="last_name" class="form-control"
+                           aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+                           placeholder="Enter your last name." value="{{ object.last_name }}">
+                </div>
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Profile picture</span>
+                    <input type="file" id="id_profile_pic" name="profile_pic" class="form-control"
+                           aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+                           value="{{ object.profile_pic }}">
+                </div>
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Phone number</span>
+                    <input type="text" id="id_phone_number" name="phone_number" class="form-control"
+                           aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+                           placeholder="Enter your phone number." value="{{ object.phone_number }}">
+                </div>
+
+                {% csrf_token %}
+
+            </div>
+
+            {% if form.first_name.errors %}
+                <div class="error-messages">
+                    {% for error in form.first_name.errors %}
+                        <p class="error">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% if form.last_name.errors %}
+                <div class="error-messages">
+                    {% for error in form.last_name.errors %}
+                        <p class="error">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% if form.phone_number.errors %}
+                <div class="error-messages">
+                    {% for error in form.phone_number.errors %}
+                        <p class="error">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <div class="button-container">
+                <div class="control-buttons"></div>
+                <div class="action-buttons">
+                    <button class="reset-button-style button btn-create">Save</button>
+                    <a class="button btn-cancel" href="{% url 'details-profile' %}">Cancel</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+
 {% endblock %}

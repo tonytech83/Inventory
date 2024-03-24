@@ -96,7 +96,7 @@
             <input type="text" id="editDeviceSerialNumber" name="serial_number"><br>
 
             <label for="editDeviceOwnerName">Owner:</label>
-            <input type="text" id="editDeviceOwnerName" name="deviceOwnerName"><br>
+            <input type="text" id="editDeviceOwnerName" name="owner_name"><br>
         </div>
 
         <div class="device-support" style="display: inline-block; vertical-align: top;">
@@ -106,9 +106,10 @@
             <label for="editDevicePurchaseOrderNumber">PO Number:</label>
             <input type="text" id="editDevicePurchaseOrderNumber" name="purchase_order_number"><br>
 
-            {#            <label for="editDeviceInvoiceImage">Invoice document:</label>#}
+            <label for="editDeviceInvoiceImage">Invoice document:</label>
             <input type="file" id="editDeviceInvoiceImage" name="invoice_img"><br>
-            <a id="invoiceDownloadLink" href="#" style="display:none;" download>Download Invoice</a><br>
+{#            <a id="invoiceDownloadLink" href="#" style="display:none;" download>Download Invoice</a><br>#}
+            <a id="existingInvoiceLink" href="#" style="display:none;" download>Download Invoice</a><br>
 
             <label for="editDeviceStartOfSupport">Start Of Support:</label>
             <input type="date" id="editDeviceStartOfSupport" name="sos"><br>

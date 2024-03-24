@@ -16,7 +16,7 @@ class InventoryUser(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
         null=False,
         blank=False,
         help_text=_(
-            "Required. Valid email address."
+            "Provide a valid email address."
         ),
         error_messages={
             "unique": _("A user with that email already exists."),

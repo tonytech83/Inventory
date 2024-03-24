@@ -31,11 +31,6 @@ class Business(models.Model):
         blank=False,
     )
 
-    business_picture = models.ImageField(
-        null=True,
-        blank=True,
-    )
-
     is_visible = models.BooleanField(
         default=True
     )

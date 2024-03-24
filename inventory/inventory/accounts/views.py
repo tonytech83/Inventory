@@ -19,15 +19,12 @@ class LoginView(auth_views.LoginView):
 
         # Check if the user's profile has the `is_first_login` set to True
         if self.request.user.profile.is_first_login:
-            # Update the profile to mark that the first login has been handled
             profile = self.request.user.profile
             profile.is_first_login = False
             profile.save(update_fields=['is_first_login'])
 
-            # Redirect to the details-profile page
             return reverse_lazy('edit-profile', kwargs={'pk': user.pk})
         else:
-            # Otherwise, use the default LOGIN_REDIRECT_URL from settings
             return super().get_success_url()
 
 
@@ -61,7 +58,6 @@ class EditProfileView(OwnerRequiredMixin, views.UpdateView):
     success_url = reverse_lazy('details-profile')
 
 
-# TODO: Check can I use CBV or somehow add it in my 'EditProfileView`
 def custom_permission_denied_view(request, exception, template_name='403.html'):
     return render(request, template_name, {}, status=403)
 

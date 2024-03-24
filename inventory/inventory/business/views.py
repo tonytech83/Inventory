@@ -129,13 +129,18 @@ class CreateBusinessApiView(api_views.CreateAPIView):
         serializer.save(owner=self.request.user)
 
 
-class EditBusinessView(views.UpdateView):
+class UpdateBusinessApiView(api_views.UpdateAPIView):
     queryset = Business.objects.all()
-    form_class = EditBusinessForm
-    template_name = 'business/edit-business.html'
+    serializer_class = BusinessSerializer
+    permission_classes = [IsAuthenticated]
 
-    def get_success_url(self):
-        """
-        Returns the URL to redirect to after processing a valid form.
-        """
-        return reverse('business', kwargs={'pk': self.object.pk})
+# class EditBusinessView(views.UpdateView):
+#     queryset = Business.objects.all()
+#     form_class = EditBusinessForm
+#     template_name = 'business/edit-business.html'
+#
+#     def get_success_url(self):
+#         """
+#         Returns the URL to redirect to after processing a valid form.
+#         """
+#         return reverse('business', kwargs={'pk': self.object.pk})

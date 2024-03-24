@@ -1,20 +1,62 @@
 {% extends 'base/base.html' %}
 
 {% block main_content %}
+    <div class="backdrop"></div>
+
     <div class="profile-container">
-        <h1>PROFILE:</h1>
-        <p>User login: {{ object.account.email }}</p>
-        <hr>
-        <p>User initials: {{ object.initials }}</p>
-        <p>First Name: {{ object.first_name }}</p>
-        <p>Last Name: {{ object.last_name }}</p>
-        <p>Phone Number: {{ object.phone_number }}</p>
-    </div>
-    <div class="button-container">
-        <div class="control-buttons"></div>
-        <div class="action-buttons">
-            <a class="button btn-edit" href="{% url 'edit-profile' pk=request.user.pk %}">Edit Profile</a>
-            <a class="button btn-cancel" href="{% url 'home-page' %}">Back to Home</a>
-        </div>
+        <form action="">
+
+            <div class="title-container">
+                <h4 class="login-title">Profile information</h4>
+            </div>
+
+            <div class="inputs">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">User login</span>
+                    <span type="email" id="id_username" class="form-control"
+                          aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+                    >{{ object.account.email }}</span>
+                </div>
+                
+                <hr>
+                
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">User login</span>
+                    <span type="email" id="id_username" class="form-control"
+                          aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+                    >{{ object.initials }}</span>
+                </div>
+                
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">First Name</span>
+                    <span type="email" id="id_username" class="form-control"
+                          aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+                    >{{ object.first_name }}</span>
+                </div>
+                
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Last Name</span>
+                    <span type="email" id="id_username" class="form-control"
+                          aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+                    >{{ object.last_name }}</span>
+                </div>
+                
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Phone Number</span>
+                    <span type="email" id="id_username" class="form-control"
+                          aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+                    >{{ object.phone_number }}</span>
+                </div>
+     
+            </div>
+
+            <div class="button-container">
+                <div class="control-buttons"></div>
+                <div class="action-buttons">
+                    <a class="button btn-edit" href="{% url 'edit-profile' pk=request.user.pk %}">Edit Profile</a>
+                    <a class="button btn-cancel" href="{% url 'home-page' %}">Back to Home</a>
+                </div>
+            </div>
+        </form>
     </div>
 {% endblock %}

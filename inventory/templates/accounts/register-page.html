@@ -1,10 +1,80 @@
 {% extends 'base/base.html' %}
 
 {% block main_content %}
-    <h2>Register</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Register</button>
-    </form>
+    <!-- Forms container-->
+    <div class="backdrop"></div>
+
+    <div class="register-page">
+
+        <div class="title-container">
+            <h4 class="login-title">Register</h4>
+        </div>
+
+        <form action="{% url 'register-user' %}" method="POST">
+            {% csrf_token %}
+
+            <div class="inputs">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Email</span>
+                    <input type="email" id="id_email" name="email" class="form-control"
+                           aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+                           placeholder="{{ form.email.help_text }}"
+                    >
+
+                </div>
+
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Password</span>
+                    <input type="password" id="id_password1" name="password1" class="form-control"
+                           autocomplete="new-password" aria-label="Sizing example input"
+                           aria-describedby="inputGroup-sizing-default" placeholder="Enter password.">
+
+                </div>
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Repeat password</span>
+                    <input type="password" id="id_password2" name="password2" class="form-control"
+                           aria-describedby="inputGroup-sizing-default" aria-label="Sizing example input"
+                           placeholder="Repeat the same password.">
+
+                </div>
+
+            </div>
+
+            {% if form.email.errors %}
+                <div class="error-messages">
+                    {% for error in form.email.errors %}
+                        <p class="error">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% if form.password1.errors %}
+                <div class="error-messages">
+                    {% for error in form.password1.errors %}
+                        <p class="error">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% if form.password2.errors %}
+                <div class="error-messages">
+                    {% for error in form.password2.errors %}
+                        <p class="error">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+
+
+            <div class="button-container">
+                <div class="control-buttons"></div>
+                <div class="action-buttons ">
+                    <button class="reset-button-style button btn-create" type="submit">Register</button>
+                    <a class="button btn-cancel" href="{% url 'dashboard' %}">Cancel</a>
+                </div>
+            </div>
+        </form>
+    </div>
 {% endblock %}

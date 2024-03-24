@@ -16,38 +16,38 @@ from inventory.devices.models import Device
 #         fields = '__all__'
 
 
-class DeviceBaseForm(forms.ModelForm):
-    class Meta:
-        model = Device
-        fields = '__all__'
-
-
-class DeviceCreateForm(DeviceBaseForm):
-    class Meta:
-        model = Device
-        exclude = ('support', 'risk', 'business')
-
-
-class DeviceEditForm(DeviceBaseForm):
-    class Meta:
-        model = Device
-        exclude = ('support', 'risk',)
-
-
-class DeviceDeleteForm(ReadOnlyFieldsFormMixin, DeviceBaseForm):
-    # TODO: Fix the Mixin if readonly_fields is '__all__' to made all fields readonly
-    readonly_fields = ('support', 'risk', 'business')
-
-    class Meta:
-        model = Device
-        exclude = ('support', 'risk', 'supplier', 'business')
-
-        def __init__(self, *args, **kwargs):
-            super().__init__(*args, **kwargs)
-
-
-class CSVUploadForm(forms.Form):
-    """
-    CSV upload form
-    """
-    csv_file = forms.FileField()
+# class DeviceBaseForm(forms.ModelForm):
+#     class Meta:
+#         model = Device
+#         fields = '__all__'
+#
+#
+# class DeviceCreateForm(DeviceBaseForm):
+#     class Meta:
+#         model = Device
+#         exclude = ('support', 'risk', 'business')
+#
+#
+# class DeviceEditForm(DeviceBaseForm):
+#     class Meta:
+#         model = Device
+#         exclude = ('support', 'risk',)
+#
+#
+# class DeviceDeleteForm(ReadOnlyFieldsFormMixin, DeviceBaseForm):
+#     # TODO: Fix the Mixin if readonly_fields is '__all__' to made all fields readonly
+#     readonly_fields = ('support', 'risk', 'business')
+#
+#     class Meta:
+#         model = Device
+#         exclude = ('support', 'risk', 'supplier', 'business')
+#
+#         def __init__(self, *args, **kwargs):
+#             super().__init__(*args, **kwargs)
+#
+#
+# class CSVUploadForm(forms.Form):
+#     """
+#     CSV upload form
+#     """
+#     csv_file = forms.FileField()

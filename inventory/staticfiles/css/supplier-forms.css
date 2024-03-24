@@ -14,7 +14,8 @@
 #editForm,
 #createForm,
 #deleteForm,
-#uploadCSVForm {
+#uploadCSVForm,
+#businessEditFormContainer {
     width: 80%;
     height: 50%;
 

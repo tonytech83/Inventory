@@ -12,8 +12,11 @@
     <!-- Hidden form for device editing -->
     {% include 'devices/partials/device-edit-form.html' %}
 
-    <!-- Hidden form for deleting -->
+    <!-- Hidden form for device deleting -->
     {% include 'devices/partials/device-delete-form.html' %}
+
+    <!-- Hidden form for business editing -->
+    {% include 'business/partials/business-edit-form.html' %}
 
     <!-- Hidden form for uploading -->
     {% include 'devices/partials/upload-form.html' with business_id=object.pk %}
@@ -25,6 +28,7 @@
     <div data-create-device-url="{% url 'create-device' business_id=object.pk %}"
          data-edit-device-url="{% url 'edit-device' pk=0 %}"
          data-delete-device-url="{% url 'delete-device' pk=0 %}"
+         data-edit-business-url="{% url 'edit-business' pk=0 %}"
          hidden id="devicesUrls"></div>
 
     <!-- Hider input with businessId for device creation -->
@@ -42,192 +46,10 @@
     <script src="{% static 'js/device-handsontable.js' %}"></script>
 
     <!-- Devices CRUD script -->
-    <script>
-        const urls = document.getElementById('devicesUrls');
-        const deleteDeviceUrl = urls.getAttribute('data-delete-device-url');
+    <script type="module" src="{% static 'js/device-crud.js' %}"></script>
 
-        function showCreateForm() {
-            // Show the form and the backdrop
-            document.getElementById('createForm').style.display = 'block';
-            document.querySelector('.backdrop').style.display = 'block';
-        }
-
-        function showDeviceEditForm(deviceId, deviceHostName, deviceDomain, deviceDescription, deviceStatus, deviceManufacturer, deviceModel, deviceIpAddress, deviceIpAddressSecondary, deviceOperatingSystem, deviceBuilding, deviceCategory, deviceSubCategory, deviceSerialNumber, deviceOwnerName, deviceSupportModel, devicePurchaseOrderNumber, deviceInvoiceImage, deviceStartOfSupport, deviceEndOfSupport, deviceEndOfLife, deviceBusinessProcessAtRisk, deviceImpact, deviceLikelihood) {
-            document.getElementById('editDeviceId').value = deviceId;
-            document.getElementById('editDeviceHostName').value = deviceHostName;
-            document.getElementById('editDeviceDomain').value = deviceDomain;
-            document.getElementById('editDeviceDescription').value = deviceDescription;
-            document.getElementById('editDeviceStatus').value = deviceStatus;
-            document.getElementById('editDeviceManufacturer').value = deviceManufacturer;
-            document.getElementById('editDeviceModel').value = deviceModel;
-            document.getElementById('editDeviceIpAddress').value = deviceIpAddress !== 'null' ? deviceIpAddress : '';
-            document.getElementById('editDeviceIpAddressSecondary').value = deviceIpAddressSecondary !== 'null' ? deviceIpAddressSecondary : '';
-            document.getElementById('editDeviceOperatingSystem').value = deviceOperatingSystem;
-            document.getElementById('editDeviceBuilding').value = deviceBuilding;
-            document.getElementById('editDeviceCategory').value = deviceCategory;
-            document.getElementById('editDeviceSubCategory').value = deviceSubCategory;
-            document.getElementById('editDeviceSerialNumber').value = deviceSerialNumber;
-            document.getElementById('editDeviceOwnerName').value = deviceOwnerName;
-            // Support
-            document.getElementById('editDeviceSupportModel').value = deviceSupportModel;
-            document.getElementById('editDevicePurchaseOrderNumber').value = devicePurchaseOrderNumber !== 'null' ? devicePurchaseOrderNumber : '';
-            document.getElementById('editDeviceInvoiceImage').value = deviceInvoiceImage;
-            // Check if there's an invoice URL and set up a download link
-            const invoiceDownloadLink = document.getElementById('invoiceDownloadLink');
-            if (deviceInvoiceImage) {
-                const fullPath = deviceInvoiceImage.startsWith('/media/') ? deviceInvoiceImage : `/media/${deviceInvoiceImage}`;
-                invoiceDownloadLink.setAttribute('href', fullPath);
-                invoiceDownloadLink.style.display = 'inline';
-            } else {
-                invoiceDownloadLink.style.display = 'none';
-            }
-            document.getElementById('editDeviceStartOfSupport').value = deviceStartOfSupport;
-            document.getElementById('editDeviceEndOfSupport').value = deviceEndOfSupport;
-            document.getElementById('editDeviceEndOfLife').value = deviceEndOfLife;
-            document.getElementById('editDeviceBusinessProcessAtRisk').value = deviceBusinessProcessAtRisk;
-            document.getElementById('editDeviceImpact').value = deviceImpact;
-            document.getElementById('editDeviceLikelihood').value = deviceLikelihood;
-
-
-            document.getElementById('editForm').style.display = 'block';
-        }
-
-        function showDeleteForm(deviceId, deviceHostName) {
-            document.getElementById('deleteDeviceId').value = deviceId;
-            document.getElementById('deleteDeviceHostName').innerText = deviceHostName;
-
-
-            // Show the form and the backdrop
-            document.getElementById('deleteForm').style.display = 'block';
-            document.querySelector('.backdrop').style.display = 'block'
-
-            // Hide the edit form if it's shown
-            document.getElementById('editForm').style.display = 'none'
-        }
-
-
-        function hideForm() {
-            document.getElementById('createForm').style.display = 'none';
-            document.getElementById('editForm').style.display = 'none';
-            document.getElementById('deleteForm').style.display = 'none';
-            document.querySelector('.backdrop').style.display = 'none';
-        }
-
-        function hideDeleteForm() {
-            // Hide the delete form and backdrop
-            document.getElementById('deleteForm').style.display = 'none';
-            document.querySelector('.backdrop').style.display = 'none';
-        }
-
-        // Create
-        function submitDeviceForm() {
-            event.preventDefault(); // Add this if submitDeviceForm is called on form submit
-
-            const formData = new FormData(document.getElementById('deviceCreateForm'));
-            const csrftoken = '{{ csrf_token }}';
-            const businessId = document.getElementById('businessId').value; // Assuming you have a hidden input for businessId
-            formData.append('business', businessId); // Append business_id to formData
-
-            const createDeviceUrl = document.getElementById('devicesUrls').getAttribute('data-create-device-url'); // Ensure this is correct
-
-            console.log(createDeviceUrl)
-
-            fetch(createDeviceUrl, {
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': csrftoken,
-                    'Accept': 'application/json',
-                },
-                body: formData
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('Success:', data);
-                    hideForm();
-                    window.location.reload();
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                    // Handle errors (e.g., showing an error message)
-                });
-        }
-
-        // Edit
-        function submitEditForm() {
-            event.preventDefault(); // Prevent default form submission behavior
-
-
-            // Corrected to use 'deviceEditForm' which is the actual <form> element's ID
-            const formData = new FormData(document.getElementById('deviceEditForm'));
-            const csrftoken = '{{ csrf_token }}'; // Django's CSRF token
-
-            const deviceId = document.getElementById('editDeviceId').value;
-
-            console.log(deviceId)
-
-            const editDeviceUrl = document.getElementById('devicesUrls').getAttribute('data-edit-device-url').replace('0', deviceId);
-
-            console.log(editDeviceUrl)
-
-            const businessId = document.getElementById('businessId').value;
-            formData.append('business', businessId);
-
-            fetch(editDeviceUrl, {
-                method: 'PATCH',
-                headers: {
-                    'X-CSRFToken': csrftoken,
-                    'Accept': 'application/json',
-                },
-                body: formData
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('Success:', data);
-                    hideForm(); // Hide the edit form
-                    window.location.reload();
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                });
-        }
-
-        // Delete
-        function confirmDelete() {
-            // Get the device ID
-            const supplierId = document.getElementById('deleteDeviceId').value;
-
-
-            const deleteUrl = deleteDeviceUrl.replace("0", `${supplierId}`);
-            const csrftoken = '{{ csrf_token }}';
-
-            fetch(deleteUrl, {
-                method: 'DELETE',
-                headers: {
-                    'X-CSRFToken': csrftoken,
-                },
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    hideDeleteForm();
-                    window.location.reload();
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        }
-    </script>
+    <!-- Business CRUD scripts -->
+    <script type="module" src="{% static 'js/business-crud.js' %}"></script>
 
     <!-- List suppliers for device creation form -->
     <script src="{% static 'js/list-suppliers.js' %}"></script>
@@ -241,7 +63,17 @@
             <div class="action-buttons">
                 <a class="button btn-create" type="button" onclick="showCreateForm()">Create device</a>
                 <button class="button btn-download" onclick="showUploadForm({{ object.pk }})">Import devices</button>
-                <a class="button btn-edit" href="{% url 'edit-business' pk=object.pk %}">Edit Business</a>
+                <a class="button btn-edit" type="button"
+                   data-business-id="{{ business.id }}"
+                   data-business-name="{{ business.business_name }}"
+                   data-business-country="{{ business.country }}"
+                   data-business-is-visible="{{ business.is_visible }}"
+                   onclick="showEditBusinessForm(
+                       this.getAttribute('data-business-id'),
+                       this.getAttribute('data-business-name'),
+                       this.getAttribute('data-business-country'),
+                       this.getAttribute('data-business-is-visible'))">Edit
+                    Business</a>
             </div>
         {% else %}
             <div class="control-buttons">
@@ -250,6 +82,9 @@
         {% endif %}
 
     </div>
+
+    <!-- Business CRUD scripts -->
+    <script type="module" src="{% static 'js/business-crud.js' %}"></script>
 
     <!-- Upload CSV scripts -->
     <script type="module" src="{% static 'js/device-upload.js' %}"></script>
