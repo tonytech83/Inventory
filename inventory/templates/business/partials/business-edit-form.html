@@ -1,0 +1,26 @@
+<div id="businessEditFormContainer" style="display:none;">
+    <div class="title-container">
+        <h3 class="suppliers-title">Edit Business</h3>
+    </div>
+    <form id="businessEditForm">
+        <input type="hidden" id="editBusinessId" name="businessId">
+        <label for="editBusinessName">Name:</label>
+        <input type="text" id="editBusinessName" name="business_name"><br>
+
+        <label for="editBusinessCountry">Country:</label>
+        <input type="text" id="editBusinessCountry" name="country"><br>
+
+        <label for="editBusinessIsVisible">Visible:</label>
+        <input type="checkbox" id="editBusinessIsVisible" name="is_visible"><br>
+        
+        <div class="button-container form-style">
+            <div class="control-buttons"></div>
+            <div class="action-buttons">
+                <button class="reset-button-style button btn-create" type="submit">Save</button>
+                <button class="reset-button-style button btn-cancel" type="button" onclick="hideBusinessForm()">Cancel
+                </button>
+            </div>
+        </div>
+
+    </form>
+</div>

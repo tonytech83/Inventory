@@ -1,0 +1,55 @@
+/* Backdrop styles */
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    display: block;
+    z-index: 10; /* Ensure it's above other content */
+}
+
+.login-page,
+.register-page,
+.profile-container,
+.edit-profile,
+.password-change,
+.password_done {
+    width: 40%;
+    height: 40%;
+
+    position: fixed; /* Position relative to the viewport */
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Adjust the centering */
+    z-index: 1000; /* Above the backdrop */
+    background-color: darkgrey; /* Ensure the form is visible against the backdrop */
+    padding: 20px; /* Add some padding */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow */
+}
+
+.inputs {
+    width: 70%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.error-messages {
+    margin: auto;
+    position: fixed;
+    bottom: 15%;
+    text-align: center;
+}
+
+.error-messages .error {
+    color: #ff0000; /* Red */
+    font-size: 0.9em;
+}
+
+.pass_done {
+    text-align: center;
+    margin-top: 25%;
+}
