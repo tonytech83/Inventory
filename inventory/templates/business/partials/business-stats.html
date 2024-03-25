@@ -2,13 +2,7 @@
 
 <div class="stats">
     <div class="box business-info">
-        {# TODO: Remove styling from html #}
-        <div class="box-icon"
-             style="display: flex; justify-content: space-between; align-items: center;margin-bottom: 20px">
-            <i class="fa-solid fa-industry"></i>
-            <h5 style="display: inline; margin-bottom: 0">Business</h5>
-        </div>
-
+        <h5> Information </h5>
         <table>
             <tr>
                 <td>Business:</td>
@@ -24,61 +18,125 @@
             </tr>
         </table>
     </div>
-    <div class="box">
+
+    <div class="box total-devices" onclick="window.location.href='{% url "business" pk=business.pk %}';">
+        <h5>Total Devices</h5>
+        <div class="total-devices-count">
+            <h1>{{ object.device_set.count }}</h1>
+        </div>
+    </div>
+
+    <div class="box ">
         <h5>Status</h5>
         <table>
             <tr class="box-row">
-                {% include 'business/partials/box-line.html' with business=object query_param='in_operation' status='In operation' %}
+                {% include 'business/partials/box-line-status.html' with business=object query_param='in_operation' status='In operation' %}
             </tr>
             <tr class="box-row">
-                {% include 'business/partials/box-line.html' with business=business query_param='is_decommissioned' status='Decommissioned' %}
+                {% include 'business/partials/box-line-status.html' with business=business query_param='is_decommissioned' status='Decommissioned' %}
             </tr>
             <tr class="box-row">
-                {% include 'business/partials/box-line.html' with business=business query_param='is_pending_setup' status='Pending Setup' %}
+                {% include 'business/partials/box-line-status.html' with business=business query_param='is_pending_setup' status='Pending Setup' %}
             </tr>
             <tr class="box-row">
-                {% include 'business/partials/box-line.html' with business=business query_param='is_offline' status='Offline' %}
+                {% include 'business/partials/box-line-status.html' with business=business query_param='is_offline' status='Offline' %}
             </tr>
             <tr class="box-row">
-                {% include 'business/partials/box-line.html' with business=business query_param='not_defined' status='Not defined yet'  %}
+                {% include 'business/partials/box-line-status.html' with business=business query_param='not_defined' status='Not defined yet' %}
             </tr>
             <tr class="box-row">
-                {% include 'business/partials/box-line.html' with business=object query_param='is_exception' status='Exception' %}
+                {% include 'business/partials/box-line-status.html' with business=object query_param='is_exception' status='Exception' %}
             </tr>
         </table>
     </div>
-    <div class="box devices-stats">
+
+    <div class="box">
         <h5>Support</h5>
         <table>
-            <tr>
-                <td>Total devices:</td>
-                <td class="value"><a href="{% url 'business' pk=object.pk %}">{{ object.device_set.count }}</a></td>
+            <tr class="box-row">
+                <td>Between 12 and 6 months</td>
+                <td>
+                    {% url 'business' pk=business.pk as business_url %}
+                    <a href="                           
+                            
+                            {% if request.GET.lt_year_gt_six_month == 'true' %}{{ business_url }}{% else %}{{ business_url }}?lt_year_gt_six_month=true{% endif %}">
+                        <span class="{% if request.GET.lt_year_gt_six_month == 'true' %}selected{% else %}not-selected{% endif %}">{% count_lt_year_gt_six_month object %}</span>
+                    </a>
+                </td>
             </tr>
-            <tr>
-                <td>No Support:</td>
-                <td><a href="?no_support=true">{% count_no_support_devices object %}</a></td>
+            <tr class="box-row">
+                <td>Between 6 nad 3 months</td>
+                <td>{% url 'business' pk=business.pk as business_url %}
+                    <a href="                           
+                            
+                            {% if request.GET.lt_six_gt_three_months == 'true' %}{{ business_url }}{% else %}{{ business_url }}?lt_six_gt_three_months=true{% endif %}">
+                        <span class="{% if request.GET.lt_six_gt_three_months == 'true' %}selected{% else %}not-selected{% endif %}">{% count_lt_six_gt_three_months object %}</span>
+                    </a>
+                </td>
             </tr>
-            <tr>
-                <td>No Reviewed:</td>
-                <td><a href="?no_reviewed=true">{% count_no_reviewed_devices object %}</a></td>
+            <tr class="box-row">
+                <td>Between 3 and No support</td>
+                <td>
+                    <a href="                           
+                            
+                            {% if request.GET.lt_three_months_and_no_support == 'true' %}{{ business_url }}{% else %}{{ business_url }}?lt_three_months_and_no_support=true{% endif %}">
+                        <span class="{% if request.GET.lt_three_months_and_no_support == 'true' %}selected{% else %}not-selected{% endif %}">{% count_lt_three_months_and_no_support object %}</span>
+                    </a>
+                </td>
             </tr>
+            <tr class="box-row">
+                <td>No Support</td>
+                <td>
+                    <a href="                          
+                            
+                            {% if request.GET.no_support == 'true' %}{{ business_url }}{% else %}{{ business_url }}?no_support=true{% endif %}">
+                        <span class="{% if request.GET.no_support == 'true' %}selected{% else %}not-selected{% endif %}">{% count_no_support_devices object %}</span>
+                    </a>
+                </td>
+            </tr>
+            <tr class="box-row">
+                <td>No Reviewed</td>
+                <td>
+                    <a href="                          
+                            
+                            {% if request.GET.no_reviewed == 'true' %}{{ business_url }}{% else %}{{ business_url }}?no_reviewed=true{% endif %}">
+                        <span class="{% if request.GET.no_reviewed == 'true' %}selected{% else %}not-selected{% endif %}">{% count_no_reviewed_devices object %}</span>
+                    </a>
+                </td>
+            </tr>
+
         </table>
-        {# TODO: Soon support expire #}
     </div>
+
     <div class="box">
         <h5>Risk</h5>
         <table>
             <tr>
                 <td>Risk below 5:</td>
-                <td>10</td>
+                <td>
+                    <a href="
+                            {% if request.GET.risk_below_five == 'true' %}{{ business_url }}{% else %}{{ business_url }}?risk_below_five=true{% endif %}">
+                        <span class="{% if request.GET.risk_below_five == 'true' %}select{% else %}not-select{% endif %}">{% risk_below_five object %}</span>
+                    </a>
+                </td>
             </tr>
             <tr>
                 <td>Risk 5-10:</td>
-                <td>10</td>
+                <td>
+                    <a href="
+                            {% if request.GET.between_five_and_ten == 'true' %}{{ business_url }}{% else %}{{ business_url }}?between_five_and_ten=true{% endif %}">
+                        <span class="{% if request.GET.between_five_and_ten == 'true' %}select{% else %}not-select{% endif %}">{% between_five_and_ten object %}</span>
+                    </a>
+                </td>
             </tr>
             <tr>
                 <td>Risk above 10:</td>
-                <td>10</td>
+                <td>
+                    <a href="
+                            {% if request.GET.above_ten == 'true' %}{{ business_url }}{% else %}{{ business_url }}?above_ten=true{% endif %}">
+                        <span class="{% if request.GET.above_ten == 'true' %}select{% else %}not-select{% endif %}">{% above_ten object %}</span>
+                    </a>
+                </td>
             </tr>
             <tr>
                 <td>TBC:</td>
@@ -87,8 +145,6 @@
         </table>
     </div>
 
-    <div class="box">
-    </div>
     <div class="box">
     </div>
 </div>

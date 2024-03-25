@@ -24,21 +24,21 @@ function showCreateForm() {
 function showDeviceEditForm(deviceId, deviceHostName, deviceDomain, deviceDescription, deviceStatus, deviceManufacturer, deviceModel, deviceIpAddress, deviceIpAddressSecondary, deviceOperatingSystem, deviceBuilding, deviceCategory, deviceSubCategory, deviceSerialNumber, deviceOwnerName, deviceSupportModel, devicePurchaseOrderNumber, deviceInvoiceImage, deviceStartOfSupport, deviceEndOfSupport, deviceEndOfLife, deviceBusinessProcessAtRisk, deviceImpact, deviceLikelihood) {
     document.getElementById('editDeviceId').value = deviceId;
     document.getElementById('editDeviceHostName').value = deviceHostName;
-    document.getElementById('editDeviceDomain').value = deviceDomain;
-    document.getElementById('editDeviceDescription').value = deviceDescription;
+    document.getElementById('editDeviceDomain').value = deviceDomain !== 'null' ? deviceDomain : '';
+    document.getElementById('editDeviceDescription').value = deviceDescription !== 'null' ? deviceDescription : '';
     document.getElementById('editDeviceStatus').value = deviceStatus;
-    document.getElementById('editDeviceManufacturer').value = deviceManufacturer;
-    document.getElementById('editDeviceModel').value = deviceModel;
+    document.getElementById('editDeviceManufacturer').value = deviceManufacturer !== 'null' ? deviceManufacturer : '';
+    document.getElementById('editDeviceModel').value = deviceModel !== 'null' ? deviceModel : '';
     document.getElementById('editDeviceIpAddress').value = deviceIpAddress !== 'null' ? deviceIpAddress : '';
     document.getElementById('editDeviceIpAddressSecondary').value = deviceIpAddressSecondary !== 'null' ? deviceIpAddressSecondary : '';
-    document.getElementById('editDeviceOperatingSystem').value = deviceOperatingSystem;
-    document.getElementById('editDeviceBuilding').value = deviceBuilding;
+    document.getElementById('editDeviceOperatingSystem').value = deviceOperatingSystem !== 'null' ? deviceOperatingSystem : '';
+    document.getElementById('editDeviceBuilding').value = deviceBuilding !== 'null' ? deviceBuilding : '';
     document.getElementById('editDeviceCategory').value = deviceCategory;
     document.getElementById('editDeviceSubCategory').value = deviceSubCategory;
-    document.getElementById('editDeviceSerialNumber').value = deviceSerialNumber;
-    document.getElementById('editDeviceOwnerName').value = deviceOwnerName;
+    document.getElementById('editDeviceSerialNumber').value = deviceSerialNumber !== 'null' ? deviceSerialNumber : '';
+    document.getElementById('editDeviceOwnerName').value = deviceOwnerName !== 'null' ? deviceOwnerName : '';
     // Support
-    document.getElementById('editDeviceSupportModel').value = deviceSupportModel;
+    document.getElementById('editDeviceSupportModel').value = deviceSupportModel !== 'null' ? deviceSupportModel : '';
     document.getElementById('editDevicePurchaseOrderNumber').value = devicePurchaseOrderNumber !== 'null' ? devicePurchaseOrderNumber : '';
     // document.getElementById('editDeviceInvoiceImage').value = deviceInvoiceImage;
     // Check if there's an invoice URL and set up a download link
@@ -54,7 +54,7 @@ function showDeviceEditForm(deviceId, deviceHostName, deviceDomain, deviceDescri
     document.getElementById('editDeviceStartOfSupport').value = deviceStartOfSupport;
     document.getElementById('editDeviceEndOfSupport').value = deviceEndOfSupport;
     document.getElementById('editDeviceEndOfLife').value = deviceEndOfLife;
-    document.getElementById('editDeviceBusinessProcessAtRisk').value = deviceBusinessProcessAtRisk;
+    document.getElementById('editDeviceBusinessProcessAtRisk').value = deviceBusinessProcessAtRisk !== 'null' ? deviceBusinessProcessAtRisk : '';
     document.getElementById('editDeviceImpact').value = deviceImpact;
     document.getElementById('editDeviceLikelihood').value = deviceLikelihood;
 
@@ -69,7 +69,7 @@ function showDeleteForm(deviceId, deviceHostName) {
 
 
     // Show the form and the backdrop
-    document.getElementById('deleteForm').style.display = 'block';
+    document.getElementById('deleteDeviceForm').style.display = 'block';
     document.querySelector('.backdrop').style.display = 'block'
 
     // Hide the edit form if it's shown
@@ -79,17 +79,15 @@ function showDeleteForm(deviceId, deviceHostName) {
 function hideForm() {
     document.getElementById('createForm').style.display = 'none';
     document.getElementById('editForm').style.display = 'none';
-    document.getElementById('deleteForm').style.display = 'none';
+    document.getElementById('deleteDeviceForm').style.display = 'none';
     document.querySelector('.backdrop').style.display = 'none';
 }
 
 function hideDeleteForm() {
     // Hide the delete form and backdrop
-    document.getElementById('deleteForm').style.display = 'none';
+    document.getElementById('deleteDeviceForm').style.display = 'none';
     document.querySelector('.backdrop').style.display = 'none';
 }
-
-// window.hideDeleteForm = hideDeleteForm;
 
 // Create
 function submitDeviceForm() {
@@ -171,6 +169,9 @@ function confirmDelete() {
     // Get the device ID and create deleteUrl
     const deviceId = document.getElementById('deleteDeviceId').value;
     const deleteUrl = deleteDeviceUrl.replace("0", `${deviceId}`);
+
+    console.log(deleteUrl)
+
     const csrftoken = getCookie('csrftoken')
 
     fetch(deleteUrl, {

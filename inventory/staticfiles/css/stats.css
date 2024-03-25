@@ -16,15 +16,34 @@ h5 {
     height: 230px;
     width: 260px;
 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /*justify-content: center;*/
+
     box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
     background: var(--background-color);
     padding: 10px;
     color: var(--text-color);
 }
 
-/*.box-row {*/
-/*    border: 1px solid coral;*/
-/*}*/
+.total-devices:hover {
+    background: lightgray;
+    color: var(--background-color);
+    transition: background 0.3s;
+    animation: shake 0.82s cubic-bezier(.36, .07, .19, .97) both;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.box .total-devices-count {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: auto;
+}
 
 .box a {
     text-decoration: none;
@@ -41,6 +60,11 @@ h5 {
 .box .not-selected {
     padding: 1px 2px;
     color: var(--text-color);
+}
+
+.box .not-selected:hover {
+    padding: 1px 2px;
+    color: coral;
 }
 
 table {

@@ -1,0 +1,24 @@
+{#{% extends 'base/base.html' %}#}
+{##}
+{#{% block main_content %}#}
+{#    <div>#}
+{##}
+{#    </div>#}
+{#    <div>#}
+{#        <form action="{% url 'upload-csv' business_id=business_id %}" method="POST" enctype="multipart/form-data">#}
+{#            {{ form }}#}
+{##}
+{#            {% csrf_token %}#}
+{##}
+{#            <div class="button-container">#}
+{#                <div class="control-buttons">#}
+{#                    <a class="button btn-download" href="{% url 'download-template' %}">Download template file</a>#}
+{#                </div>#}
+{#                <div class="action-buttons">#}
+{#                    <button class="reset-button-style button btn-create">Upload</button>#}
+{#                    <a class="button btn-cancel" href="{% url 'business' pk=business_id %}">Back</a>#}
+{#                </div>#}
+{#            </div>#}
+{#        </form>#}
+{#    </div>#}
+{#{% endblock %}#}

@@ -1,8 +1,8 @@
 import {getCookie} from './get-cookie.js'
 
-window.showUploadForm =showUploadForm;
+window.showUploadForm = showUploadForm;
 window.hideUploadForm = hideUploadForm;
-// window.displayImportResults = displayImportResults;
+window.displayImportResults = displayImportResults;
 
 function showUploadForm(businessId) {
     document.getElementById('uploadCSVForm').style.display = 'block';
@@ -13,7 +13,7 @@ function showUploadForm(businessId) {
 
 function hideUploadForm() {
     document.getElementById('uploadCSVForm').style.display = 'none';
-    document.querySelector('.backdrop').style.display = 'none'; // If you're using a backdrop
+    document.querySelector('.backdrop').style.display = 'none';
 
     // Buttons
     const inputFieldId = document.getElementById('inputFieldId')
@@ -31,32 +31,15 @@ function hideUploadForm() {
     window.location.reload();
 }
 
-// function getCookie(name) {
-//     let cookieValue = null;
-//     if (document.cookie && document.cookie !== '') {
-//         const cookies = document.cookie.split(';');
-//         for (let i = 0; i < cookies.length; i++) {
-//             const cookie = cookies[i].trim();
-//             if (cookie.substring(0, name.length + 1) === (name + '=')) {
-//                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-//                 break;
-//             }
-//         }
-//     }
-//     return cookieValue;
-// }
-
 function displayImportResults(results) {
     const resultsElement = document.getElementById('importResults');
     const resultsList = document.getElementById('importResultsList');
-    resultsList.innerHTML = ''; // Clear previous results
+    // Clear previous results
+    resultsList.innerHTML = '';
 
     results.forEach(results => {
         const li = document.createElement('li');
         li.textContent = `${results.device_name}: ${results.status}`;
-
-        // To handle errors and provide user-friendly output!!!
-        // console.log(`${results.device_name}: ${results.error}`)
 
         if (results.status === 'Error') {
             let message = '';
@@ -72,12 +55,12 @@ function displayImportResults(results) {
             li.textContent += ` - Message: ${message}`;
             li.style.color = 'red';
         } else {
-            li.style.color = 'green'; // Success color
+            li.style.color = 'green';
         }
         resultsList.appendChild(li);
     });
-
-    resultsElement.style.display = 'block'; // Show results
+    // Show results
+    resultsElement.style.display = 'block';
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -93,6 +76,18 @@ document.addEventListener('DOMContentLoaded', function () {
     uploadForm.addEventListener('submit', function (e) {
         e.preventDefault();
 
+        const fileInput = document.getElementById('inputFieldId');
+        const uploadMessage = document.getElementById('uploadMessage');
+
+        // Check if a file has been selected
+        if (!fileInput.files.length) {
+            uploadMessage.style.display = 'block';
+            return;
+        } else {
+            uploadMessage.style.display = 'none';
+        }
+
+        // Continue if a file is selected
         const formData = new FormData(uploadForm);
         const csrftoken = getCookie('csrftoken');
 
@@ -105,8 +100,7 @@ document.addEventListener('DOMContentLoaded', function () {
         })
             .then(response => response.json())
             .then(data => {
-                // console.log('Success:', data);
-                displayImportResults(data.results); // Call function to display results
+                displayImportResults(data.results);
 
                 uploadButton.style.visibility = 'hidden';
                 cancelButton.style.visibility = 'hidden';
@@ -118,6 +112,4 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     });
 });
-
-
 

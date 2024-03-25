@@ -74,7 +74,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         <!-- Start Columns settings -->
         columnSorting: true,
-        // colHeaders: ['Hostname', 'Status', 'Owner', 'Model', 'Category', 'Sub-category', 'Serial number', 'EOS', 'Supplier'],
         colHeaders: ['Hostname', 'Domain', 'Description', 'Status', 'Manufacturer', 'Model', 'IP Address', 'IP Address Second', 'Operating System', 'Building', 'Category', 'Sub Category', 'Serial Number', 'Owner', 'Support Model', 'PO Number', 'Invoice', 'SOS', 'EOS', 'EOL', 'Process at risk', 'Impact', 'Likelihood', 'Supplier'],
         hiddenColumns: {
             columns: [1, 2, 4, 6, 7, 8, 9, 14, 15, 16, 17, 19, 20, 21, 22],
@@ -124,17 +123,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
         <!-- Start Filters settings -->
         filters: true,
-        //dropdownMenu: true,
         dropdownMenu: ['filter_by_value', 'filter_action_bar'],
-        // Remove all selections
-        afterDropdownMenuShow(instance) {
-            var filters = instance.hot.getPlugin('filters');
-            console.log(filters.components.get('filter_by_value').elements[0])
-            filters.components.get('filter_by_value').elements[0].onClearAllClick({
-                preventDefault: function () {
-                }
-            });
-        },
+        // Remove all selections in dropdownMenu
+        // afterDropdownMenuShow(instance) {
+        //     var filters = instance.hot.getPlugin('filters');
+        //     console.log(filters.components.get('filter_by_value').elements[0])
+        //     filters.components.get('filter_by_value').elements[0].onClearAllClick({
+        //         preventDefault: function () {
+        //         }
+        //     });
+        // },
 
         // Disable cell selection
         disableVisualSelection: true,
@@ -146,14 +144,14 @@ document.addEventListener('DOMContentLoaded', function () {
         <!-- End Other settings -->
     });
 
-    // Start part of the `Remove all selection in dropdown menu`
-    var filters = hot.getPlugin('filters');
-
-    window.hot = hot;
-    window.filters = filters;
-
-    hot.render();
-    // End part of the `Remove all selection`
+    // // Start part of the `Remove all selection in dropdown menu`
+    // var filters = hot.getPlugin('filters');
+    //
+    // window.hot = hot;
+    // window.filters = filters;
+    //
+    // hot.render();
+    // // End part of the `Remove all selection`
 
     // Download data to CSV
     const button = document.querySelector('#export-file');
@@ -171,7 +169,7 @@ document.addEventListener('DOMContentLoaded', function () {
             mimeType: 'text/csv',
             rowDelimiter: '\r\n',
             rowHeaders: false,
-            range: [0, 1, devicesData.length, 10] // TODO: to check how is working `range`
+            // range: [0, 0, devicesData.length, 10] //
         });
     });
 });

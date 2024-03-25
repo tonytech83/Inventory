@@ -20,7 +20,8 @@
 #createSupplierForm,
 #editSupplierForm,
 #deleteSupplierForm,
-#businessEditFormContainer {
+#businessEditFormContainer,
+#deleteDeviceForm {
     width: 50%;
     height: 40%;
 

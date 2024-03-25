@@ -2,13 +2,21 @@
     <div style="border: 2px solid var(--background-color); padding: 4px 12px;margin-bottom: 10px">
         <input id="inputFieldId" type="file" name="csv_file" accept=".xlsx">
     </div>
-    
+
     <div id="importResults" style="display:none; overflow-y: auto; width: 80%; height: 80%; margin: auto;">
         <h5>Import Results</h5>
         <ul id="importResultsList"></ul>
     </div>
+    <div id="uploadMessage" class="upload-message"
+         style="color: red; display: none; text-align: center; margin-top: 25%;">
+        <p>Please, first choose a file and after that click the button "Upload".</p>
+    </div>
     <div class="button-container">
-        <div class="control-buttons"></div>
+        <div class="control-buttons">
+            <div class="control-buttons">
+                <a class="button btn-download" href="{% url 'download-template' %}">Download template file</a>
+            </div>
+        </div>
         <div class="action-buttons">
             <button id="upload-button" class="reset-button-style button btn-create" type="submit">Upload</button>
             <button id="cancel-button" class="reset-button-style button btn-cancel" type="button"

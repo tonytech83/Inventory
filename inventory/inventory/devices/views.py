@@ -1,3 +1,5 @@
+import random
+
 from django.http import FileResponse
 import openpyxl
 
@@ -64,7 +66,10 @@ class CSVUploadApiView(APIView):
 
             results = []
 
-            for row in sheet.iter_rows(min_row=3):  # Skip the first two header rows
+            for row in sheet.iter_rows(min_row=3):  # Skip the first two header rows, thre
+                # Random 4 digits if no serial number set
+                four_random_digits = ''.join(str(random.randint(0, 9)) for _ in range(4))
+
                 try:
                     Device.objects.create(
                         device_name=row[0].value,
@@ -77,13 +82,10 @@ class CSVUploadApiView(APIView):
                         model=row[7].value,
                         ip_address=row[8].value,
                         ip_address_sec=row[9].value,
-                        serial_number=row[10].value,
+                        serial_number=row[10].value if row[10].value else f'{row[0].value}-{four_random_digits}',
                         operating_system=row[11].value,
                         building=row[12].value,
                         owner_name=row[13].value,
-                        # TODO: Fix support and risk, no models anymore
-                        # support=support,
-                        # risk=risk,
                         business=business,
                     )
                     results.append({'device_name': row[0].value, 'status': 'success'})
@@ -105,7 +107,7 @@ def download_template(request):
     excel = open(template_path, 'rb')
     response = FileResponse(excel)
 
-    # Set the content-type and disposition to prompt download
+    # Content-type and prompt download
     response['Content-Type'] = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     response['Content-Disposition'] = 'attachment; filename=template.xlsx'
     return response

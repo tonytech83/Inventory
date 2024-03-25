@@ -1,6 +1,7 @@
 import json
 from datetime import timedelta
 
+from django.db.models import Q
 from django.shortcuts import get_list_or_404
 from rest_framework import generics as api_views
 
@@ -31,7 +32,10 @@ class BusinessView(views.DetailView):
         # TODO: to made mixin for queries below
         # Support
         no_support = self.request.GET.get('no_support', None)
+        lt_year_gt_six_month = self.request.GET.get('lt_year_gt_six_month', None)
+        lt_six_gt_three_months = self.request.GET.get('lt_six_gt_three_months', None)
         no_reviewed = self.request.GET.get('no_reviewed', None)
+        lt_three_months_and_no_support = self.request.GET.get('lt_three_months_and_no_support', None)
 
         # Status
         in_operation = self.request.GET.get('in_operation', None)
@@ -44,7 +48,12 @@ class BusinessView(views.DetailView):
         device_queryset = business.device_set.all()
 
         if no_support == 'true':
-            device_queryset = device_queryset.filter(eos__lt=now().date())
+            query = Q(eos__lt=now().date()) | Q(eos__isnull=True)
+            # device_queryset = device_queryset.filter(eos__lt=now().date())
+            # for device in device_queryset:
+            #     print(device.__dict__)
+
+            device_queryset = device_queryset.filter(query)
 
         if no_reviewed == 'true':
             one_year_ago = now() - timedelta(days=365)
@@ -67,6 +76,29 @@ class BusinessView(views.DetailView):
 
         if is_exception == 'true':
             device_queryset = device_queryset.filter(status='Exception')
+
+        if lt_year_gt_six_month == 'true':
+            today = now().date()
+            six_months_from_now = today + timedelta(days=182)
+            one_year_from_now = today + timedelta(days=365)
+
+            query = Q(eos__gt=six_months_from_now) & Q(eos__lt=one_year_from_now)
+            device_queryset = device_queryset.filter(query)
+
+        if lt_six_gt_three_months == 'true':
+            today = now().date()
+            six_months_from_now = today + timedelta(days=182)
+            three_months_from_now = today + timedelta(days=90)
+
+            query = Q(eos__gt=three_months_from_now) & Q(eos__lt=six_months_from_now)
+            device_queryset = device_queryset.filter(query)
+
+        if lt_three_months_and_no_support == 'true':
+            today = now().date()
+            three_months_from_now = today + timedelta(days=90)
+
+            query = Q(eos__gt=today) & Q(eos__lt=three_months_from_now)
+            device_queryset = device_queryset.filter(query)
 
         device_list = []
 
