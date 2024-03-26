@@ -18,16 +18,19 @@
 
 
 #data-container {
+    font-family: "Montserrat", sans-serif;
     font-size: 1.5em;
-    border-top: thin solid var(--table-border-color);
-    border-bottom: thin solid var(--table-border-color);
+    /*border-top: thin solid var(--table-border-color);*/
+    /*border-bottom: thin solid var(--table-border-color);*/
+    border: 3px solid var(--table-border-color);
     box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
 }
 
 #data-container .handsontable {
     font-size: 1em;
     font-weight: normal;
-    color: var(--color);
+    /*color: var(--color);*/
+    color: var(--text-color);
 }
 
 
@@ -50,18 +53,19 @@
 /* Column headers */
 #data-container .ht_clone_top th {
     background-color: var(--table-header-background);
-    color: var(--table-header-color);
+    color: var(--text-color);
+    font-size: 1.1em;
 }
 
 /* Row headers */
-/*#data-container .ht_clone_top_left_corner th {*/
-/*  border-bottom: 1px solid var(--table-border-color);*/
-/*}*/
+#data-container .ht_clone_top_left_corner th {
+    border-bottom: 1px solid var(--table-border-color);
+}
 
-/*#data-container .ht_clone_left th {*/
-/*  border-right: 1px solid var(--table-border-color);*/
-/*  border-left: 1px solid var(--table-border-color);*/
-/*}*/
+#data-container .ht_clone_left th {
+    border-right: 1px solid var(--table-border-color);
+    border-left: 1px solid var(--table-border-color);
+}
 
 /* Column headers */
 #data-container .ht_clone_top th {
@@ -75,7 +79,7 @@
 }
 
 #data-container .handsontable .changeType {
-    background: inherit;
+    background: coral;
     border-color: var(--table-border-color);
 }
 
@@ -120,7 +124,7 @@
 
 /* Selected cell */
 #data-container tr > td {
-    background-color: var(--cell-color);
+    background-color: var(--background-color);
 }
 
 /* Selected cell */
@@ -138,7 +142,7 @@
 .htContextMenu table tbody tr td,
 .htDropdownMenu table tbody tr td,
 .htFiltersConditionsMenu table tbody tr td {
-    background-color: var(--ctx-background);
+    background-color: var(--text-color);
 }
 
 .htContextMenu table tbody tr td.current,
@@ -153,18 +157,18 @@
 
 .htContextMenu .handsontable table td.htCustomMenuRenderer,
 .htDropdownMenu .handsontable table td.htCustomMenuRenderer {
-    background-color: var(--ctx-background);
+    background-color: var(--background-color);
 }
 
-.handsontable .htUISelectCaption.
+.handsontable .htUISelectCaption,
 .handsontable .htUISelectCaption:hover {
     background-color: var(--ctx-background);
 }
 
 /* Scroll bar */
 ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 8px;
+    height: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -181,8 +185,23 @@
 
 /*==================================*/
 
+.handsontable .htUIClearAll a,
+.handsontable .htUISelectAll a {
+    font-size: 1em;
+}
+
+.handsontable .htFiltersMenuCondition .htUIInput input, .handsontable .htFiltersMenuValue .htUIMultipleSelectSearch input {
+    font-size: 1em;
+}
+
+.handsontable .htFiltersMenuLabel {
+    color: var(--text-color);
+}
+
+
+
 .handsontable a {
-    color: red;
+    color: coral;
 }
 
 .handsontable .changeType {

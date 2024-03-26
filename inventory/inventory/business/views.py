@@ -1,7 +1,7 @@
 import json
 from datetime import timedelta
 
-from django.db.models import Q
+from django.db.models import Q, ExpressionWrapper, F, fields
 from django.shortcuts import get_list_or_404
 from rest_framework import generics as api_views
 
@@ -30,13 +30,6 @@ class BusinessView(views.DetailView):
         business = context['object']
 
         # TODO: to made mixin for queries below
-        # Support
-        no_support = self.request.GET.get('no_support', None)
-        lt_year_gt_six_month = self.request.GET.get('lt_year_gt_six_month', None)
-        lt_six_gt_three_months = self.request.GET.get('lt_six_gt_three_months', None)
-        no_reviewed = self.request.GET.get('no_reviewed', None)
-        lt_three_months_and_no_support = self.request.GET.get('lt_three_months_and_no_support', None)
-
         # Status
         in_operation = self.request.GET.get('in_operation', None)
         is_decommissioned = self.request.GET.get('is_decommissioned', None)
@@ -45,14 +38,22 @@ class BusinessView(views.DetailView):
         not_defined = self.request.GET.get('not_defined', None)
         is_exception = self.request.GET.get('is_exception', None)
 
+        # Support
+        no_support = self.request.GET.get('no_support', None)
+        lt_year_gt_six_month = self.request.GET.get('lt_year_gt_six_month', None)
+        lt_six_gt_three_months = self.request.GET.get('lt_six_gt_three_months', None)
+        no_reviewed = self.request.GET.get('no_reviewed', None)
+        lt_three_months_and_no_support = self.request.GET.get('lt_three_months_and_no_support', None)
+
+        # Risk
+        risk_below_five = self.request.GET.get('risk_below_five', None)
+        between_five_and_ten = self.request.GET.get('between_five_and_ten', None)
+        above_ten = self.request.GET.get('above_ten', None)
+
         device_queryset = business.device_set.all()
 
         if no_support == 'true':
             query = Q(eos__lt=now().date()) | Q(eos__isnull=True)
-            # device_queryset = device_queryset.filter(eos__lt=now().date())
-            # for device in device_queryset:
-            #     print(device.__dict__)
-
             device_queryset = device_queryset.filter(query)
 
         if no_reviewed == 'true':
@@ -100,7 +101,31 @@ class BusinessView(views.DetailView):
             query = Q(eos__gt=today) & Q(eos__lt=three_months_from_now)
             device_queryset = device_queryset.filter(query)
 
+        if risk_below_five == 'true':
+            device_queryset = device_queryset.annotate(
+                calculated_risk_score=ExpressionWrapper(
+                    F('impact') * F('likelihood'),
+                    output_field=fields.FloatField()
+                )
+            ).filter(calculated_risk_score__lt=5)
+
+        if between_five_and_ten == 'true':
+            device_queryset = device_queryset.annotate(
+                calculated_risk_score=ExpressionWrapper(
+                    F('impact') * F('likelihood'),
+                    output_field=fields.FloatField()
+                )
+            ).filter(calculated_risk_score__gte=5, calculated_risk_score__lte=10)
+
         device_list = []
+
+        if above_ten == 'true':
+            device_queryset = device_queryset.annotate(
+                calculated_risk_score=ExpressionWrapper(
+                    F('impact') * F('likelihood'),
+                    output_field=fields.FloatField()
+                )
+            ).filter(calculated_risk_score__gt=10)
 
         for device in device_queryset:
             device_dict = {

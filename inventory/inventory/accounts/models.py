@@ -9,7 +9,7 @@ from inventory.accounts.managers import InventoryUserManager
 from inventory.accounts.validators import phone_validator, check_name_symbols_for_non_alphabetical
 
 
-# auth_models.AbstractUser
+
 class InventoryUser(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
     email = models.EmailField(
         unique=True,
@@ -73,6 +73,7 @@ class Profile(models.Model):
     )
 
     profile_pic = models.ImageField(
+        upload_to='profile_pic/',
         null=True,
         blank=True,
     )

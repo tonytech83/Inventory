@@ -78,7 +78,7 @@ def risk_below_five(business):
 def between_five_and_ten(business):
     devices = business.device_set.all()
 
-    filtered_devices = [device for device in devices if 5 <= device.risk_score < 10]
+    filtered_devices = [device for device in devices if 5 <= device.risk_score <= 10]
 
     return len(filtered_devices)
 

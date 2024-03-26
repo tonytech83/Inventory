@@ -1,71 +1,46 @@
-.navbar {
-    /*position: fixed;*/
-    /*z-index: 100000;*/
+header {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    background: coral;
-    padding: 0;
+    padding: 0 1%;
+    background: var(--background-color);
     box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
 }
 
-.logo img {
-    height: 50px;
-    background: transparent;
-    color: inherit;
-    /*border: 1px solid red; !* Just for testing *!*/
+.link-item,
+.link-item-link {
+    font-weight: 500;
+    font-size: 22px;
+    color: var(--text-color);
+    text-decoration: none;
 }
 
-
-.nav-container {
-    padding: 5px 0;
-    width: 90%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.logo {
+    height: 60px;
+    width: 60px;
+    background: transparent;
+    color: var(--text-color);
 }
 
 .nav-links {
-    font-weight: lighter;
-    color: var(--text-color);
-}
-
-.nav-group {
-    display: flex;
-    gap: 24px;
-}
-
-
-.nav-group .nav-item {
-    list-style-type: none;
-    /*margin: 0 8px;*/
-}
-
-.nav-group .nav-item a {
-    font-size: 22px;
-    display: block;
-    color: var(--text-color);
-    text-decoration: none;
-    /*padding: 0 8px;*/
-}
-
-.nav-group .nav-item button {
-    font-size: 22px;
-}
-
-.nav-group {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    list-style: none;
     margin: 0;
 }
 
-.nav-item {
-    background: transparent;
-    margin: 0;
-    padding: 0;
-
+.nav-links li {
+    display: inline-block;
+    padding: 0 20px;
 }
+
+.nav-links li a {
+    transition: all 0.3s ease 0s;
+}
+
+.nav-links li:hover {
+    background: coral;
+    transition: all 0.3s ease 0s;
+}
+
 
 /*Menu for Profile*/
 .profile-image {
@@ -73,18 +48,14 @@
     height: 40px;
     width: 40px;
     text-align: center;
-    /*margin: 4px 8px;*/
-    padding: 4px 8px 4px 7px;
+    /*padding: 4px 8px 4px 7px;*/
     border-radius: 50%;
 }
-
 
 .dropdown {
     text-decoration: none;
     display: inline-block;
     background: var(--background-color);
-    border-radius: 50%;
-    /*border: 1px solid black;*/
     color: black;
 }
 
@@ -93,8 +64,11 @@
     background: var(--primary-color);
     color: var(--background-color);
     width: 40px;
+    font-size: 24px;
+    font-weight: 600;
+    margin: auto;
+    padding: 4px 2px;
 }
-
 
 .dropdown-menu {
     color: black;
@@ -104,34 +78,36 @@
     content: none;
 }
 
+.dropdown-item {
+    font-size: 16px;
+}
+
 .nav-group .nav-item .dropdown-menu .dropdown-item {
     font-size: 16px;
     color: black;
 }
 
+
 [data-bs-theme="dark"] {
-  --bs-body-color: var(--background-color);
-  --bs-body-color-rgb: #{to-rgb($white)};
-  --bs-body-bg: var(--text-color);
-  --bs-body-bg-rgb: #{to-rgb($blue)};
-  --bs-tertiary-bg: #{$blue-600};
+    --bs-body-color: var(--background-color);
+    --bs-body-color-rgb: #{to-rgb($white)};
+    --bs-body-bg: var(--text-color);
+    --bs-body-bg-rgb: #{to-rgb($blue)};
+    --bs-tertiary-bg: #{$blue-600};
 
-  .dropdown {
-    --bs-dropdown-bg: #{mix($blue-500, $blue-600)};
-    --bs-dropdown-link-active-bg: #{$blue-700};
-  }
+    .dropdown {
+        --bs-dropdown-bg: #{mix($blue-500, $blue-600)};
+        --bs-dropdown-link-active-bg: #{$blue-700};
+    }
 
-  .btn-secondary {
-    --bs-btn-bg: #{mix($gray-600, $blue-400, .5)};
-    --bs-btn-border-color: #{rgba($white, .25)};
-    --bs-btn-hover-bg: #{darken(mix($gray-600, $blue-400, .5), 5%)};
-    --bs-btn-hover-border-color: #{rgba($white, .25)};
-    --bs-btn-active-bg: #{darken(mix($gray-600, $blue-400, .5), 10%)};
-    --bs-btn-active-border-color: #{rgba($white, .5)};
-    --bs-btn-focus-border-color: #{rgba($white, .5)};
-    --bs-btn-focus-box-shadow: 0 0 0 .25rem rgba(255, 255, 255, .2);
-  }
+    .btn-secondary {
+        --bs-btn-bg: #{mix($gray-600, $blue-400, .5)};
+        --bs-btn-border-color: #{rgba($white, .25)};
+        --bs-btn-hover-bg: #{darken(mix($gray-600, $blue-400, .5), 5%)};
+        --bs-btn-hover-border-color: #{rgba($white, .25)};
+        --bs-btn-active-bg: #{darken(mix($gray-600, $blue-400, .5), 10%)};
+        --bs-btn-active-border-color: #{rgba($white, .5)};
+        --bs-btn-focus-border-color: #{rgba($white, .5)};
+        --bs-btn-focus-box-shadow: 0 0 0 .25rem rgba(255, 255, 255, .2);
+    }
 }
-
-
-

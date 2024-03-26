@@ -12,6 +12,8 @@
 @import "footer.css";
 @import "accounts.css";
 
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
 :root {
     --background-color: #373737;
     --primary-color: #ACBABF;
@@ -29,7 +31,7 @@ html, body {
     height: 100%;
     margin: 0;
     background: darkgrey;
-    font-family: "Open Sans", sans-serif;
+    font-family: "Montserrat", sans-serif;
 }
 
 .site-container {

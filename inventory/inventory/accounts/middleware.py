@@ -15,8 +15,8 @@ class FirstLoginRedirectMiddleware(MiddlewareMixin):
         # If it's a GET request to the login URL, and the user is already authenticated,
         # it indicates a redirect after the first successful login
         if request.path == reverse('login-user') and request.method == 'GET':
-            if request.user.profile.is_first_login:  # Assuming you have a flag in the user profile
-                # Redirect to the details profile page
+            if request.user.profile.is_first_login:
+
+
                 return redirect(reverse('details-profile'))
 
-        # For all other cases, no action is needed by this middleware
