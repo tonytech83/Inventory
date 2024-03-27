@@ -40,10 +40,10 @@ function showDeviceEditForm(deviceId, deviceHostName, deviceDomain, deviceDescri
     // Support
     document.getElementById('editDeviceSupportModel').value = deviceSupportModel !== 'null' ? deviceSupportModel : '';
     document.getElementById('editDevicePurchaseOrderNumber').value = devicePurchaseOrderNumber !== 'null' ? devicePurchaseOrderNumber : '';
-    // document.getElementById('editDeviceInvoiceImage').value = deviceInvoiceImage;
+
     // Check if there's an invoice URL and set up a download link
     const invoiceLinkElement = document.getElementById('existingInvoiceLink');
-    // const invoiceDownloadLink = document.getElementById('invoiceDownloadLink');
+
     if (deviceInvoiceImage) {
         const fullPath = deviceInvoiceImage.startsWith('/media/') ? deviceInvoiceImage : `/media/${deviceInvoiceImage}`;
         invoiceLinkElement.setAttribute('href', fullPath);
@@ -58,6 +58,8 @@ function showDeviceEditForm(deviceId, deviceHostName, deviceDomain, deviceDescri
     document.getElementById('editDeviceImpact').value = deviceImpact;
     document.getElementById('editDeviceLikelihood').value = deviceLikelihood;
 
+    // Show the Host name of the current device instead of 'Edit Device'
+    document.querySelector('.action-title').textContent = '-- ' + deviceHostName + ' --';
 
     document.getElementById('editForm').style.display = 'block';
     document.querySelector('.backdrop').style.display = 'block';

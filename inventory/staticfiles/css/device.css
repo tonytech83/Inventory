@@ -1,7 +1,38 @@
 #deviceCreateForm,
 #deviceEditForm {
     display: flex;
+    flex-direction: column;
     justify-content: space-around;
+    /*gap: 20px;*/
+}
+
+.device-info,
+.support-info,
+.risk-info {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.input-group-sm {
+    flex-basis: 32%;
+}
+
+.date-field {
+    flex-basis: 32%;
+    margin-right: 1.5em;
+}
+
+#existingInvoiceLink {
+    flex-basis: 32%;
+    margin-bottom: 1em;
+}
+
+.sub-title {
+    display: inline-block;
+    width: 100%;
+    font-size: 1.2em;
 }
 
 
