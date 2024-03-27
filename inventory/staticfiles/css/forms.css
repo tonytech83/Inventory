@@ -1,13 +1,13 @@
 /* Backdrop styles */
 .backdrop {
-    position: fixed; /* Position relative to the viewport */
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
-    display: none; /* Hidden by default */
-    z-index: 10; /* Ensure it's above other content */
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    z-index: 10;
 }
 
 /* Edit and Save form styles */
@@ -42,7 +42,8 @@
     margin-bottom: 20px;
 }
 
-.title-container h4 {
+.title-container h4,
+.title-container h3 {
     text-align: center;
     line-height: 1;
     margin: 6px 0;

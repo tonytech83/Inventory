@@ -1,7 +1,7 @@
 from datetime import timedelta
 
 from django import template
-from django.db.models import Q
+from django.db.models import Q, QuerySet
 from django.utils.timezone import now
 
 register = template.Library()
@@ -60,7 +60,18 @@ def get_query_param(value, arg):
 
 @register.simple_tag
 def count_by_status(business, status):
+    if isinstance(business, QuerySet):
+        return sum([b.device_set.filter(status__icontains=status).count() for b in business])
+
     return business.device_set.filter(status=status).count()
+
+
+@register.simple_tag
+def count_by_category(business, category):
+    if isinstance(business, QuerySet):
+        return sum([b.device_set.filter(category__icontains=category).count() for b in business])
+
+    return business.device_set.filter(category=category).count()
 
 
 # Risk

@@ -9,7 +9,6 @@ from inventory.accounts.managers import InventoryUserManager
 from inventory.accounts.validators import phone_validator, check_name_symbols_for_non_alphabetical
 
 
-
 class InventoryUser(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
     email = models.EmailField(
         unique=True,
@@ -98,10 +97,14 @@ class Profile(models.Model):
 
     @property
     def full_name(self):
-        return f'{self.first_name} {self.last_name}'
+        if self.first_name and self.last_name:
+            return f'{self.first_name} {self.last_name}'
+
+        return 'Unknown'
 
     @property
     def initials(self):
         if self.first_name and self.last_name:
             return f'{self.first_name[0]}{self.last_name[0]}'.upper()
+
         return self.account.email[0].upper()

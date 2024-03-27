@@ -104,7 +104,6 @@
                     <td>No Reviewed</td>
                     <td>
                         <a href="
-                                
                                 {% if request.GET.no_reviewed == 'true' %}{{ business_url }}{% else %}{{ business_url }}?no_reviewed=true{% endif %}">
                             <span class="{% if request.GET.no_reviewed == 'true' %}selected{% else %}not-selected{% endif %}">{% count_no_reviewed_devices object %}</span>
                         </a>

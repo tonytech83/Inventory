@@ -35,6 +35,9 @@
 
 <!-- JavaScript Libraries Start -->
 {% include 'base/partials/js.html' %}
+<script>$(document).ready(function () {
+    {% block jquery %}{% endblock %}
+})</script>
 <!-- JavaScript Libraries End -->
 
 </body>

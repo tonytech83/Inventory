@@ -1,16 +1,7 @@
-/*==================== GOOGLE FONTS ====================*/
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
-
-/*==================== VARIABLES CSS ====================*/
 :root {
     /*========== Colors ==========*/
     --text-color: #000000;
     --bg-color: #282828;
-
-    /*========== Font and typography ==========*/
-    --body-font: 'Poppins', sans-serif;
-    --normal-font-size: 1rem;
-
 }
 
 
@@ -75,6 +66,7 @@
 .fa-industry {
     font-size: 2em;
     font-weight: 900;
+    color: coral;
 }
 
 .business-link {

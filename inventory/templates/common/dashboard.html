@@ -1,19 +1,194 @@
 {% extends 'base/base.html' %}
+{% load business_tags %}
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        {% block jquery %}
+            const endpoint = '{% url "chart-data" %}';
+            let labels = [];
+            let devices = [];
+            let colors = [];
+            let status_labels = [];
+            let status_data = [];
+
+            $.ajax({
+                method: 'GET',
+                url: endpoint,
+                success: function (data) {
+                    labels = data.labels;
+                    devices = data.devices;
+                    colors = data.colors;
+                    status_labels = data.status_labels;
+                    status_data = data.status_data;
+
+                    setChart();
+                    createLegend(labels, colors, 'legend_one');
+                    createLegend(status_labels, colors, 'legend_two')
+                },
+                error: function (error_data) {
+                    console.log('error');
+                    console.log(error_data);
+                }
+            });
+
+            function setChart() {
+                const ctx = document.getElementById('chart_one').getContext('2d');
+                const ctx2 = document.getElementById('chart_two').getContext('2d');
+                let myChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: '# of Devices',
+                            data: devices,
+                            backgroundColor: colors,
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            legend: {
+                                display: false,
+                            }
+                        }
+                    }
+                });
+                let myChart2 = new Chart(ctx2, {
+                    type: 'pie',
+                    data: {
+                        labels: status_labels,
+                        datasets: [{
+                            label: '# of Devices',
+                            data: status_data,
+                            backgroundColor: colors,
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            legend: {
+                                display: false,
+                            }
+                        }
+                    }
+                });
+            }
+
+            function createLegend(labels, colors, legend_number) {
+                const legendContainer = document.getElementById(`${legend_number}`);
+                legendContainer.innerHTML = '';
+
+                labels.forEach((name, idx) => {
+                    const color = colors[idx];
+                    const legendItem = document.createElement('div');
+                    legendItem.innerHTML = `<span class="legend-dot" style="background-color: ${color};"></span>${name}`;
+                    legendContainer.appendChild(legendItem);
+                });
+            }
+        {% endblock %}
+    });
+</script>
 
 {% block main_content %}
-    <div class="container">
-        <h1>Dashboard</h1>
-        <ul>
-            <li>Charts</li>
-            <li>Reports (form DB to csv, from DB to Word or PDF)</li>
-            <li>Да има едно празно квадратче пред всяко устройсто, като се сложи чавката да има бутон който от disabled
-                да става активен.
-                След като се накликат няколко устройсва, да им се сменя статуса от not reviewed към reviewed.
-            </li>
-            <li>
-                Handsontable - dark theme
-                link: https://jsfiddle.net/MrPolywhirl/ubajLmp7/
-            </li>
-        </ul>
+
+    <!-- Charts -->
+
+
+    <div class="title-container">
+        <h3>Dashboard</h3>
     </div>
+
+    <div class="data_wrapper">
+        <div class="data_one">
+            <div class="chart-legend">
+                <canvas id="chart_one"></canvas>
+                <div id="legend_one"></div>
+
+            </div>
+            <table class="dashboard-table">
+                <tr>
+                    <th></th>
+                    <th>Network</th>
+                    <th>Server - Virtual</th>
+                    <th>Server - Physical</th>
+                    <th>Server - Platform</th>
+                    <th>Printer / Scaner</th>
+                    <th>Storage</th>
+                    <th>Conferencing</th>
+                    <th>End User Computing</th>
+                    <th>Total assets/category</th>
+                </tr>
+                {% for business in object_list %}
+                    <tr>
+                        <td class="business-name">{{ business.business_name }}</td>
+                        <td>{% count_by_category business 'Network' %}</td>
+                        <td>{% count_by_category business 'Server - Virtual' %}</td>
+                        <td>{% count_by_category business 'Server - Physical' %}</td>
+                        <td>{% count_by_category business 'Server - Platform' %}</td>
+                        <td>{% count_by_category business 'Printer / Scaner' %}</td>
+                        <td>{% count_by_category business 'Storage' %}</td>
+                        <td>{% count_by_category business 'Conferencing' %}</td>
+                        <td>{% count_by_category business 'End Users Computing' %}</td>
+                        <td>{{ business.device_set.count }}</td>
+                    </tr>
+                {% endfor %}
+                <tr class="totals">
+                    <td class="business-name">Total assets/site</td>
+                    <td>{% count_by_category object_list 'Network' %}</td>
+                    <td>{% count_by_category object_list 'Server - Virtual' %}</td>
+                    <td>{% count_by_category object_list 'Server - Physical' %}</td>
+                    <td>{% count_by_category object_list 'Server - Platform' %}</td>
+                    <td>{% count_by_category object_list 'Printer / Scaner' %}</td>
+                    <td>{% count_by_category object_list 'Storage' %}</td>
+                    <td>{% count_by_category object_list 'Conferencing' %}</td>
+                    <td>{% count_by_category object_list 'End Users Computing' %}</td>
+                    <td>{% count_by_category object_list '' %}</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="data_two">
+            <div class="chart-legend">
+                <canvas id="chart_two"></canvas>
+                <div id="legend_two"></div>
+
+            </div>
+            <table class="dashboard-table">
+                <tr>
+                    <th></th>
+                    <th>In operation</th>
+                    <th>Decommissioned</th>
+                    <th>Offline</th>
+                    <th>Pending Setup</th>
+                    <th>Not defined yet</th>
+                    <th>Exception</th>
+                    <th>Total assets/status</th>
+                </tr>
+                {% for business in object_list %}
+                    <tr>
+                        <td class="business-name">{{ business.business_name }}</td>
+                        <td>{% count_by_status business 'In operation' %}</td>
+                        <td>{% count_by_status business 'Decommissioned' %}</td>
+                        <td>{% count_by_status business 'Offline' %}</td>
+                        <td>{% count_by_status business 'Pending Setup' %}</td>
+                        <td>{% count_by_status business 'Not defined yet' %}</td>
+                        <td>{% count_by_status business 'Exception' %}</td>
+                        <td>{{ business.device_set.count }}</td>
+                    </tr>
+                {% endfor %}
+                <tr class="totals">
+                    <td class="business-name">Total assets/site</td>
+                    <td>{% count_by_status object_list 'In operation' %}</td>
+                    <td>{% count_by_status object_list 'Decommissioned' %}</td>
+                    <td>{% count_by_status object_list 'Offline' %}</td>
+                    <td>{% count_by_status object_list 'Pending Setup' %}</td>
+                    <td>{% count_by_status object_list 'Not defined yet' %}</td>
+                    <td>{% count_by_status object_list 'Exception' %}</td>
+                    <td>{% count_by_status object_list '' %}</td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+
+
 {% endblock %}

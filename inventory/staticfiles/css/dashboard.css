@@ -1,0 +1,89 @@
+/* ---------------------
+        Table
+------------------------ */
+.dashboard-table {
+    border: 2px solid var(--background-color);
+    box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
+    width: 72%;
+    font-size: 0.8em;
+}
+
+.dashboard-table th {
+    border-right: 2px solid var(--background-color);
+    border-left: 2px solid var(--background-color);
+    text-align: center;
+}
+
+.dashboard-table th:last-child,
+.dashboard-table td:last-child,
+.totals {
+    background: var(--background-color);
+    color: var(--text-color)
+}
+
+.dashboard-table tr {
+    border: 2px solid var(--background-color);
+}
+
+.dashboard-table td {
+    border-right: 2px solid var(--background-color);
+    font-weight: 500;
+    text-align: center;
+}
+
+.dashboard-table .business-name {
+    padding-left: 5px;
+    text-align: start;
+}
+
+/*---------------------------
+        Chart 1
+-----------------------------*/
+.data_wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.data_one,
+.data_two {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.chart-legend {
+    padding: 5px 25px;
+    border: 2px solid var(--background-color);
+    box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 20px;
+    width: 28%;
+}
+
+#legend_one,
+#legend_two {
+    margin: auto;
+    font-size: 0.77em;
+    font-weight: 500;
+}
+
+#chart_one,
+#chart_two {
+    width: 250px !important;
+    height: 250px !important;
+
+    display: block;
+    box-sizing: border-box;
+}
+
+.legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 3px;
+}

@@ -13,29 +13,60 @@
     <div data-edit-business-url="{% url 'edit-business' pk=0 %}"
          data-create-business-url="{% url 'create-business' %}"
          hidden id="devicesUrls"></div>
-    
+
     <!-- Stats -->
     <div class="stats">
         <div class="box">
-            <p>Total business: {{ object_list.count }}</p>
-            <p>Total devices: {{ all_devices }}</p>
+            <h5>Businesses</h5>
+            <div class="table-location">
+                <h1>{{ object_list.count }}</h1>
+            </div>
         </div>
+
+        <div class="box">
+            <h5>Total devices</h5>
+            <div class="table-location">
+                <h1>{{ all_devices }}</h1>
+            </div>
+        </div>
+
+        <div class="box">
+            <h5>Engineers</h5>
+            <div class="table-location">
+                <h1>{{ all_engineers }}</h1>
+            </div>
+        </div>
+
+        <div class="box">
+            <h5>Suppliers</h5>
+            <div class="table-location">
+                <h1>{{ total_suppliers }}</h1>
+            </div>
+        </div>
+
     </div>
 
     <section id="catalogue">
-        <h3>Owned Business</h3>
+        <div class="title-container">
+            <h3>Owned Businesses</h3>
+        </div>
         <div class="owned">
             {% include 'business/partials/create-business-card.html' %}
             {% for owned_business in owned_businesses %}
                 {% include 'business/partials/business-card.html' with business=owned_business %}
             {% endfor %}
         </div>
-        <h3>Other Business</h3>
-        <div class="other">
-            {% for not_owned_business in not_owned_businesses %}
-                {% include 'business/partials/business-card.html' with business=not_owned_business %}
-            {% endfor %}
-        </div>
+
+        {% if not not_owned_business %}
+            <div class="title-container">
+                <h3>Other Businesses</h3>
+            </div>
+            <div class="other">
+                {% for not_owned_business in not_owned_businesses %}
+                    {% include 'business/partials/business-card.html' with business=not_owned_business %}
+                {% endfor %}
+            </div>
+        {% endif %}
     </section>
 
     <!-- Business CRUD scripts -->
