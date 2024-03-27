@@ -6,25 +6,35 @@
     document.addEventListener('DOMContentLoaded', function () {
         {% block jquery %}
             const endpoint = '{% url "chart-data" %}';
-            let labels = [];
+            let businessLabels = [];
             let devices = [];
             let colors = [];
             let status_labels = [];
             let status_data = [];
+            let support_labels = [];
+            let support_data = [];
+            let categories_data = [];
+            let category_labels = [];
 
             $.ajax({
                 method: 'GET',
                 url: endpoint,
                 success: function (data) {
-                    labels = data.labels;
+                    businessLabels = data.labels;
                     devices = data.devices;
                     colors = data.colors;
                     status_labels = data.status_labels;
                     status_data = data.status_data;
+                    support_labels = data.support_labels;
+                    support_data = data.support_data;
+                    categories_data = data.categories_data;
+                    category_labels = data.category_labels
+
 
                     setChart();
-                    createLegend(labels, colors, 'legend_one');
+                    createLegend(businessLabels, colors, 'legend_one');
                     createLegend(status_labels, colors, 'legend_two')
+                    createLegend(support_labels, colors, 'legend_three')
                 },
                 error: function (error_data) {
                     console.log('error');
@@ -33,12 +43,23 @@
             });
 
             function setChart() {
+
+                const dataset_categories = category_labels.map((label, idx) => {
+                    return {
+                        label: label,
+                        data: businessLabels.map(name => categories_data[name][idx] || 0),
+                        backgroundColor: 'rgba(' + (idx * 30 % 255) + ', ' + (idx * 60 % 255) + ', ' + (idx * 90 % 255) + ', 0.5)'
+                    }
+                })
+
                 const ctx = document.getElementById('chart_one').getContext('2d');
                 const ctx2 = document.getElementById('chart_two').getContext('2d');
+                const ctx3 = document.getElementById('chart_three').getContext('2d');
+                const ctx4 = document.getElementById('bar').getContext('2d');
                 let myChart = new Chart(ctx, {
                     type: 'pie',
                     data: {
-                        labels: labels,
+                        labels: businessLabels,
                         datasets: [{
                             label: '# of Devices',
                             data: devices,
@@ -47,8 +68,26 @@
                     },
                     options: {
                         plugins: {
+                            title: {
+                                display: true,
+                                color: '#000',
+                                align: 'start',
+                                text: 'Devices per business',
+                                font: {
+                                    size: 22,
+                                }
+                            },
                             legend: {
                                 display: false,
+                            },
+                            tooltip: {
+                                enabled: true,
+                                bodyFont: {
+                                    size: 18,
+                                },
+                                titleFont: {
+                                    size: 22,
+                                },
                             }
                         }
                     }
@@ -65,8 +104,85 @@
                     },
                     options: {
                         plugins: {
+                            title: {
+                                display: true,
+                                color: '#000',
+                                align: 'start',
+                                text: 'Devices by status',
+                                font: {
+                                    size: 22,
+                                }
+                            },
                             legend: {
                                 display: false,
+                            },
+                            tooltip: {
+                                enabled: true,
+                                bodyFont: {
+                                    size: 18,
+                                },
+                                titleFont: {
+                                    size: 22,
+                                },
+                            }
+                        }
+                    }
+                });
+                let myChart3 = new Chart(ctx3, {
+                    type: 'pie',
+                    data: {
+                        labels: support_labels,
+                        datasets: [{
+                            label: '# of Devices',
+                            data: support_data,
+                            backgroundColor: colors,
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            title: {
+                                display: true,
+                                color: '#000',
+                                align: 'start',
+                                text: 'Devices by support',
+                                font: {
+                                    size: 22,
+                                }
+                            },
+                            legend: {
+                                display: false,
+                            },
+                            tooltip: {
+                                enabled: true,
+                                bodyFont: {
+                                    size: 18,
+                                },
+                                titleFont: {
+                                    size: 22,
+                                },
+                            }
+                        }
+                    }
+                });
+                let myChart4 = new Chart(ctx4, {
+                    type: 'bar',
+                    data: {
+                        labels: businessLabels,
+                        datasets: dataset_categories,
+                    },
+                    options: {
+                        plugins: {
+                            legend: {
+                                display: true,
+                            },
+                            tooltip: {
+                                enabled: true,
+                                bodyFont: {
+                                    size: 14,
+                                },
+                                titleFont: {
+                                    size: 16,
+                                },
                             }
                         }
                     }
@@ -84,29 +200,51 @@
                     legendContainer.appendChild(legendItem);
                 });
             }
+
+
         {% endblock %}
     });
+
+
 </script>
 
 {% block main_content %}
 
+    <!-- Forms container-->
+    <div class="backdrop" style="display:none;" onclick="hideForm()"></div>
+
     <!-- Charts -->
-
-
     <div class="title-container">
         <h3>Dashboard</h3>
     </div>
 
-    <div class="data_wrapper">
-        <div class="data_one">
-            <div class="chart-legend">
-                <canvas id="chart_one"></canvas>
-                <div id="legend_one"></div>
 
-            </div>
+    <div class="pie-carts">
+        <div class="chart-legend" onclick="showTable('One');">
+            <canvas id="chart_one"></canvas>
+            <div id="legend_one"></div>
+        </div>
+
+        <div class="chart-legend" onclick="showTable('Two');">
+            <canvas id="chart_two"></canvas>
+            <div id="legend_two"></div>
+        </div>
+
+        <div class="chart-legend" onclick="showTable('Three');">
+            <canvas id="chart_three"></canvas>
+            <div id="legend_three"></div>
+        </div>
+    </div>
+
+    <div class="bar-chart">
+        <canvas id="bar"></canvas>
+    </div>
+
+    <div class="tables">
+        <div id="tableOne" style="display: none;">
             <table class="dashboard-table">
                 <tr>
-                    <th></th>
+                    <th>Location</th>
                     <th>Network</th>
                     <th>Server - Virtual</th>
                     <th>Server - Physical</th>
@@ -145,16 +283,10 @@
                 </tr>
             </table>
         </div>
-
-        <div class="data_two">
-            <div class="chart-legend">
-                <canvas id="chart_two"></canvas>
-                <div id="legend_two"></div>
-
-            </div>
+        <div id="tableTwo" style="display: none;">
             <table class="dashboard-table">
                 <tr>
-                    <th></th>
+                    <th>Location</th>
                     <th>In operation</th>
                     <th>Decommissioned</th>
                     <th>Offline</th>
@@ -187,8 +319,66 @@
                 </tr>
             </table>
         </div>
-
+        <div id="tableThree" style="display: none;">
+            <table class="dashboard-table">
+                <tr>
+                    <th>Location</th>
+                    <th>No support</th>
+                    <th>3 months to 0</th>
+                    <th>6 to 3 months</th>
+                    <th>12 to 6 months</th>
+                    <th>Good</th>
+                    <th>Unknown</th>
+                    <th>Total assets/support</th>
+                </tr>
+                {% for business in object_list %}
+                    <tr>
+                        <td class="business-name">{{ business.business_name }}</td>
+                        <td>{% count_no_support_devices business %}</td>
+                        <td>{% count_lt_three_months_and_no_support business %}</td>
+                        <td>{% count_lt_six_gt_three_months business %}</td>
+                        <td>{% count_lt_year_gt_six_month business %}</td>
+                        <td>{% count_devices_in_support business %}</td>
+                        <td>{% count_devices_unknown_support business %}</td>
+                        <td>{{ business.device_set.count }}</td>
+                    </tr>
+                {% endfor %}
+                <tr class="totals">
+                    <td class="business-name">Total assets/site</td>
+                    <td>{% count_no_support_devices object_list %}</td>
+                    <td>{% count_lt_three_months_and_no_support object_list %}</td>
+                    <td>{% count_lt_six_gt_three_months object_list %}</td>
+                    <td>{% count_lt_year_gt_six_month object_list %}</td>
+                    <td>{% count_devices_in_support object_list %}</td>
+                    <td>{% count_devices_unknown_support object_list %}</td>
+                    <td>{% count_by_status object_list '' %}</td>
+                </tr>
+            </table>
+        </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            function showTable(tableIdSuffix) {
+                const tableId = `table${tableIdSuffix}`;
+                document.getElementById(tableId).style.display = 'block';
+                document.querySelector('.backdrop').style.display = 'block';
+            }
+
+            window.showTable = showTable;
+
+            function hideForm() {
+                document.querySelectorAll('.dashboard-table').forEach(table => {
+                    table.style.display = 'none';
+                });
+                document.querySelector('.backdrop').style.display = 'none';
+                window.location.reload();
+            }
+
+            window.hideForm = hideForm;
+        });
+    </script>
 
 
 {% endblock %}

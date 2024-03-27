@@ -44,6 +44,8 @@ class BusinessView(views.DetailView):
         lt_six_gt_three_months = self.request.GET.get('lt_six_gt_three_months', None)
         no_reviewed = self.request.GET.get('no_reviewed', None)
         lt_three_months_and_no_support = self.request.GET.get('lt_three_months_and_no_support', None)
+        count_devices_in_support = self.request.GET.get('count_devices_in_support', None)
+        count_devices_unknown_support = self.request.GET.get('count_devices_unknown_support', None)
 
         # Risk
         risk_below_five = self.request.GET.get('risk_below_five', None)
@@ -53,8 +55,8 @@ class BusinessView(views.DetailView):
         device_queryset = business.device_set.all()
 
         if no_support == 'true':
-            query = Q(eos__lt=now().date()) | Q(eos__isnull=True)
-            device_queryset = device_queryset.filter(query)
+            # query = Q(eos__lt=now().date()) | Q(eos__isnull=True)
+            device_queryset = device_queryset.filter(eos__lt=now().date())
 
         if no_reviewed == 'true':
             one_year_ago = now() - timedelta(days=365)
@@ -116,6 +118,14 @@ class BusinessView(views.DetailView):
                     output_field=fields.FloatField()
                 )
             ).filter(calculated_risk_score__gte=5, calculated_risk_score__lte=10)
+
+        if count_devices_in_support == 'true':
+            today = now().date()
+            one_year_from_now = today + timedelta(days=365)
+            device_queryset = device_queryset.filter(eos__gt=one_year_from_now)
+
+        if count_devices_unknown_support == 'true':
+            device_queryset = device_queryset.filter(eos=None)
 
         device_list = []
 

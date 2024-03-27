@@ -4,8 +4,10 @@
 .dashboard-table {
     border: 2px solid var(--background-color);
     box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
-    width: 72%;
-    font-size: 0.8em;
+    width: 100%;
+    height: 100%;
+    font-size: 0.9em;
+    margin: auto;
 }
 
 .dashboard-table th {
@@ -37,20 +39,36 @@
 }
 
 /*---------------------------
-        Chart 1
+        Chart
 -----------------------------*/
-.data_wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.data_one,
-.data_two {
+.pie-carts {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    flex-wrap: wrap;
     gap: 20px;
+}
+
+.bar-chart {
+    margin-top: 30px;
+    padding: 10px;
+    border: 2px solid var(--background-color);
+    box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
+}
+
+#bar {
+    height: 630px !important;
+}
+
+#chart_one,
+#chart_two,
+#chart_three {
+    width: 350px !important;
+    height: 350px !important;
+    display: block;
+    box-sizing: border-box;
+    gap: 20px;
+
 }
 
 .chart-legend {
@@ -60,25 +78,46 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    gap: 20px;
-    width: 28%;
+}
+
+.chart-legend:hover {
+    background: lightgray;
+    color: var(--background-color);
+    transition: background 0.3s;
+    /* Shake animation */
+    animation: shake 0.82s cubic-bezier(.36, .07, .19, .97) both;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+/* Shake animation */
+@keyframes shake {
+    10%, 90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    20%, 80% {
+        transform: translate3d(2px, 0, 0);
+    }
+
+    30%, 50%, 70% {
+        transform: translate3d(-2px, 0, 0);
+    }
+
+    40%, 60% {
+        transform: translate3d(2px, 0, 0);
+    }
 }
 
 #legend_one,
-#legend_two {
+#legend_two,
+#legend_three {
     margin: auto;
     font-size: 0.77em;
     font-weight: 500;
 }
 
-#chart_one,
-#chart_two {
-    width: 250px !important;
-    height: 250px !important;
-
-    display: block;
-    box-sizing: border-box;
-}
 
 .legend-dot {
     width: 12px;

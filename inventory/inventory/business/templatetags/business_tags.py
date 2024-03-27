@@ -9,8 +9,29 @@ register = template.Library()
 
 @register.simple_tag
 def count_no_support_devices(business):
-    query = Q(eos__lt=now().date()) | Q(eos__isnull=True)
-    return business.device_set.filter(query).count()
+    if isinstance(business, QuerySet):
+        return sum([b.device_set.filter(eos__lt=now().date()).count() for b in business])
+
+    return business.device_set.filter(eos__lt=now().date()).count()
+
+
+@register.simple_tag
+def count_devices_in_support(business):
+    today = now().date()
+    one_year_from_now = today + timedelta(days=365)
+
+    if isinstance(business, QuerySet):
+        return sum([b.device_set.filter(eos__gt=one_year_from_now).count() for b in business])
+
+    return business.device_set.filter(eos__gt=one_year_from_now).count()
+
+
+@register.simple_tag
+def count_devices_unknown_support(business):
+    if isinstance(business, QuerySet):
+        return sum([b.device_set.filter(eos=None).count() for b in business])
+
+    return business.device_set.filter(eos=None).count()
 
 
 @register.simple_tag
@@ -20,6 +41,9 @@ def count_lt_year_gt_six_month(business):
     one_year_from_now = today + timedelta(days=365)
 
     query = Q(eos__gt=six_months_from_now) & Q(eos__lt=one_year_from_now)
+
+    if isinstance(business, QuerySet):
+        return sum([b.device_set.filter(query).count() for b in business])
 
     return business.device_set.filter(query).count()
 
@@ -32,6 +56,9 @@ def count_lt_six_gt_three_months(business):
 
     query = Q(eos__gt=three_months_from_now) & Q(eos__lt=six_months_from_now)
 
+    if isinstance(business, QuerySet):
+        return sum([b.device_set.filter(query).count() for b in business])
+
     return business.device_set.filter(query).count()
 
 
@@ -41,6 +68,9 @@ def count_lt_three_months_and_no_support(business):
     three_months_from_now = today + timedelta(days=90)
 
     query = Q(eos__gt=today) & Q(eos__lt=three_months_from_now)
+
+    if isinstance(business, QuerySet):
+        return sum([b.device_set.filter(query).count() for b in business])
 
     return business.device_set.filter(query).count()
 

@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from inventory.business.models import Business
-from inventory.common.utils import get_device_status_counts
+from inventory.common.utils import get_device_status_counts, get_devices_support_count, get_business_by_categories
 from inventory.devices.models import Device
 from inventory.suppliers.models import Supplier
 
@@ -22,8 +22,11 @@ class ChartData(APIView):
     def get(self, request, format=None):
         business_names = [b.business_name for b in Business.objects.all()]
         devices_per_business = [b.device_set.count() for b in Business.objects.all()]
-        colors = ["#FF6384", "#36A2EB", "#FFCE56", "#cc65fe", "#ff6347", "#36a2eb", "#ffd700"]
         status_labels, status_data = get_device_status_counts()
+        support_labels, support_data = get_devices_support_count()
+        categories_data, category_labels = get_business_by_categories()
+        colors = ["#FF6384", "#36A2EB", "#FFCE56", "#cc65fe", "#ff6347", "#36a2eb", "#ffd700", "#4bc0c0", "#9975B9",
+                  "#c9cbcf"]
 
         data = {
             'labels': business_names,
@@ -31,6 +34,10 @@ class ChartData(APIView):
             'colors': colors[:len(business_names)],
             'status_labels': status_labels,
             'status_data': status_data,
+            'support_labels': support_labels,
+            'support_data': support_data,
+            'categories_data': categories_data,
+            'category_labels': category_labels,
         }
 
         return Response(data)
