@@ -3,7 +3,7 @@ import {getCookie} from './get-cookie.js'
 window.showCreateForm = showCreateForm;
 window.showEditForm = showEditForm;
 window.showDeleteForm = showDeleteForm;
-window.hideForm =hideForm;
+window.hideForm = hideForm;
 window.confirmDelete = confirmDelete;
 window.hideDeleteForm = hideDeleteForm;
 
@@ -49,12 +49,46 @@ function hideForm() {
     document.getElementById('createSupplierForm').style.display = 'none';
     document.getElementById('deleteSupplierForm').style.display = 'none';
     document.querySelector('.backdrop').style.display = 'none';
+
+    document.getElementById('errorsSupplierContainer').style.display = 'none';
+    document.getElementById('errorsSupplierEditContainer').style.display = 'none';
 }
 
 function hideDeleteForm() {
     // Hide the delete form and backdrop
     document.getElementById('deleteSupplierForm').style.display = 'none';
     document.querySelector('.backdrop').style.display = 'none';
+}
+
+function displayErrors(errors, containerId) {
+    const errorsContainer = document.getElementById(containerId);
+    if (!errorsContainer) {
+        console.error('Error container not found:', containerId);
+        return;
+    }
+
+    errorsContainer.innerHTML = '';
+
+    // Iterate over each error
+    Object.keys(errors).forEach(key => {
+        errors[key].forEach(msg => {
+            const errorElement = document.createElement('p');
+            if (`${key}` === 'name') {
+                errorElement.textContent = `Supplier name: ${msg}`;
+            } else if (`${key}` === 'contact_name') {
+                errorElement.textContent = `Contact name: ${msg}`;
+            } else if (`${key}` === 'phone_number') {
+                errorElement.textContent = `Phone number: ${msg}`;
+            } else {
+                errorElement.textContent = `Email: ${msg}`;
+            }
+            // errorElement.textContent = `${key}: ${msg}`;
+            errorElement.classList.add('error-message');
+            errorsContainer.appendChild(errorElement);
+        });
+    });
+
+    errorsContainer.style.display = 'block';
 }
 
 function confirmDelete() {
@@ -80,6 +114,7 @@ function confirmDelete() {
         })
         .catch(error => {
             console.error('Error:', error);
+            // displayErrors({message: [error]}, 'errorsSupplierContainer');
         });
 
 }
@@ -91,8 +126,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const formData = new FormData(this);
         const data = Object.fromEntries(formData.entries());
-
-
         const csrftoken = getCookie('csrftoken');
 
         fetch(createSupplierUrl, {
@@ -107,11 +140,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 hideForm();
                 window.location.reload();
             } else {
-                console.error('Failed to create supplier.');
+                return response.json();
             }
-        }).catch(error => console.error('Error:', error));
+        }).then(data => {
+            if (data) {
+                displayErrors(data, 'errorsSupplierContainer');
+            }
+        }).catch(error => {
+            console.error('Error:', error);
+            displayErrors({message: ["An unexpected error occurred. Please try again."]}, 'errorsSupplierContainer');
+        });
     });
-
 });
 
 // Edit
@@ -146,15 +185,21 @@ document.addEventListener("DOMContentLoaded", function () {
                 'X-CSRFToken': csrftoken,
                 'Content-Type': 'application/json',
             },
-        })
-            .then(response => {
-                if (response.ok) {
-                    hideForm();
-                    window.location.reload();
-                } else {
-                    console.error('Failed to edit supplier.');
-                }
-            })
-            .catch(error => console.error('Error:', error));
+        }).then(response => {
+            if (response.ok) {
+                hideForm();
+                window.location.reload();
+            } else {
+                console.error('Failed to edit supplier.');
+                return response.json();
+            }
+        }).then(data => {
+            if (data) {
+                displayErrors(data, 'errorsSupplierEditContainer');
+            }
+        }).catch(error => {
+            console.error('Error:', error);
+            displayErrors({message: ["An unexpected error occurred. Please try again."]}, 'errorsSupplierEditContainer');
+        });
     });
 });

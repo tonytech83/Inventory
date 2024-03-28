@@ -64,3 +64,19 @@
     line-height: 1;
     margin: 6px 0;
 }
+
+#errorsSupplierContainer,
+#errorsSupplierEditContainer {
+    position: absolute;
+    bottom: 12%;
+    color: red;
+    font-size: 0.9rem;
+    text-align: left;
+    margin: auto;
+}
+
+#errorsSupplierContainer p,
+#errorsSupplierEditContainer p {
+    padding: 0;
+    margin: 0;
+}
