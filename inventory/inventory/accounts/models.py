@@ -6,7 +6,8 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from inventory.accounts.managers import InventoryUserManager
-from inventory.accounts.validators import phone_validator, check_name_symbols_for_non_alphabetical
+from inventory.accounts.validators import check_name_symbols_for_non_alphabetical
+from inventory.core.model_validators import phone_validator
 
 
 class InventoryUser(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):

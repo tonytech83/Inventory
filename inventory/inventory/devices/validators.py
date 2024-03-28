@@ -18,3 +18,10 @@ def validate_mime_type(value):
 
     if mime_type not in allowed_mime_types:
         raise ValidationError('Unsupported file type.')
+
+
+def purchase_order_number_validator(value):
+    value_str = str(value)
+
+    if len(value_str) != 10 or not value_str.isdigit():
+        raise ValidationError('Purchase order number must be exactly 10 digits.')

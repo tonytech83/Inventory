@@ -32,7 +32,6 @@
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text" id="inputGroup-sizing-sm">Status</span>
                 <select id="editDeviceStatus" name="status" class="form-control">
-                    {# TODO: Hardcoded options, not a good practise #}
                     <option value="In operation">In operation</option>
                     <option value="Decommissioned">Decommissioned</option>
                     <option value="Pending Setup">Pending Setup</option>
@@ -238,15 +237,15 @@
         <div class="button-container form-style">
             <div class="control-buttons"></div>
             <div class="action-buttons">
-                <button class="reset-button-style button btn-create" type="submit" onclick="submitEditForm()">Save
-                </button>
-                <button class="reset-button-style button btn-delete" type="button"
-                        onclick="showDeleteForm(
+                    <button class="reset-button-style button btn-create" type="submit" onclick="submitEditForm()">Save
+                    </button>
+                    <button class="reset-button-style button btn-delete" type="button"
+                            onclick="showDeleteForm(
                             document.getElementById('editDeviceId').value,
                              document.getElementById('editDeviceHostName').value
                              )">
-                    Delete
-                </button>
+                        Delete
+                    </button>
                 <button class="reset-button-style button btn-cancel" type="button" onclick="hideForm()">Cancel
                 </button>
             </div>

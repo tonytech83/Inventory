@@ -45,7 +45,7 @@ class Migration(migrations.Migration):
                 ('first_name', models.CharField(blank=True, max_length=15, null=True, validators=[django.core.validators.MinLengthValidator(2), inventory.accounts.validators.check_name_symbols_for_non_alphabetical])),
                 ('last_name', models.CharField(blank=True, max_length=15, null=True, validators=[django.core.validators.MinLengthValidator(2), inventory.accounts.validators.check_name_symbols_for_non_alphabetical])),
                 ('profile_pic', models.ImageField(blank=True, null=True, upload_to='')),
-                ('phone_number', models.CharField(blank=True, max_length=15, null=True, validators=[inventory.accounts.validators.phone_validator])),
+                ('phone_number', models.CharField(blank=True, max_length=15, null=True, validators=[inventory.core.model_validators.phone_validator])),
                 ('is_first_login', models.BooleanField(default=True)),
                 ('account', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, primary_key=True, related_name='profile', serialize=False, to=settings.AUTH_USER_MODEL)),
             ],

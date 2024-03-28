@@ -1,10 +1,11 @@
 from django.contrib.auth import get_user_model
-from django.core.validators import MinLengthValidator
+from django.core.validators import MinLengthValidator, MaxValueValidator, MinValueValidator
 from django.db import models
 from datetime import datetime
 from inventory.business.models import Business
 from inventory.core.model_mixins import TimeStampedModel
-from inventory.devices.validators import validate_no_special_characters, validate_mime_type
+from inventory.devices.validators import validate_no_special_characters, validate_mime_type, \
+    purchase_order_number_validator
 from inventory.suppliers.models import Supplier
 
 from datetime import date
@@ -233,7 +234,9 @@ class Device(TimeStampedModel, models.Model):
     )
 
     purchase_order_number = models.IntegerField(
-        # TODO: to validate length of PO ?
+        validators=(
+            purchase_order_number_validator,
+        ),
         null=True,
         blank=True,
     )

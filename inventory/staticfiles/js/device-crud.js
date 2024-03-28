@@ -162,18 +162,16 @@ function submitDeviceForm() {
 }
 
 // Edit
+
 function submitEditForm() {
     event.preventDefault(); // Prevent default form submission behavior
 
     const formData = new FormData(document.getElementById('deviceEditForm'));
-    const csrftoken = getCookie('csrftoken')
+    const csrftoken = getCookie('csrftoken');
     const deviceId = document.getElementById('editDeviceId').value;
-    const editUrl = editDeviceUrl.replace("0", `${deviceId}`)
+    const editUrl = editDeviceUrl.replace("0", deviceId); // Ensure you have defined editDeviceUrl
 
-    // const editDeviceUrl = document.getElementById('devicesUrls').getAttribute('data-edit-device-url').replace('0', deviceId);
-
-
-    const businessId = document.getElementById('businessId').value;
+    const businessId = document.getElementById('businessId').value; // Ensure you have this element in your form
     formData.append('business', businessId);
 
     fetch(editUrl, {
@@ -185,27 +183,15 @@ function submitEditForm() {
         body: formData
     })
         .then(response => {
+            const contentType = response.headers.get("Content-Type");
             if (!response.ok) {
-                // Read the response as text
-                return response.text().then(html => {
-                    // Define known error messages and their user-friendly equivalents
-                    const errorMappings = {
-                        '{"device_name":["This field may not be blank."]}': "The Hostname can not be blank.",
-                        '{"detail":"UNIQUE constraint failed: devices_device.serial_number"}': "The Serial number is already used. Please use a unique Serial number.",
-                        '{"device_name":["device with this device name already exists."]}': "The Hostname is already used. Please use a unique Hostname.",
-                        '{"device_name":["Ensure this field has at least 2 characters."]}': "Ensure Hostname field has at least 2 characters."
-                    };
-
-                    let userFriendlyError = "An unexpected error occurred. Please try again.";
-                    Object.keys(errorMappings).forEach(errorPattern => {
-                        if (html.includes(errorPattern)) {
-                            userFriendlyError = errorMappings[errorPattern];
-                        }
-                    });
-
-                    // Reject the promise
-                    return Promise.reject(userFriendlyError);
-                });
+                if (contentType && contentType.indexOf("application/json") !== -1) {
+                    // Parse response as JSON
+                    return response.json().then(data => Promise.reject(data));
+                } else {
+                    // Non-JSON response, treat as text
+                    return response.text().then(text => Promise.reject(text));
+                }
             }
             return response.json();
         })
@@ -214,10 +200,18 @@ function submitEditForm() {
             hideForm();
             window.location.reload();
         })
-        .catch((error) => {
-            displayErrors({message: [error]}, 'errorsEditContainer');
-            console.error('Error:', error);
-
+        .catch(error => {
+            // Determine error type (JSON or string)
+            if (typeof error === 'object' && error.detail) {
+                displayErrors({message: [error.detail]}, 'errorsEditContainer');
+            } else if (typeof error === 'string') {
+                // Handle non-JSON errors, potentially parsing for known error messages
+                // For simplicity, showing the received error string directly
+                displayErrors({message: [error]}, 'errorsEditContainer');
+            } else {
+                console.error('Error:', error);
+                displayErrors({message: ["An unexpected error occurred. Please try again."]}, 'errorsEditContainer');
+            }
         });
 }
 
@@ -235,17 +229,37 @@ function confirmDelete() {
         method: 'DELETE',
         headers: {
             'X-CSRFToken': csrftoken,
+            'Accept': 'application/json', // Ensure the server responds with JSON
         },
     })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                // Parse the response as JSON if it's not ok
+                return response.json().then(data => Promise.reject(data));
             }
             hideDeleteForm();
             window.location.reload();
         })
         .catch(error => {
+            // Handle errors
             console.error('Error:', error);
+            displayErrors({message: [error.detail]}, 'errorsDeleteConfirmContainer');
         });
+    // fetch(deleteUrl, {
+    //     method: 'DELETE',
+    //     headers: {
+    //         'X-CSRFToken': csrftoken,
+    //     },
+    // })
+    //     .then(response => {
+    //         if (!response.ok) {
+    //             throw new Error('Network response was not ok');
+    //         }
+    //         hideDeleteForm();
+    //         window.location.reload();
+    //     })
+    //     .catch(error => {
+    //         console.error('Error:', error);
+    //     });
 }
 

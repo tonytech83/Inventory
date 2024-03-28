@@ -17,31 +17,16 @@ from rest_framework import status
 from rest_framework.views import APIView
 
 from inventory.business.models import Business
+from inventory.core.view_mixins import IsOwnerMixin, IsBusinessOwner
 
 from inventory.devices.models import Device
 from inventory.devices.serializers import CSVUploadSerializer, DeviceSerializer
 
 
-# class DeviceCreateAPIView(api_views.CreateAPIView):
-#     queryset = Device.objects.all()
-#     serializer_class = DeviceSerializer
-#
-#     # TODO: Check which other permissions classes I need
-#
-#     def perform_create(self, serializer):
-#         business_id = self.kwargs.get('business_id')
-#         serializer.save(business_id=business_id)
-#
-#     def get_serializer_context(self):
-#         context = super().get_serializer_context()
-#         context.update({
-#             "business_id": self.kwargs.get('business_id')
-#         })
-#         return context
-
-class DeviceCreateAPIView(api_views.CreateAPIView):
+class DeviceCreateAPIView( api_views.CreateAPIView):
     queryset = Device.objects.all()
     serializer_class = DeviceSerializer
+    permission_classes = [IsBusinessOwner, IsAuthenticated]
 
     def perform_create(self, serializer):
         business_id = self.kwargs.get('business_id')
@@ -58,8 +43,7 @@ class DeviceCreateAPIView(api_views.CreateAPIView):
         try:
             return super().post(request, *args, **kwargs)
         except IntegrityError as e:
-
-            # Check for 'serial_number' uniqueness violation
+            # Check for unique serial number
             if 'serial_number' in str(e):
                 return Response({'detail': 'UNIQUE constraint failed: devices_device.serial_number'},
                                 status=status.HTTP_400_BAD_REQUEST)
@@ -76,8 +60,7 @@ class DeviceCreateAPIView(api_views.CreateAPIView):
 class DeviceUpdateApiView(api_views.UpdateAPIView):
     queryset = Device.objects.all()
     serializer_class = DeviceSerializer
-
-    # TODO: Check which other permissions classes I need
+    permission_classes = [IsBusinessOwner, IsAuthenticated]
 
     def update(self, request, *args, **kwargs):
         try:
@@ -100,8 +83,7 @@ class DeviceUpdateApiView(api_views.UpdateAPIView):
 class DeviceDeleteApiView(api_views.DestroyAPIView):
     queryset = Device.objects.all()
     serializer_class = DeviceSerializer
-    # TODO: Check which other permissions classes I need
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsBusinessOwner, IsAuthenticated]
 
 
 class CSVUploadApiView(APIView):

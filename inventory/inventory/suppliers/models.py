@@ -1,6 +1,8 @@
 from django.core.validators import MinLengthValidator
 from django.db import models
 
+from inventory.core.model_validators import phone_validator
+
 
 class Supplier(models.Model):
     MIN_NAME_LENGTH = 2
@@ -29,8 +31,10 @@ class Supplier(models.Model):
     )
 
     phone_number = models.CharField(
-        # TODO: Check how to implement this!!!
         max_length=15,
+        validators=(
+            phone_validator,
+        ),
     )
 
     email = models.EmailField(
