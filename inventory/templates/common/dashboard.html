@@ -1,7 +1,9 @@
 {% extends 'base/base.html' %}
+{% load static %}
 {% load business_tags %}
 
 
+<!-- Charts -->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         {% block jquery %}
@@ -48,7 +50,7 @@
                     return {
                         label: label,
                         data: businessLabels.map(name => categories_data[name][idx] || 0),
-                        backgroundColor: 'rgba(' + (idx * 30 % 255) + ', ' + (idx * 60 % 255) + ', ' + (idx * 90 % 255) + ', 0.5)'
+                        backgroundColor: 'rgba(' + (idx * 30 % 255) + ', ' + (idx * 60 % 255) + ', ' + (idx * 90 % 255) + ', 0.5)',
                     }
                 })
 
@@ -200,12 +202,8 @@
                     legendContainer.appendChild(legendItem);
                 });
             }
-
-
         {% endblock %}
     });
-
-
 </script>
 
 {% block main_content %}
@@ -357,28 +355,7 @@
         </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-
-            function showTable(tableIdSuffix) {
-                const tableId = `table${tableIdSuffix}`;
-                document.getElementById(tableId).style.display = 'block';
-                document.querySelector('.backdrop').style.display = 'block';
-            }
-
-            window.showTable = showTable;
-
-            function hideForm() {
-                document.querySelectorAll('.dashboard-table').forEach(table => {
-                    table.style.display = 'none';
-                });
-                document.querySelector('.backdrop').style.display = 'none';
-                window.location.reload();
-            }
-
-            window.hideForm = hideForm;
-        });
-    </script>
-
+    <!-- Show Tables scripts -->
+    <script src="{% static 'js/dashboard.js' %}"></script>
 
 {% endblock %}

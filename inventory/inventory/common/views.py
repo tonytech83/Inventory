@@ -25,13 +25,16 @@ class ChartData(APIView):
         status_labels, status_data = get_device_status_counts()
         support_labels, support_data = get_devices_support_count()
         categories_data, category_labels = get_business_by_categories()
-        colors = ["#FF6384", "#36A2EB", "#FFCE56", "#cc65fe", "#ff6347", "#36a2eb", "#ffd700", "#4bc0c0", "#9975B9",
-                  "#c9cbcf"]
+
+        colors = [
+            f'rgba({(idx + 10) * 30 % 255}, {(idx + 10) * 60 % 255}, {(idx + 10) * 90 % 255}, 0.5)'
+            for idx in range(len(category_labels))
+        ]
 
         data = {
             'labels': business_names,
             'devices': devices_per_business,
-            'colors': colors[:len(business_names)],
+            'colors': colors,
             'status_labels': status_labels,
             'status_data': status_data,
             'support_labels': support_labels,
