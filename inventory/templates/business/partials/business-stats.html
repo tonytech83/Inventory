@@ -32,7 +32,7 @@
         <h5>Not Reviewed</h5>
         <div class="table-location">
             <div class="table-location">
-                <h1>
+                <h1>{% url 'business' pk=business.pk as business_url %}
                     <a href="
                            {% if request.GET.no_reviewed == 'true' %}{{ business_url }}{% else %}{{ business_url }}?no_reviewed=true{% endif %}">
                             <span class="{% if request.GET.no_reviewed == 'true' %}selected{% else %}not-selected{% endif %}">{% count_no_reviewed_devices object %}</span>

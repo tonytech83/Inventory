@@ -6,6 +6,7 @@ import openpyxl
 from django.conf import settings
 import os
 
+from django.db import IntegrityError
 from django.shortcuts import get_object_or_404
 
 from rest_framework.parsers import MultiPartParser, FormParser
@@ -21,11 +22,26 @@ from inventory.devices.models import Device
 from inventory.devices.serializers import CSVUploadSerializer, DeviceSerializer
 
 
+# class DeviceCreateAPIView(api_views.CreateAPIView):
+#     queryset = Device.objects.all()
+#     serializer_class = DeviceSerializer
+#
+#     # TODO: Check which other permissions classes I need
+#
+#     def perform_create(self, serializer):
+#         business_id = self.kwargs.get('business_id')
+#         serializer.save(business_id=business_id)
+#
+#     def get_serializer_context(self):
+#         context = super().get_serializer_context()
+#         context.update({
+#             "business_id": self.kwargs.get('business_id')
+#         })
+#         return context
+
 class DeviceCreateAPIView(api_views.CreateAPIView):
     queryset = Device.objects.all()
     serializer_class = DeviceSerializer
-
-    # TODO: Check which other permissions classes I need
 
     def perform_create(self, serializer):
         business_id = self.kwargs.get('business_id')
@@ -38,11 +54,47 @@ class DeviceCreateAPIView(api_views.CreateAPIView):
         })
         return context
 
+    def post(self, request, *args, **kwargs):
+        try:
+            return super().post(request, *args, **kwargs)
+        except IntegrityError as e:
+
+            # Check for 'serial_number' uniqueness violation
+            if 'serial_number' in str(e):
+                return Response({'detail': 'UNIQUE constraint failed: devices_device.serial_number'},
+                                status=status.HTTP_400_BAD_REQUEST)
+            # Check for 'device_name' uniqueness violation
+            elif 'device_name' in str(e):
+
+                return Response({'detail': 'The Device name is already used. Please use a unique Device name.'},
+                                status=status.HTTP_400_BAD_REQUEST)
+            # Generic integrity error
+            else:
+                return Response({'detail': 'An unexpected error occurred.'}, status=status.HTTP_400_BAD_REQUEST)
+
 
 class DeviceUpdateApiView(api_views.UpdateAPIView):
     queryset = Device.objects.all()
     serializer_class = DeviceSerializer
+
     # TODO: Check which other permissions classes I need
+
+    def update(self, request, *args, **kwargs):
+        try:
+            # Call the superclass's update method to perform the actual update operation
+            return super().update(request, *args, **kwargs)
+        except IntegrityError as e:
+            # Check for 'serial_number' uniqueness violation
+            if 'serial_number' in str(e):
+                return Response({'detail': 'UNIQUE constraint failed: devices_device.serial_number'},
+                                status=status.HTTP_400_BAD_REQUEST)
+            # Check for 'device_name' uniqueness violation
+            elif 'device_name' in str(e):
+                return Response({'detail': 'The Device name is already used. Please use a unique Device name.'},
+                                status=status.HTTP_400_BAD_REQUEST)
+            # Generic integrity error
+            else:
+                return Response({'detail': 'An unexpected error occurred.'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class DeviceDeleteApiView(api_views.DestroyAPIView):

@@ -1,5 +1,26 @@
+.home-wrapper {
+    display: flex;
+    flex-direction: row;
+
+    gap: 40px;
+}
+
+.business-stats {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 2px solid var(--background-color);
+    padding: 20px;
+    height: 88vh;
+}
+
+.business-stats .title-container {
+    text-align: center;
+    margin: 0;
+}
+
 #catalogue {
-    width: 100%;
+    width: 80%;
     display: flex;
     flex-direction: column;
     gap: 20px;

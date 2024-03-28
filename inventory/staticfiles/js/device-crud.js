@@ -78,29 +78,44 @@ function showDeleteForm(deviceId, deviceHostName) {
     document.getElementById('editForm').style.display = 'none'
 }
 
+
 function hideForm() {
     document.getElementById('createForm').style.display = 'none';
     document.getElementById('editForm').style.display = 'none';
     document.getElementById('deleteDeviceForm').style.display = 'none';
     document.querySelector('.backdrop').style.display = 'none';
+
+    document.getElementById('errorsEditContainer').style.display = 'none';
+    document.getElementById('errorsContainer').style.display = 'none';
 }
 
 function hideDeleteForm() {
-    // Hide the delete form and backdrop
     document.getElementById('deleteDeviceForm').style.display = 'none';
     document.querySelector('.backdrop').style.display = 'none';
 }
 
+function displayErrors(errors, containerId) {
+    const errorsContainer = document.getElementById(containerId);
+    errorsContainer.innerHTML = '';
+
+    errors.message.forEach(msg => {
+        const errorElement = document.createElement('p');
+        errorElement.textContent = msg;
+        errorElement.classList.add('error-message'); // Ensure you have CSS for this class
+        errorsContainer.appendChild(errorElement);
+    });
+
+    errorsContainer.style.display = 'block';
+}
+
 // Create
 function submitDeviceForm() {
-    event.preventDefault(); // Add this if submitDeviceForm is called on form submit
+    event.preventDefault(); // Prevent form from submitting the default way
 
     const formData = new FormData(document.getElementById('deviceCreateForm'));
     const csrftoken = getCookie('csrftoken');
     const businessId = document.getElementById('businessId').value;
     formData.append('business', businessId);
-
-    // const createDeviceUrl = document.getElementById('devicesUrls').getAttribute('data-create-device-url'); // Ensure this is correct
 
     fetch(createDeviceUrl, {
         method: 'POST',
@@ -112,7 +127,26 @@ function submitDeviceForm() {
     })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                // Read the response as text
+                return response.text().then(html => {
+                    // Define known error messages and their user-friendly equivalents
+                    const errorMappings = {
+                        '{"device_name":["This field may not be blank."]}': "The Hostname can not be blank.",
+                        '{"detail":"UNIQUE constraint failed: devices_device.serial_number"}': "The Serial number is already used. Please use a unique Serial number.",
+                        '{"device_name":["device with this device name already exists."]}': "The Hostname is already used. Please use a unique Hostname.",
+                        '{"device_name":["Ensure this field has at least 2 characters."]}': "Ensure Hostname field has at least 2 characters."
+                    };
+
+                    let userFriendlyError = "An unexpected error occurred. Please try again.";
+                    Object.keys(errorMappings).forEach(errorPattern => {
+                        if (html.includes(errorPattern)) {
+                            userFriendlyError = errorMappings[errorPattern];
+                        }
+                    });
+
+                    // Reject the promise
+                    return Promise.reject(userFriendlyError);
+                });
             }
             return response.json();
         })
@@ -121,9 +155,9 @@ function submitDeviceForm() {
             hideForm();
             window.location.reload();
         })
-        .catch((error) => {
+        .catch(error => {
             console.error('Error:', error);
-            // Handle errors (e.g., showing an error message)
+            displayErrors({message: [error]}, 'errorsContainer');
         });
 }
 
@@ -152,17 +186,38 @@ function submitEditForm() {
     })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                // Read the response as text
+                return response.text().then(html => {
+                    // Define known error messages and their user-friendly equivalents
+                    const errorMappings = {
+                        '{"device_name":["This field may not be blank."]}': "The Hostname can not be blank.",
+                        '{"detail":"UNIQUE constraint failed: devices_device.serial_number"}': "The Serial number is already used. Please use a unique Serial number.",
+                        '{"device_name":["device with this device name already exists."]}': "The Hostname is already used. Please use a unique Hostname.",
+                        '{"device_name":["Ensure this field has at least 2 characters."]}': "Ensure Hostname field has at least 2 characters."
+                    };
+
+                    let userFriendlyError = "An unexpected error occurred. Please try again.";
+                    Object.keys(errorMappings).forEach(errorPattern => {
+                        if (html.includes(errorPattern)) {
+                            userFriendlyError = errorMappings[errorPattern];
+                        }
+                    });
+
+                    // Reject the promise
+                    return Promise.reject(userFriendlyError);
+                });
             }
             return response.json();
         })
         .then(data => {
             console.log('Success:', data);
-            hideForm(); // Hide the edit form
+            hideForm();
             window.location.reload();
         })
         .catch((error) => {
+            displayErrors({message: [error]}, 'errorsEditContainer');
             console.error('Error:', error);
+
         });
 }
 

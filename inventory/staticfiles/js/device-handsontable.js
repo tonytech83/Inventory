@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
         width: '100%', // size of the table
         stretchH: 'all', // stretch horizontally table
         height: '64vh',
-        overflow: 'hidden',
+        overflow: 'auto',
         <!-- End General settings -->
 
         <!-- Start Columns settings -->

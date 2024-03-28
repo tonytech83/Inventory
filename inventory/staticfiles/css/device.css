@@ -35,4 +35,12 @@
     font-size: 1.2em;
 }
 
+#errorsContainer,
+#errorsEditContainer {
+    width: 100%;
+    text-align: center;
+    color: red;
+}
+
+
 

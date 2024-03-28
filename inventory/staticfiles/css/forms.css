@@ -16,7 +16,7 @@
 #deleteForm,
 #uploadCSVForm {
     width: 80%;
-    height: 65%;
+    height: 55%;
 
     position: fixed; /* Position relative to the viewport */
     top: 50%; /* Center vertically */
