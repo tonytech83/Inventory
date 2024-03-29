@@ -22,3 +22,6 @@ class DeviceAdmin(admin.ModelAdmin):
         ('Supplier', {'fields': ('supplier',)}),
         ('Business', {'fields': ('business',)})
     )
+
+    ordering = ('-created_at',)
+    search_fields = ('device_name', 'status', 'model', 'category', 'serial_number',)
