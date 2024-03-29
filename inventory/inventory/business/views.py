@@ -12,6 +12,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from inventory.business.models import Business
 from inventory.business.serializers import BusinessSerializer
+from inventory.organization.models import Organization
 
 from inventory.suppliers.models import Supplier
 
@@ -171,7 +172,7 @@ class CreateBusinessApiView(api_views.CreateAPIView):
     permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+        serializer.save(owner=self.request.user, organization=Organization.objects.first())
 
 
 class UpdateBusinessApiView(api_views.UpdateAPIView):

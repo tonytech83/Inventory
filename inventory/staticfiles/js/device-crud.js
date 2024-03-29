@@ -44,7 +44,9 @@ function showDeviceEditForm(deviceId, deviceHostName, deviceDomain, deviceDescri
     // Check if there's an invoice URL and set up a download link
     const invoiceLinkElement = document.getElementById('existingInvoiceLink');
 
-    if (deviceInvoiceImage) {
+    // console.log(deviceInvoiceImage)
+
+    if (deviceInvoiceImage !== 'null') {
         const fullPath = deviceInvoiceImage.startsWith('/media/') ? deviceInvoiceImage : `/media/${deviceInvoiceImage}`;
         invoiceLinkElement.setAttribute('href', fullPath);
         invoiceLinkElement.style.display = 'inline';
@@ -162,7 +164,6 @@ function submitDeviceForm() {
 }
 
 // Edit
-
 function submitEditForm() {
     event.preventDefault(); // Prevent default form submission behavior
 

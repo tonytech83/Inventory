@@ -32,4 +32,4 @@ class AppUserAdmin(admin.ModelAdmin):
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ('first_name', 'last_name', 'phone_number')
-    # list_filter = ('first_name', 'last_name',)
+
