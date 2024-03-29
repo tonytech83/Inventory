@@ -17,13 +17,13 @@ from rest_framework import status
 from rest_framework.views import APIView
 
 from inventory.business.models import Business
-from inventory.core.view_mixins import IsOwnerMixin, IsBusinessOwner
+from inventory.core.view_mixins import IsBusinessOwner
 
 from inventory.devices.models import Device
 from inventory.devices.serializers import CSVUploadSerializer, DeviceSerializer
 
 
-class DeviceCreateAPIView( api_views.CreateAPIView):
+class DeviceCreateAPIView(api_views.CreateAPIView):
     queryset = Device.objects.all()
     serializer_class = DeviceSerializer
     permission_classes = [IsBusinessOwner, IsAuthenticated]

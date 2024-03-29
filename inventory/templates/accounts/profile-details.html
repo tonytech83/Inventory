@@ -1,4 +1,5 @@
 {% extends 'base/base.html' %}
+{% load static %}
 
 {% block main_content %}
     <div class="backdrop"></div>
@@ -10,44 +11,46 @@
                 <h4 class="login-title">Profile information</h4>
             </div>
 
-            <div class="inputs">
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="inputGroup-sizing-default">User login</span>
-                    <span type="email" id="id_username" class="form-control"
-                          aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
-                    >{{ object.account.email }}</span>
+            <div class="wrapper">
+                <div class="profile-image">
+                    {% if request.user.profile.profile_pic %}
+                        <img src="{{ request.user.profile.profile_pic.url }}" alt="">
+                    {% else %}
+                        <img src="{% static 'img/for_success_registration.jfif' %}" alt="">
+                    {% endif %}
                 </div>
-                
-                <hr>
-                
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="inputGroup-sizing-default">User login</span>
-                    <span type="email" id="id_username" class="form-control"
-                          aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
-                    >{{ object.initials }}</span>
+
+                <div class="profile-information">
+                    <div>
+                        <p class="profile-item">User Login</p>
+                        <p class="profile-item">{{ object.account.email }}</p>
+                    </div>
+
+                    <div>
+                        <p class="profile-item">User Initials</p>
+                        <p class="profile-item">{{ object.initials }}</p>
+                    </div>
+
+                    <div>
+                        <p class="profile-item">First Name</p>
+                        <p class="profile-item">
+                            {% if not object.first_name %}Not set{% else %}{{ object.first_name }}{% endif %}</p>
+                    </div>
+
+                    <div>
+                        <p class="profile-item">Last Name</p>
+                        <p class="profile-item">
+                            {% if not object.last_name %}Not set{% else %}{{ object.last_name }}{% endif %}</p>
+                    </div>
+
+                    <div>
+                        <p class="profile-item">Phone Number</p>
+                        <p class="profile-item">
+                            {% if not object.phone_number %}Not set{% else %}{{ object.phone_number }}{% endif %}</p>
+                    </div>
+
                 </div>
-                
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="inputGroup-sizing-default">First Name</span>
-                    <span type="email" id="id_username" class="form-control"
-                          aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
-                    >{{ object.first_name }}</span>
-                </div>
-                
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="inputGroup-sizing-default">Last Name</span>
-                    <span type="email" id="id_username" class="form-control"
-                          aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
-                    >{{ object.last_name }}</span>
-                </div>
-                
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="inputGroup-sizing-default">Phone Number</span>
-                    <span type="email" id="id_username" class="form-control"
-                          aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
-                    >{{ object.phone_number }}</span>
-                </div>
-     
+
             </div>
 
             <div class="button-container">

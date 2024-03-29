@@ -211,149 +211,154 @@
     <!-- Forms container-->
     <div class="backdrop" style="display:none;" onclick="hideForm()"></div>
 
-    <!-- Charts -->
-    <div class="title-container">
-        <h3>Dashboard</h3>
-    </div>
-
-
-    <div class="pie-carts">
-        <div class="chart-legend" onclick="showTable('One');">
-            <canvas id="chart_one"></canvas>
-            <div id="legend_one"></div>
+    {% if is_data %}
+        <!-- Charts -->
+        <div class="title-container">
+            <h3>Dashboard</h3>
         </div>
 
-        <div class="chart-legend" onclick="showTable('Two');">
-            <canvas id="chart_two"></canvas>
-            <div id="legend_two"></div>
+
+        <div class="pie-carts">
+            <div class="chart-legend" onclick="showTable('One');">
+                <canvas id="chart_one"></canvas>
+                <div id="legend_one"></div>
+            </div>
+
+            <div class="chart-legend" onclick="showTable('Two');">
+                <canvas id="chart_two"></canvas>
+                <div id="legend_two"></div>
+            </div>
+
+            <div class="chart-legend" onclick="showTable('Three');">
+                <canvas id="chart_three"></canvas>
+                <div id="legend_three"></div>
+            </div>
         </div>
 
-        <div class="chart-legend" onclick="showTable('Three');">
-            <canvas id="chart_three"></canvas>
-            <div id="legend_three"></div>
+        <div class="bar-chart">
+            <canvas id="bar"></canvas>
         </div>
-    </div>
 
-    <div class="bar-chart">
-        <canvas id="bar"></canvas>
-    </div>
-
-    <div class="tables">
-        <div id="tableOne" style="display: none;">
-            <table class="dashboard-table">
-                <tr>
-                    <th>Location</th>
-                    <th>Network</th>
-                    <th>Server - Virtual</th>
-                    <th>Server - Physical</th>
-                    <th>Server - Platform</th>
-                    <th>Printer / Scaner</th>
-                    <th>Storage</th>
-                    <th>Conferencing</th>
-                    <th>End User Computing</th>
-                    <th>Total assets/category</th>
-                </tr>
-                {% for business in object_list %}
+        <div class="tables">
+            <div id="tableOne" style="display: none;">
+                <table class="dashboard-table">
                     <tr>
-                        <td class="business-name">{{ business.business_name }}</td>
-                        <td>{% count_by_category business 'Network' %}</td>
-                        <td>{% count_by_category business 'Server - Virtual' %}</td>
-                        <td>{% count_by_category business 'Server - Physical' %}</td>
-                        <td>{% count_by_category business 'Server - Platform' %}</td>
-                        <td>{% count_by_category business 'Printer / Scaner' %}</td>
-                        <td>{% count_by_category business 'Storage' %}</td>
-                        <td>{% count_by_category business 'Conferencing' %}</td>
-                        <td>{% count_by_category business 'End Users Computing' %}</td>
-                        <td>{{ business.device_set.count }}</td>
+                        <th>Location</th>
+                        <th>Network</th>
+                        <th>Server - Virtual</th>
+                        <th>Server - Physical</th>
+                        <th>Server - Platform</th>
+                        <th>Printer / Scaner</th>
+                        <th>Storage</th>
+                        <th>Conferencing</th>
+                        <th>End User Computing</th>
+                        <th>Total assets/category</th>
                     </tr>
-                {% endfor %}
-                <tr class="totals">
-                    <td class="business-name">Total assets/site</td>
-                    <td>{% count_by_category object_list 'Network' %}</td>
-                    <td>{% count_by_category object_list 'Server - Virtual' %}</td>
-                    <td>{% count_by_category object_list 'Server - Physical' %}</td>
-                    <td>{% count_by_category object_list 'Server - Platform' %}</td>
-                    <td>{% count_by_category object_list 'Printer / Scaner' %}</td>
-                    <td>{% count_by_category object_list 'Storage' %}</td>
-                    <td>{% count_by_category object_list 'Conferencing' %}</td>
-                    <td>{% count_by_category object_list 'End Users Computing' %}</td>
-                    <td>{% count_by_category object_list '' %}</td>
-                </tr>
-            </table>
-        </div>
-        <div id="tableTwo" style="display: none;">
-            <table class="dashboard-table">
-                <tr>
-                    <th>Location</th>
-                    <th>In operation</th>
-                    <th>Decommissioned</th>
-                    <th>Offline</th>
-                    <th>Pending Setup</th>
-                    <th>Not defined yet</th>
-                    <th>Exception</th>
-                    <th>Total assets/status</th>
-                </tr>
-                {% for business in object_list %}
+                    {% for business in object_list %}
+                        <tr>
+                            <td class="business-name">{{ business.business_name }}</td>
+                            <td>{% count_by_category business 'Network' %}</td>
+                            <td>{% count_by_category business 'Server - Virtual' %}</td>
+                            <td>{% count_by_category business 'Server - Physical' %}</td>
+                            <td>{% count_by_category business 'Server - Platform' %}</td>
+                            <td>{% count_by_category business 'Printer / Scaner' %}</td>
+                            <td>{% count_by_category business 'Storage' %}</td>
+                            <td>{% count_by_category business 'Conferencing' %}</td>
+                            <td>{% count_by_category business 'End Users Computing' %}</td>
+                            <td>{{ business.device_set.count }}</td>
+                        </tr>
+                    {% endfor %}
+                    <tr class="totals">
+                        <td class="business-name">Total assets/site</td>
+                        <td>{% count_by_category object_list 'Network' %}</td>
+                        <td>{% count_by_category object_list 'Server - Virtual' %}</td>
+                        <td>{% count_by_category object_list 'Server - Physical' %}</td>
+                        <td>{% count_by_category object_list 'Server - Platform' %}</td>
+                        <td>{% count_by_category object_list 'Printer / Scaner' %}</td>
+                        <td>{% count_by_category object_list 'Storage' %}</td>
+                        <td>{% count_by_category object_list 'Conferencing' %}</td>
+                        <td>{% count_by_category object_list 'End Users Computing' %}</td>
+                        <td>{% count_by_category object_list '' %}</td>
+                    </tr>
+                </table>
+            </div>
+            <div id="tableTwo" style="display: none;">
+                <table class="dashboard-table">
                     <tr>
-                        <td class="business-name">{{ business.business_name }}</td>
-                        <td>{% count_by_status business 'In operation' %}</td>
-                        <td>{% count_by_status business 'Decommissioned' %}</td>
-                        <td>{% count_by_status business 'Offline' %}</td>
-                        <td>{% count_by_status business 'Pending Setup' %}</td>
-                        <td>{% count_by_status business 'Not defined yet' %}</td>
-                        <td>{% count_by_status business 'Exception' %}</td>
-                        <td>{{ business.device_set.count }}</td>
+                        <th>Location</th>
+                        <th>In operation</th>
+                        <th>Decommissioned</th>
+                        <th>Offline</th>
+                        <th>Pending Setup</th>
+                        <th>Not defined yet</th>
+                        <th>Exception</th>
+                        <th>Total assets/status</th>
                     </tr>
-                {% endfor %}
-                <tr class="totals">
-                    <td class="business-name">Total assets/site</td>
-                    <td>{% count_by_status object_list 'In operation' %}</td>
-                    <td>{% count_by_status object_list 'Decommissioned' %}</td>
-                    <td>{% count_by_status object_list 'Offline' %}</td>
-                    <td>{% count_by_status object_list 'Pending Setup' %}</td>
-                    <td>{% count_by_status object_list 'Not defined yet' %}</td>
-                    <td>{% count_by_status object_list 'Exception' %}</td>
-                    <td>{% count_by_status object_list '' %}</td>
-                </tr>
-            </table>
-        </div>
-        <div id="tableThree" style="display: none;">
-            <table class="dashboard-table">
-                <tr>
-                    <th>Location</th>
-                    <th>No support</th>
-                    <th>3 months to 0</th>
-                    <th>6 to 3 months</th>
-                    <th>12 to 6 months</th>
-                    <th>Good</th>
-                    <th>Unknown</th>
-                    <th>Total assets/support</th>
-                </tr>
-                {% for business in object_list %}
+                    {% for business in object_list %}
+                        <tr>
+                            <td class="business-name">{{ business.business_name }}</td>
+                            <td>{% count_by_status business 'In operation' %}</td>
+                            <td>{% count_by_status business 'Decommissioned' %}</td>
+                            <td>{% count_by_status business 'Offline' %}</td>
+                            <td>{% count_by_status business 'Pending Setup' %}</td>
+                            <td>{% count_by_status business 'Not defined yet' %}</td>
+                            <td>{% count_by_status business 'Exception' %}</td>
+                            <td>{{ business.device_set.count }}</td>
+                        </tr>
+                    {% endfor %}
+                    <tr class="totals">
+                        <td class="business-name">Total assets/site</td>
+                        <td>{% count_by_status object_list 'In operation' %}</td>
+                        <td>{% count_by_status object_list 'Decommissioned' %}</td>
+                        <td>{% count_by_status object_list 'Offline' %}</td>
+                        <td>{% count_by_status object_list 'Pending Setup' %}</td>
+                        <td>{% count_by_status object_list 'Not defined yet' %}</td>
+                        <td>{% count_by_status object_list 'Exception' %}</td>
+                        <td>{% count_by_status object_list '' %}</td>
+                    </tr>
+                </table>
+            </div>
+            <div id="tableThree" style="display: none;">
+                <table class="dashboard-table">
                     <tr>
-                        <td class="business-name">{{ business.business_name }}</td>
-                        <td>{% count_no_support_devices business %}</td>
-                        <td>{% count_lt_three_months_and_no_support business %}</td>
-                        <td>{% count_lt_six_gt_three_months business %}</td>
-                        <td>{% count_lt_year_gt_six_month business %}</td>
-                        <td>{% count_devices_in_support business %}</td>
-                        <td>{% count_devices_unknown_support business %}</td>
-                        <td>{{ business.device_set.count }}</td>
+                        <th>Location</th>
+                        <th>No support</th>
+                        <th>3 months to 0</th>
+                        <th>6 to 3 months</th>
+                        <th>12 to 6 months</th>
+                        <th>Good</th>
+                        <th>Unknown</th>
+                        <th>Total assets/support</th>
                     </tr>
-                {% endfor %}
-                <tr class="totals">
-                    <td class="business-name">Total assets/site</td>
-                    <td>{% count_no_support_devices object_list %}</td>
-                    <td>{% count_lt_three_months_and_no_support object_list %}</td>
-                    <td>{% count_lt_six_gt_three_months object_list %}</td>
-                    <td>{% count_lt_year_gt_six_month object_list %}</td>
-                    <td>{% count_devices_in_support object_list %}</td>
-                    <td>{% count_devices_unknown_support object_list %}</td>
-                    <td>{% count_by_status object_list '' %}</td>
-                </tr>
-            </table>
+                    {% for business in object_list %}
+                        <tr>
+                            <td class="business-name">{{ business.business_name }}</td>
+                            <td>{% count_no_support_devices business %}</td>
+                            <td>{% count_lt_three_months_and_no_support business %}</td>
+                            <td>{% count_lt_six_gt_three_months business %}</td>
+                            <td>{% count_lt_year_gt_six_month business %}</td>
+                            <td>{% count_devices_in_support business %}</td>
+                            <td>{% count_devices_unknown_support business %}</td>
+                            <td>{{ business.device_set.count }}</td>
+                        </tr>
+                    {% endfor %}
+                    <tr class="totals">
+                        <td class="business-name">Total assets/site</td>
+                        <td>{% count_no_support_devices object_list %}</td>
+                        <td>{% count_lt_three_months_and_no_support object_list %}</td>
+                        <td>{% count_lt_six_gt_three_months object_list %}</td>
+                        <td>{% count_lt_year_gt_six_month object_list %}</td>
+                        <td>{% count_devices_in_support object_list %}</td>
+                        <td>{% count_devices_unknown_support object_list %}</td>
+                        <td>{% count_by_status object_list '' %}</td>
+                    </tr>
+                </table>
+            </div>
         </div>
-    </div>
+
+    {% else %}
+        <h4 style="margin: auto;">Not data to display wet.</h4>
+    {% endif %}
 
     <!-- Show Tables scripts -->
     <script src="{% static 'js/dashboard.js' %}"></script>

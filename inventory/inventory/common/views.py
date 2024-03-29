@@ -17,6 +17,13 @@ class DashboardView(views.ListView):
                 .prefetch_related('device_set'))
     template_name = 'common/dashboard.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['is_data'] = Device.objects.all()
+
+        return context
+
 
 class ChartData(APIView):
     def get(self, request, format=None):

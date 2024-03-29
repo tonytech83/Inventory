@@ -217,11 +217,8 @@ function submitEditForm() {
 
 // Delete
 function confirmDelete() {
-    // Get the device ID and create deleteUrl
     const deviceId = document.getElementById('deleteDeviceId').value;
     const deleteUrl = deleteDeviceUrl.replace("0", `${deviceId}`);
-
-    console.log(deleteUrl)
 
     const csrftoken = getCookie('csrftoken')
 
@@ -229,37 +226,19 @@ function confirmDelete() {
         method: 'DELETE',
         headers: {
             'X-CSRFToken': csrftoken,
-            'Accept': 'application/json', // Ensure the server responds with JSON
+            'Accept': 'application/json',
         },
     })
         .then(response => {
             if (!response.ok) {
-                // Parse the response as JSON if it's not ok
                 return response.json().then(data => Promise.reject(data));
             }
             hideDeleteForm();
             window.location.reload();
         })
         .catch(error => {
-            // Handle errors
             console.error('Error:', error);
             displayErrors({message: [error.detail]}, 'errorsDeleteConfirmContainer');
         });
-    // fetch(deleteUrl, {
-    //     method: 'DELETE',
-    //     headers: {
-    //         'X-CSRFToken': csrftoken,
-    //     },
-    // })
-    //     .then(response => {
-    //         if (!response.ok) {
-    //             throw new Error('Network response was not ok');
-    //         }
-    //         hideDeleteForm();
-    //         window.location.reload();
-    //     })
-    //     .catch(error => {
-    //         console.error('Error:', error);
-    //     });
 }
 

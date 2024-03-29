@@ -26,7 +26,11 @@
          hidden id="supplierUrls"></div>
 
     <!-- Handsontable container-->
-    <div id="data-container" data-suppliers='{{ suppliers_json|safe }}'></div>
+    {% if supplier_list %}
+        <div id="data-container" data-suppliers='{{ suppliers_json|safe }}'></div>
+    {% else %}
+        <h4 style="margin: auto;">There are still no suppliers created.</h4>
+    {% endif %}
 
     <!-- Handsontable JS Script-->
     <script src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>

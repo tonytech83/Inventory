@@ -39,7 +39,11 @@
     <!-- End Stats -->
 
     <!-- Handsontable data container -->
-    <div id="data-container" data-devices='{{ devices_json|safe }}'></div>
+    {% if not has_devices %}
+        <h4 style="margin: auto;">There are still no devices created.</h4>
+    {% else %}
+        <div id="data-container" data-devices='{{ devices_json|safe }}'></div>
+    {% endif %}
 
     <!-- Handsontable JS Script-->
     <script src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>

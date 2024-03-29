@@ -1,19 +1,20 @@
 import json
 from datetime import timedelta
 
-from django.db.models import Q, ExpressionWrapper, F, fields
-from django.shortcuts import get_list_or_404
+from django.db.models import ExpressionWrapper, F, fields
+
 from rest_framework import generics as api_views
 
 from django.utils.timezone import now
 
-from django.urls import reverse
+
 from django.views import generic as views
 from rest_framework.permissions import IsAuthenticated
 
-from inventory.business.forms import EditBusinessForm
+
 from inventory.business.models import Business
 from inventory.business.serializers import BusinessSerializer
+
 from inventory.suppliers.models import Supplier
 
 
@@ -150,7 +151,8 @@ class BusinessView(views.DetailView):
         device_queryset = self.get_devices_queryset(business)
         device_list = self.prepare_device_list(device_queryset)
 
-        suppliers = get_list_or_404(Supplier)
+        # suppliers = get_list_or_404(Supplier)
+        suppliers = Supplier.objects.all()
         suppliers_list = [{
             "id": supplier.id,
             "name": supplier.name,
@@ -159,6 +161,7 @@ class BusinessView(views.DetailView):
             "email": supplier.email,
         } for supplier in suppliers]
 
+        context['has_devices'] = device_queryset.exists()
         context['suppliers_json'] = json.dumps(suppliers_list)
         context['devices_json'] = json.dumps(device_list)
         return context

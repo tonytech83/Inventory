@@ -25,14 +25,16 @@
                     <span class="input-group-text" id="inputGroup-sizing-default">First name</span>
                     <input type="text" id="id_first_name" name="first_name" class="form-control"
                            aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
-                           placeholder="Enter your first name" value="{{ object.first_name }}">
+                           placeholder="Enter your first name"
+                           value="{% if not object.first_name %}{% else %}{{ object.first_name }}{% endif %}">
                 </div>
 
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="inputGroup-sizing-default">Last name</span>
                     <input type="text" id="id_last_name" name="last_name" class="form-control"
                            aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
-                           placeholder="Enter your last name." value="{{ object.last_name }}">
+                           placeholder="Enter your last name."
+                           value="{% if not object.last_name %}{% else %}{{ object.last_name }}{% endif %}">
                 </div>
 
                 <div class="input-group mb-3">
@@ -46,7 +48,8 @@
                     <span class="input-group-text" id="inputGroup-sizing-default">Phone number</span>
                     <input type="text" id="id_phone_number" name="phone_number" class="form-control"
                            aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
-                           placeholder="Enter your phone number." value="{{ object.phone_number }}">
+                           placeholder="Enter your phone number."
+                           value="{% if not object.phone_number %}{% else %}{{ object.phone_number }}{% endif %}">
                 </div>
 
                 {% csrf_token %}

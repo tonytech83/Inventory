@@ -82,3 +82,8 @@
     padding: 0;
     margin: 0;
 }
+
+#inputGroup-sizing-sm {
+    color: black;
+    font-weight: 500;
+}
