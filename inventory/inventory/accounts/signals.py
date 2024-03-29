@@ -15,15 +15,13 @@ UserModel = get_user_model()
 def set_first_user_superuser(sender, instance, **kwargs):
     # Use a transaction.atomic block to ensure thread safety
     with transaction.atomic():
-        # instance.is_active = False
 
-        # Check if this is the first user
         if not UserModel.objects.exists():
             instance.is_staff = True
             instance.is_superuser = True
         else:
             # Ensure subsequent users are staff but not superusers
-            if not instance.pk:  # Check if this is a new user being created
+            if not instance.pk:
                 instance.is_staff = True
                 instance.is_superuser = False
 
@@ -53,5 +51,6 @@ def send_successful_registration_email(user):
 @receiver(user_logged_in)
 def set_first_login(sender, request, user, **kwargs):
     # Check if it's the first login
-    if user.last_login is None:  # This checks if the user has never logged in before
+    if user.last_login is None:
         request.session['first_login'] = True
+

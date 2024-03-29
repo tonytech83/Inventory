@@ -21,7 +21,9 @@
 #editSupplierForm,
 #deleteSupplierForm,
 #businessEditFormContainer,
-#deleteDeviceForm {
+#deleteDeviceForm,
+.organization-create-form,
+.organization-edit-form {
     width: 50%;
     height: 40%;
 

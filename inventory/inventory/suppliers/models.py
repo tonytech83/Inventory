@@ -11,6 +11,9 @@ class Supplier(models.Model):
     MIN_CONTACT_LENGTH = 6
     MAX_CONTACT_LENGTH = 50
 
+    MIN_COUNTRY_LENGTH = 3
+    MAX_COUNTRY_LENGTH = 60
+
     name = models.CharField(
         max_length=MAX_NAME_LENGTH,
         validators=(
@@ -25,6 +28,15 @@ class Supplier(models.Model):
         max_length=MAX_CONTACT_LENGTH,
         validators=(
             MinLengthValidator(MIN_CONTACT_LENGTH),
+        ),
+        null=False,
+        blank=False,
+    )
+
+    supplier_country = models.CharField(
+        max_length=MAX_COUNTRY_LENGTH,
+        validators=(
+            MinLengthValidator(MIN_COUNTRY_LENGTH),
         ),
         null=False,
         blank=False,

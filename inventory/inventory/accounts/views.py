@@ -16,14 +16,20 @@ class LoginView(auth_views.LoginView):
 
     def get_success_url(self):
         user = self.request.user
+        profile = user.profile
 
-        # Check if the user's profile has the `is_first_login` set to True
-        if self.request.user.profile.is_first_login:
-            profile = self.request.user.profile
+        if user.is_superuser and profile.is_first_login:
+            profile.is_first_login = False
+            profile.save(update_fields=['is_first_login'])
+
+            return reverse_lazy('create-organization')
+
+        elif profile.is_first_login:
             profile.is_first_login = False
             profile.save(update_fields=['is_first_login'])
 
             return reverse_lazy('edit-profile', kwargs={'pk': user.pk})
+
         else:
             return super().get_success_url()
 

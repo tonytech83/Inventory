@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 
 from inventory.accounts.views import custom_permission_denied_view
 
-# Custom permission denied handler
+# Custom permission denied handler for profile edit
 handler403 = custom_permission_denied_view
 
 urlpatterns = [
@@ -15,4 +15,5 @@ urlpatterns = [
                   path('business/', include('inventory.business.urls')),
                   path('supplier/', include('inventory.suppliers.urls')),
                   path('device/', include('inventory.devices.urls')),
+                  path('organization/', include('inventory.organization.urls')),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

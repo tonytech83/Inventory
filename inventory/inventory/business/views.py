@@ -7,10 +7,8 @@ from rest_framework import generics as api_views
 
 from django.utils.timezone import now
 
-
 from django.views import generic as views
 from rest_framework.permissions import IsAuthenticated
-
 
 from inventory.business.models import Business
 from inventory.business.serializers import BusinessSerializer

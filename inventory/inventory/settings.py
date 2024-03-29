@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'inventory.common',
     'inventory.accounts.apps.AccountsConfig',
     'inventory.suppliers',
+    "inventory.organization.apps.OrganizationConfig"
 ]
 
 MIDDLEWARE = [
@@ -37,7 +38,9 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    # Custom Middleware
     'inventory.accounts.middleware.FirstLoginRedirectMiddleware',
+
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -56,6 +59,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # Custom context processor
+                'inventory.common.context_processors.get_organization',
             ],
         },
     },

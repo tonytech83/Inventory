@@ -1,7 +1,18 @@
 {% load static %}
 
-
-<img class="logo" src="{% static 'img/app_logo.svg' %}" alt="logo">
+{% if organization and request.user.is_superuser %}
+    {% if organization.logo %}
+        <a href="{% url 'edit-organization' pk=1 %}"><img class="logo" src="{{ organization.logo.url }}" alt="logo"></a>
+    {% else %}
+        <a href="{% url 'edit-organization' pk=1 %}"><img class="logo" src="{% static 'img/app_logo.svg' %}" alt="logo"></a>
+    {% endif %}
+{% else %}
+    {% if organization.logo %}
+        <img class="logo" src="{{ organization.logo.url }}" alt="logo">
+    {% else %}
+        <img class="logo" src="{% static 'img/app_logo.svg' %}" alt="logo">
+    {% endif %}
+{% endif %}
 
 <nav>
     <ul class="nav-links">
@@ -9,7 +20,6 @@
             <li class="link-item"><a class="link-item-link" href="{% url 'dashboard' %}">Dashboard</a></li>
             <li class="link-item"><a class="link-item-link" href="{% url 'home-page' %}">Home</a></li>
             <li class="link-item"><a class="link-item-link" href="{% url 'supplier-list' %}">Suppliers</a></li>
-
         {% else %}
             <li class="link-item"><a class="link-item-link" href="{% url 'login-user' %}">Login</a></li>
             <li class="link-item"><a class="link-item-link" href="{% url 'register-user' %}">Register</a></li>

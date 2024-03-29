@@ -2,6 +2,8 @@ from django.contrib.auth import get_user_model
 from django.core.validators import MinLengthValidator
 from django.db import models
 
+from inventory.organization.models import Organization
+
 UserModel = get_user_model()
 
 
@@ -33,6 +35,11 @@ class Business(models.Model):
 
     is_visible = models.BooleanField(
         default=True,
+    )
+
+    organization = models.ForeignKey(
+        to=Organization,
+        on_delete=models.DO_NOTHING,
     )
 
     owner = models.ForeignKey(

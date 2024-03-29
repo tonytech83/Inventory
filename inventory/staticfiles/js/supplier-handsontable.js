@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return [
             item.name,
             item.contact_name,
+            item.supplier_country,
             item.phone_number,
             item.email,
         ];
@@ -17,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
             data: data,
             columns: [
                 {},
-                // {data: 0, renderer: "html"},  // Ensure the first column renders HTML for the link
+                {},
                 {},
                 {},
                 {},
@@ -30,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             <!-- Start Columns settings -->
             columnSorting: true,
-            colHeaders: ['Name', 'Contact name', 'Phone number', 'Email'],
+            colHeaders: ['Name', 'Contact name', 'Country', 'Phone number', 'Email'],
             // Make first column link to edit
             afterRenderer: function (TD, row, col, prop, value, cellProperties) {
                 if (col === 0) {
@@ -38,12 +39,13 @@ document.addEventListener('DOMContentLoaded', function () {
                             ${suppliersData[row].id},
                             '${suppliersData[row].name}',
                             '${suppliersData[row].contact_name}',
+                            '${suppliersData[row].supplier_country}',
                             '${suppliersData[row].phone_number}',
                             '${suppliersData[row].email}'
                             )">${value}</span>`;
                 }
             },
-            colWidths: [1, 1, 1, 1],
+            colWidths: [1, 1, 1, 1, 1],
             <!-- End Columns settings -->
 
             <!-- Start Rows settings -->

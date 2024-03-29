@@ -1,0 +1,60 @@
+{% extends 'base/base.html' %}
+
+
+{% block main_content %}
+
+    <!-- Forms container-->
+    <div class="backdrop"></div>
+
+    <div class="organization-create-form">
+        <form action="{% url 'create-organization' %}" method="POST" enctype="multipart/form-data">
+
+            {% csrf_token %}
+
+            <div class="title-container">
+                <h4 class="login-title">Create your Organization</h4>
+            </div>
+
+            <div class="inputs">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
+                    <input type="text" id="organization_name" name="organization_name" class="form-control"
+                           aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+                           placeholder="Provide name for your organization.">
+                </div>
+
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Region</span>
+                    {{ form.region }}
+                </div>
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Logo</span>
+                    <input type="file" id="logo" name="logo" class="form-control"
+                           aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                </div>
+
+            </div>
+
+            {% if form.errors %}
+                <div class="error-messages">
+                    {% for field, errors in form.errors.items %}
+                        {% for error in errors %}
+                            <p class="error" style="text-align: center;">Organization name is required field</p>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <div class="button-container">
+                <div class="control-buttons"></div>
+                <div class="action-buttons ">
+                    <button class="reset-button-style button btn-create" type="submit">Save</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+{% endblock %}

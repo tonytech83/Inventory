@@ -18,11 +18,12 @@ function showCreateForm() {
     document.querySelector('.backdrop').style.display = 'block';
 }
 
-function showEditForm(supplierId, supplierName, supplierContactName, supplierPhoneNumber, supplierEmail) {
+function showEditForm(supplierId, supplierName, supplierContactName,supplierCountryName, supplierPhoneNumber, supplierEmail) {
     // Populate the form fields
     document.getElementById('supplierId').value = supplierId;
     document.getElementById('supplierName').value = supplierName;
     document.getElementById('supplierContactName').value = supplierContactName;
+    document.getElementById('supplierCountryName').value = supplierCountryName;
     document.getElementById('supplierPhoneNumber').value = supplierPhoneNumber;
     document.getElementById('supplierEmail').value = supplierEmail;
 
@@ -166,6 +167,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Prepare the request payload
         const supplierName = document.getElementById('supplierName').value;
         const supplierContactName = document.getElementById('supplierContactName').value;
+        const supplierCountryName = document.getElementById('supplierCountryName').value;
         const supplierPhoneNumber = document.getElementById('supplierPhoneNumber').value;
         const supplierEmail = document.getElementById('supplierEmail').value;
 
@@ -178,6 +180,7 @@ document.addEventListener("DOMContentLoaded", function () {
             body: JSON.stringify({
                 name: supplierName,
                 contact_name: supplierContactName,
+                supplier_country: supplierCountryName,
                 phone_number: supplierPhoneNumber,
                 email: supplierEmail
             }),
