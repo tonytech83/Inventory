@@ -287,6 +287,9 @@ class Device(TimeStampedModel, models.Model):
         on_delete=models.DO_NOTHING,
     )
 
+    def __str__(self):
+        return f'{self.device_name}'
+
     @property
     def days_since_update(self):
         return (date.today() - self.updated_at).days

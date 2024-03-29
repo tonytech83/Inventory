@@ -8,6 +8,9 @@ UserModel = get_user_model()
 
 
 class Business(models.Model):
+    class Meta:
+        verbose_name_plural = "Businesses"
+
     MIN_BUSINESS_LENGTH = 2
     MAX_BUSINESS_LENGTH = 30
 

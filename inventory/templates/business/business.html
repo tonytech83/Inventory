@@ -7,19 +7,19 @@
     <div class="backdrop" style="display:none;" onclick="hideUploadForm()"></div>
 
     <!-- Hidden form for device creation -->
-    {% include 'devices/partials/device-create-form.html' %}
+    {% include 'devices/device-create-form.html' %}
 
     <!-- Hidden form for device editing -->
-    {% include 'devices/partials/device-edit-form.html' %}
+    {% include 'devices/device-edit-form.html' %}
 
     <!-- Hidden form for device deleting -->
-    {% include 'devices/partials/device-delete-form.html' %}
+    {% include 'devices/device-delete-form.html' %}
 
     <!-- Hidden form for business editing -->
     {% include 'business/partials/business-edit-form.html' %}
 
     <!-- Hidden form for uploading -->
-    {% include 'devices/partials/upload-form.html' with business_id=object.pk %}
+    {% include 'devices/upload-form.html' with business_id=object.pk %}
 
     <!-- Suppliers data-->
     <div id="data-suppliers" data-suppliers='{{ suppliers_json|safe }}'></div>

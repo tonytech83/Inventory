@@ -11,6 +11,9 @@ from inventory.core.model_validators import phone_validator
 
 
 class InventoryUser(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
+    class Meta:
+        verbose_name_plural = "Users"
+
     email = models.EmailField(
         unique=True,
         null=False,
