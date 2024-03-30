@@ -20,7 +20,7 @@ def set_first_user_superuser(sender, instance, **kwargs):
             instance.is_staff = True
             instance.is_superuser = True
         else:
-            # Ensure subsequent users are staff but not superusers
+            # Ensure users after first are only staff
             if not instance.pk:
                 instance.is_staff = True
                 instance.is_superuser = False
@@ -50,7 +50,7 @@ def send_successful_registration_email(user):
 
 @receiver(user_logged_in)
 def set_first_login(sender, request, user, **kwargs):
-    # Check if it's the first login
+    # Check if this is the first login
     if user.last_login is None:
         request.session['first_login'] = True
 

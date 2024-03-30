@@ -183,7 +183,6 @@ class Device(TimeStampedModel, models.Model):
             MinLengthValidator(MIN_SERIAL_NUMBER_LENGTH),
         ),
         unique=True,
-        # TODO: Change null and blank to False
         null=True,
         blank=True,
     )
