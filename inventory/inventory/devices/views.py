@@ -21,6 +21,7 @@ from inventory.core.view_mixins import IsBusinessOwner
 
 from inventory.devices.models import Device
 from inventory.devices.serializers import CSVUploadSerializer, DeviceSerializer
+from inventory.devices.utils import catches_exception, create_devices_form_upload
 
 
 class DeviceCreateAPIView(api_views.CreateAPIView):
@@ -43,18 +44,7 @@ class DeviceCreateAPIView(api_views.CreateAPIView):
         try:
             return super().post(request, *args, **kwargs)
         except IntegrityError as e:
-            # Check for unique serial number
-            if 'serial_number' in str(e):
-                return Response({'detail': 'UNIQUE constraint failed: devices_device.serial_number'},
-                                status=status.HTTP_400_BAD_REQUEST)
-            # Check for 'device_name' uniqueness violation
-            elif 'device_name' in str(e):
-
-                return Response({'detail': 'The Device name is already used. Please use a unique Device name.'},
-                                status=status.HTTP_400_BAD_REQUEST)
-            # Generic integrity error
-            else:
-                return Response({'detail': 'An unexpected error occurred.'}, status=status.HTTP_400_BAD_REQUEST)
+            catches_exception(e)
 
 
 class DeviceUpdateApiView(api_views.UpdateAPIView):
@@ -64,20 +54,9 @@ class DeviceUpdateApiView(api_views.UpdateAPIView):
 
     def update(self, request, *args, **kwargs):
         try:
-            # Call the superclass's update method to perform the actual update operation
             return super().update(request, *args, **kwargs)
         except IntegrityError as e:
-            # Check for 'serial_number' uniqueness violation
-            if 'serial_number' in str(e):
-                return Response({'detail': 'UNIQUE constraint failed: devices_device.serial_number'},
-                                status=status.HTTP_400_BAD_REQUEST)
-            # Check for 'device_name' uniqueness violation
-            elif 'device_name' in str(e):
-                return Response({'detail': 'The Device name is already used. Please use a unique Device name.'},
-                                status=status.HTTP_400_BAD_REQUEST)
-            # Generic integrity error
-            else:
-                return Response({'detail': 'An unexpected error occurred.'}, status=status.HTTP_400_BAD_REQUEST)
+            catches_exception(e)
 
 
 class DeviceDeleteApiView(api_views.DestroyAPIView):
@@ -98,39 +77,7 @@ class CSVUploadApiView(APIView):
             sheet = wb.active
             business = get_object_or_404(Business, pk=business_id)
 
-            results = []
-
-            for row in sheet.iter_rows(min_row=3):  # Skip the first two header rows, thre
-                # Random 4 digits if no serial number set
-                four_random_digits = ''.join(str(random.randint(0, 9)) for _ in range(4))
-
-                try:
-                    Device.objects.create(
-                        device_name=row[0].value,
-                        domain=row[1].value,
-                        description=row[2].value,
-                        status=row[3].value,
-                        category=row[4].value,
-                        sub_category=row[5].value,
-                        manufacturer=row[6].value,
-                        model=row[7].value,
-                        ip_address=row[8].value,
-                        ip_address_sec=row[9].value,
-                        serial_number=row[10].value if row[10].value else f'{row[0].value}-{four_random_digits}',
-                        operating_system=row[11].value,
-                        building=row[12].value,
-                        owner_name=row[13].value,
-                        support_model=row[14].value,
-                        purchase_order_number=row[15].value,
-                        business_processes_at_risk=row[20].value,
-                        impact=row[21].value if row[21].value else 1,
-                        likelihood=row[22].value if row[22].value else 1,
-                        business=business,
-                    )
-                    results.append({'device_name': row[0].value, 'status': 'success'})
-                except Exception as e:
-                    results.append({'device_name': row[0].value, 'status': 'Error', 'error': str(e)})
-                    continue
+            results = create_devices_form_upload(sheet, business)
 
             return Response({'message': 'Devices imported successfully.', 'results': results},
                             status=status.HTTP_200_OK)

@@ -40,7 +40,7 @@
 
     <!-- Handsontable data container -->
     {% if not has_devices %}
-        <h4 style="margin: auto;">There are still no devices created.</h4>
+        <h4 style="margin: auto;">No devices.</h4>
     {% else %}
         <div id="data-container" data-devices='{{ devices_json|safe }}'></div>
     {% endif %}

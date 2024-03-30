@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 
 def validate_no_special_characters(value):
-    special_characters = "!@#$%^&*()-+=[]{}|\\:;\"'<>,.?/"
+    special_characters = "!@#$%^&*[]{}|\\:;\"'<>,?/"
     if any(char in special_characters for char in value):
         raise ValidationError(
             _('The value "%(value)s" contains special characters which are not allowed.'),
