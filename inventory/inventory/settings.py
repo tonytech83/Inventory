@@ -68,15 +68,32 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'inventory.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
 DATABASES = {
     'default': {
+    }
+}
+
+if DEBUG:
+    DATABASES['default'] = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
-}
+else:
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'prod_db_name',
+        'USER': 'prod_db_user',
+        'PASSWORD': 'prod_db_password',
+        'HOST': 'prod_db_host',
+        'PORT': 'prod_db_port',
+    }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators

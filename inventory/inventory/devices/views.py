@@ -120,6 +120,11 @@ class CSVUploadApiView(APIView):
                         operating_system=row[11].value,
                         building=row[12].value,
                         owner_name=row[13].value,
+                        support_model=row[14].value,
+                        purchase_order_number=row[15].value,
+                        business_processes_at_risk=row[20].value,
+                        impact=row[21].value if row[21].value else 1,
+                        likelihood=row[22].value if row[22].value else 1,
                         business=business,
                     )
                     results.append({'device_name': row[0].value, 'status': 'success'})

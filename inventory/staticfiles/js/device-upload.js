@@ -34,7 +34,6 @@ function hideUploadForm() {
 function displayImportResults(results) {
     const resultsElement = document.getElementById('importResults');
     const resultsList = document.getElementById('importResultsList');
-    // Clear previous results
     resultsList.innerHTML = '';
 
     results.forEach(results => {
@@ -42,6 +41,7 @@ function displayImportResults(results) {
         li.textContent = `${results.device_name}: ${results.status}`;
 
         if (results.status === 'Error') {
+            console.log(results.error)
             let message = '';
             if (results.error.includes("UNIQUE constraint failed: devices_device.device_name")) {
                 message = "The device name should be unique."
@@ -59,6 +59,7 @@ function displayImportResults(results) {
         }
         resultsList.appendChild(li);
     });
+
     // Show results
     resultsElement.style.display = 'block';
 }
@@ -78,13 +79,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const fileInput = document.getElementById('inputFieldId');
         const uploadMessage = document.getElementById('uploadMessage');
+        const uploadDescription = document.getElementById('uploadDescription');
 
         // Check if a file has been selected
         if (!fileInput.files.length) {
+            uploadDescription.style.display = 'none';
             uploadMessage.style.display = 'block';
             return;
         } else {
             uploadMessage.style.display = 'none';
+            uploadDescription.style.display = 'none';
         }
 
         // Continue if a file is selected
@@ -101,6 +105,9 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(response => response.json())
             .then(data => {
                 displayImportResults(data.results);
+
+                // const uploadDescription = document.getElementById('uploadDescription');
+                // uploadDescription.style.display = 'none';
 
                 uploadButton.style.visibility = 'hidden';
                 cancelButton.style.visibility = 'hidden';

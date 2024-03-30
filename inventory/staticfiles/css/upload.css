@@ -1,0 +1,24 @@
+.upload-wrapper {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    height: 100%;
+}
+
+#uploadDescription {
+    margin: auto;
+}
+
+#importResults {
+    display: none;
+    overflow-y: auto;
+    width: 80%;
+    height: 80%;
+    margin: 5% 10% 10% 10%;
+}
+
+#uploadMessage {
+    color: red;
+    display: none;
+    margin: auto;
+}
