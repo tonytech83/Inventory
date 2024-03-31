@@ -11,26 +11,11 @@
 
             <h4 class="sub-title">Device</h4>
 
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text" id="inputGroup-sizing-sm">Hostname</span>
-                <input type="text" id="editDeviceHostName" name="device_name" class="form-control"
-                       aria-label="Sizing example input"
-                       aria-describedby="inputGroup-sizing-sm" placeholder="Device hostname.">
-            </div>
+            {% include 'devices/partials/device-create-edit-filed.html' with f_title='Hostname' f_type='text' f_id='editDeviceHostName' f_name='device_name' f_placeholder='Device hostname' %}
 
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text" id="inputGroup-sizing-sm">Domain</span>
-                <input type="text" id="editDeviceDomain" name="domain" class="form-control"
-                       aria-label="Sizing example input"
-                       aria-describedby="inputGroup-sizing-sm" placeholder="Domain if existing.">
-            </div>
+            {% include 'devices/partials/device-create-edit-filed.html' with f_title='Domain' f_type='text' f_id='editDeviceDomain' f_name='domain' f_placeholder='Domain if existing' %}
 
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text" id="inputGroup-sizing-sm">Description</span>
-                <input type="text" id="editDeviceDescription" name="description" class="form-control"
-                       aria-label="Sizing example input"
-                       aria-describedby="inputGroup-sizing-sm" placeholder="Short description.">
-            </div>
+            {% include 'devices/partials/device-create-edit-filed.html' with f_title='Description' f_type='text' f_id='editDeviceDescription' f_name='description' f_placeholder='Short description' %}
 
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text" id="inputGroup-sizing-sm">Status</span>
@@ -41,50 +26,21 @@
                     <option value="Offline">Offline</option>
                     <option value="Not defined yet">Not defined yet</option>
                     <option value="Exception">Exception</option>
-                </select><br>
+                </select>
             </div>
+            
 
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text" id="inputGroup-sizing-sm">Manufacturer</span>
-                <input type="text" id="editDeviceManufacturer" name="manufacturer" class="form-control"
-                       aria-label="Sizing example input"
-                       aria-describedby="inputGroup-sizing-sm" placeholder="Device manufacturer.">
-            </div>
+            {% include 'devices/partials/device-create-edit-filed.html' with f_title='Manufacturer' f_type='text' f_id='editDeviceManufacturer' f_name='manufacturer' f_placeholder='Device manufacturer' %}
 
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text" id="inputGroup-sizing-sm">Model</span>
-                <input type="text" id="editDeviceModel" name="model" class="form-control"
-                       aria-label="Sizing example input"
-                       aria-describedby="inputGroup-sizing-sm" placeholder="Device model.">
-            </div>
+            {% include 'devices/partials/device-create-edit-filed.html' with f_title='Model' f_type='text' f_id='editDeviceModel' f_name='model' f_placeholder='Device model' %}
 
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text" id="inputGroup-sizing-sm">IP Address</span>
-                <input type="text" id="editDeviceIpAddress" name="ip_address" class="form-control"
-                       aria-label="Sizing example input"
-                       aria-describedby="inputGroup-sizing-sm" placeholder="Device IP address.">
-            </div>
+            {% include 'devices/partials/device-create-edit-filed.html' with f_title='IP Address' f_type='text' f_id='editDeviceIpAddress' f_name='ip_address' f_placeholder='Device IP address' %}
 
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text" id="inputGroup-sizing-sm">IP Address Second</span>
-                <input type="text" id="editDeviceIpAddressSecondary" name="ip_address_sec" class="form-control"
-                       aria-label="Sizing example input"
-                       aria-describedby="inputGroup-sizing-sm" placeholder="Device second IP address.">
-            </div>
+            {% include 'devices/partials/device-create-edit-filed.html' with f_title='IP Address Second' f_type='text' f_id='editDeviceIpAddressSecondary' f_name='ip_address_sec' f_placeholder='Device second IP address' %}
 
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text" id="inputGroup-sizing-sm">Operating System</span>
-                <input type="text" id="editDeviceOperatingSystem" name="operating_system" class="form-control"
-                       aria-label="Sizing example input"
-                       aria-describedby="inputGroup-sizing-sm" placeholder="Device operating system.">
-            </div>
+            {% include 'devices/partials/device-create-edit-filed.html' with f_title='IP Address Second' f_type='text' f_id='editDeviceOperatingSystem' f_name='operating_system' f_placeholder='Device second IP address' %}
 
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text" id="inputGroup-sizing-sm">Building</span>
-                <input type="text" id="editDeviceBuilding" name="building" class="form-control"
-                       aria-label="Sizing example input"
-                       aria-describedby="inputGroup-sizing-sm" placeholder="Location of device.">
-            </div>
+            {% include 'devices/partials/device-create-edit-filed.html' with f_title='Building' f_type='text' f_id='editDeviceBuilding' f_name='building' f_placeholder='Building / Location of device' %}
 
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text" id="inputGroup-sizing-sm">Category</span>
@@ -100,7 +56,7 @@
                     <option value="AirCon">AirCon</option>
                     <option value="UPS">UPS</option>
                     <option value="Other">Other</option>
-                </select><br>
+                </select>
             </div>
 
             <div class="input-group input-group-sm mb-3">
@@ -135,22 +91,12 @@
                     <option value="Remote Access">Remote Access</option>
                     <option value="Remote Terminal Unit (RTU)">Remote Terminal Unit (RTU)</option>
                     <option value="Other hardware">Other hardware</option>
-                </select><br>
+                </select>
             </div>
 
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text" id="inputGroup-sizing-sm">Serial Number</span>
-                <input type="text" id="editDeviceSerialNumber" name="serial_number" class="form-control"
-                       aria-label="Sizing example input"
-                       aria-describedby="inputGroup-sizing-sm" placeholder="Device unique serial number.">
-            </div>
+            {% include 'devices/partials/device-create-edit-filed.html' with f_title='Serial Number' f_type='text' f_id='editDeviceSerialNumber' f_name='serial_number' f_placeholder='Device unique serial number' %}
 
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text" id="inputGroup-sizing-sm">Owner</span>
-                <input type="text" id="editDeviceOwnerName" name="owner_name" class="form-control"
-                       aria-label="Sizing example input"
-                       aria-describedby="inputGroup-sizing-sm" placeholder="Person who use/own device.">
-            </div>
+            {% include 'devices/partials/device-create-edit-filed.html' with f_title='Owner' f_type='text' f_id='editDeviceOwnerName' f_name='owner_name' f_placeholder='Person who use / own device' %}
 
         </div>
 
@@ -158,45 +104,20 @@
 
             <h4 class="sub-title">Support</h4>
 
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text" id="inputGroup-sizing-sm">Support Model</span>
-                <input type="text" id="editDeviceSupportModel" name="support_model" class="form-control"
-                       aria-label="Sizing example input"
-                       aria-describedby="inputGroup-sizing-sm" placeholder="Short desc of device support model.">
-            </div>
+            {% include 'devices/partials/device-create-edit-filed.html' with f_title='Support Model' f_type='text' f_id='editDeviceSupportModel' f_name='support_model' f_placeholder='Short desc of device support model' %}
 
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text" id="inputGroup-sizing-sm">PO Number</span>
-                <input type="text" id="editDevicePurchaseOrderNumber" name="purchase_order_number" class="form-control"
-                       aria-label="Sizing example input"
-                       aria-describedby="inputGroup-sizing-sm" placeholder="Purchase order number.">
-            </div>
+            {% include 'devices/partials/device-create-edit-filed.html' with f_title='PO Number' f_type='text' f_id='editDevicePurchaseOrderNumber' f_name='purchase_order_number' f_placeholder='Purchase order number' %}
 
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text" id="inputGroup-sizing-sm">Invoice Image</span>
-                <input type="file" id="editDeviceInvoiceImage" name="invoice_img" class="form-control"><br>
+                <input type="file" id="editDeviceInvoiceImage" name="invoice_img" class="form-control">
             </div>
 
-            <div class="input-group input-group-sm mb-3 date-field">
-                <span class="input-group-text" id="inputGroup-sizing-sm">Start Of Support</span>
-                <input type="date" id="editDeviceStartOfSupport" name="sos" class="form-control"
-                       aria-label="Sizing example input"
-                       aria-describedby="inputGroup-sizing-sm">
-            </div>
+            {% include 'devices/partials/device-create-edit-filed.html' with f_title='Start Of Support' f_type='date' f_id='editDeviceStartOfSupport' f_name='sos' f_placeholder='' %}
 
-            <div class="input-group input-group-sm mb-3 date-field">
-                <span class="input-group-text" id="inputGroup-sizing-sm">End Of Support</span>
-                <input type="date" id="editDeviceEndOfSupport" name="eos" class="form-control"
-                       aria-label="Sizing example input"
-                       aria-describedby="inputGroup-sizing-sm">
-            </div>
+            {% include 'devices/partials/device-create-edit-filed.html' with f_title='End Of Support' f_type='date' f_id='editDeviceEndOfSupport' f_name='eos' f_placeholder='' %}
 
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text" id="inputGroup-sizing-sm">End Of Life</span>
-                <input type="date" id="editDeviceEndOfLife" name="eol" class="form-control"
-                       aria-label="Sizing example input"
-                       aria-describedby="inputGroup-sizing-sm">
-            </div>
+            {% include 'devices/partials/device-create-edit-filed.html' with f_title='End Of Life' f_type='date' f_id='editDeviceEndOfLife' f_name='eol' f_placeholder='' %}
 
             <a id="existingInvoiceLink" class="button btn-create" href="#" style="display:none;" download>Download
                 Invoice</a><br>
@@ -207,13 +128,7 @@
 
             <h4 class="sub-title">Risk</h4>
 
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text" id="inputGroup-sizing-sm">Process At Risk</span>
-                <input type="text" id="editDeviceBusinessProcessAtRisk" name="business_processes_at_risk"
-                       class="form-control"
-                       aria-label="Sizing example input"
-                       aria-describedby="inputGroup-sizing-sm" placeholder="Short desc of device support model.">
-            </div>
+            {% include 'devices/partials/device-create-edit-filed.html' with f_title='Process At Risk' f_type='text' f_id='editDeviceBusinessProcessAtRisk' f_name='business_processes_at_risk' f_placeholder='Short desc of device support model' %}
 
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text" id="inputGroup-sizing-sm">Impact</span>
@@ -221,7 +136,7 @@
                     {% for i in '12345' %}
                         <option value="{{ i }}">{{ i }}</option>
                     {% endfor %}
-                </select><br>
+                </select>
             </div>
 
             <div class="input-group input-group-sm mb-3">
@@ -230,7 +145,7 @@
                     {% for i in '12345' %}
                         <option value="{{ i }}">{{ i }}</option>
                     {% endfor %}
-                </select><br>
+                </select>
             </div>
 
         </div>
