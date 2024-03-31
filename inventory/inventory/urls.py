@@ -3,11 +3,6 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 
-from inventory.accounts.views import custom_permission_denied_view
-
-# Custom permission denied handler for profile edit
-handler403 = custom_permission_denied_view
-
 urlpatterns = [
                   path('admin/', admin.site.urls),
                   path('', include('inventory.common.urls')),

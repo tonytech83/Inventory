@@ -2,6 +2,7 @@ from django.contrib.auth import views as auth_views, get_user_model
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy
 from django.views import generic as views
+from django.contrib.auth import mixins as auth_mixins
 
 from inventory.accounts.forms import UserRegistrationForm, LoginUserForm, ProfileEditForm
 from inventory.accounts.models import Profile
@@ -62,10 +63,6 @@ class EditProfileView(OwnerRequiredMixin, views.UpdateView):
     template_name = 'accounts/edit-profile.html'
 
     success_url = reverse_lazy('details-profile')
-
-
-def custom_permission_denied_view(request, exception, template_name='403.html'):
-    return render(request, template_name, {}, status=403)
 
 
 class PasswordChangeView(auth_views.PasswordChangeView):

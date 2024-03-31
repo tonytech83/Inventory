@@ -3,3 +3,12 @@
     padding: 20px;
     height: 90vh;
 }
+
+.forbidden,
+.not-found {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin: auto;
+    text-align: center;
+}

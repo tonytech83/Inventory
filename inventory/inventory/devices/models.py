@@ -183,8 +183,8 @@ class Device(TimeStampedModel, models.Model):
             MinLengthValidator(MIN_SERIAL_NUMBER_LENGTH),
         ),
         unique=True,
-        null=True,
-        blank=True,
+        null=False,
+        blank=False,
     )
 
     operating_system = models.CharField(

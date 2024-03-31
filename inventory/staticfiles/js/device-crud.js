@@ -102,8 +102,20 @@ function displayErrors(errors, containerId) {
 
     errors.message.forEach(msg => {
         const errorElement = document.createElement('p');
-        errorElement.textContent = msg;
-        errorElement.classList.add('error-message'); // Ensure you have CSS for this class
+
+        let key = (Object.keys(msg))[0];
+        let message = msg[key][0]
+
+        if (key === 'serial_number') {
+            key = 'Serial Number'
+        } else {
+            key = 'Device Name'
+        }
+
+        console.log(message)
+
+        errorElement.textContent = `${key} - ${message}`;
+        errorElement.classList.add('error-message');
         errorsContainer.appendChild(errorElement);
     });
 
@@ -112,7 +124,7 @@ function displayErrors(errors, containerId) {
 
 // Create
 function submitDeviceForm() {
-    event.preventDefault(); // Prevent form from submitting the default way
+    event.preventDefault();
 
     const formData = new FormData(document.getElementById('deviceCreateForm'));
     const csrftoken = getCookie('csrftoken');
@@ -128,66 +140,10 @@ function submitDeviceForm() {
         body: formData
     })
         .then(response => {
-            if (!response.ok) {
-                // Read the response as text
-                return response.text().then(html => {
-                    // Define known error messages and their user-friendly equivalents
-                    const errorMappings = {
-                        '{"device_name":["This field may not be blank."]}': "The Hostname can not be blank.",
-                        '{"detail":"UNIQUE constraint failed: devices_device.serial_number"}': "The Serial number is already used. Please use a unique Serial number.",
-                        '{"device_name":["device with this device name already exists."]}': "The Hostname is already used. Please use a unique Hostname.",
-                        '{"device_name":["Ensure this field has at least 2 characters."]}': "Ensure Hostname field has at least 2 characters."
-                    };
-
-                    let userFriendlyError = "An unexpected error occurred. Please try again.";
-                    Object.keys(errorMappings).forEach(errorPattern => {
-                        if (html.includes(errorPattern)) {
-                            userFriendlyError = errorMappings[errorPattern];
-                        }
-                    });
-
-                    // Reject the promise
-                    return Promise.reject(userFriendlyError);
-                });
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Success:', data);
-            hideForm();
-            window.location.reload();
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            displayErrors({message: [error]}, 'errorsContainer');
-        });
-}
-
-// Edit
-function submitEditForm() {
-    event.preventDefault(); // Prevent default form submission behavior
-
-    const formData = new FormData(document.getElementById('deviceEditForm'));
-    const csrftoken = getCookie('csrftoken');
-    const deviceId = document.getElementById('editDeviceId').value;
-    const editUrl = editDeviceUrl.replace("0", deviceId); // Ensure you have defined editDeviceUrl
-
-    const businessId = document.getElementById('businessId').value; // Ensure you have this element in your form
-    formData.append('business', businessId);
-
-    fetch(editUrl, {
-        method: 'PATCH',
-        headers: {
-            'X-CSRFToken': csrftoken,
-            'Accept': 'application/json',
-        },
-        body: formData
-    })
-        .then(response => {
             const contentType = response.headers.get("Content-Type");
             if (!response.ok) {
                 if (contentType && contentType.indexOf("application/json") !== -1) {
-                    // Parse response as JSON
+                    // Parse response to JSON
                     return response.json().then(data => Promise.reject(data));
                 } else {
                     // Non-JSON response, treat as text
@@ -202,16 +158,73 @@ function submitEditForm() {
             window.location.reload();
         })
         .catch(error => {
-            // Determine error type (JSON or string)
-            if (typeof error === 'object' && error.detail) {
-                displayErrors({message: [error.detail]}, 'errorsEditContainer');
-            } else if (typeof error === 'string') {
+            if (typeof error === 'string' || typeof error === 'object') {
+                displayErrors({message: [error]}, 'errorsContainer');
+            } else {
+                console.error('Error:', error);
+                displayErrors({message: ["JS error"]}, 'errorsContainer');
+            }
+        });
+}
+
+// Edit
+function submitEditForm() {
+    event.preventDefault(); // Prevent default form submission behavior
+
+    const formData = new FormData(document.getElementById('deviceEditForm'));
+    const csrftoken = getCookie('csrftoken');
+    const deviceId = document.getElementById('editDeviceId').value;
+    const editUrl = editDeviceUrl.replace("0", deviceId);
+
+    const businessId = document.getElementById('businessId').value;
+    formData.append('business', businessId);
+
+    fetch(editUrl, {
+        method: 'PATCH',
+        headers: {
+            'X-CSRFToken': csrftoken,
+            'Accept': 'application/json',
+        },
+        body: formData
+    })
+        .then(response => {
+            const contentType = response.headers.get("Content-Type");
+            if (!response.ok) {
+                if (contentType && contentType.indexOf("application/json") !== -1) {
+                    // Parse response to JSON
+                    return response.json().then(data => Promise.reject(data));
+                } else {
+                    // Non-JSON response, treat as text
+                    return response.text().then(text => Promise.reject(text));
+                }
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+            hideForm();
+            window.location.reload();
+        })
+        .catch(error => {
+            // if (typeof error === 'object' ) {
+            //     console.log('Error is object')
+            // }
+            //
+            // console.log(typeof error)
+
+
+            // if (typeof error === 'object') {
+            //     // console.log(error.details)
+            //     displayErrors({message: [error]}, 'errorsEditContainer');
+            // } else
+            console.log(error)
+            if (typeof error === 'string' || typeof error === 'object') {
                 // Handle non-JSON errors, potentially parsing for known error messages
                 // For simplicity, showing the received error string directly
                 displayErrors({message: [error]}, 'errorsEditContainer');
             } else {
                 console.error('Error:', error);
-                displayErrors({message: ["An unexpected error occurred. Please try again."]}, 'errorsEditContainer');
+                displayErrors({message: ["JS error"]}, 'errorsEditContainer');
             }
         });
 }

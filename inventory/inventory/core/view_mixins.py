@@ -20,21 +20,6 @@ class OwnerRequiredMixin:
         return obj
 
 
-# class IsOwnerMixin:
-#     """
-#     Mixin to check if the current user is the owner of the business.
-#     """
-#
-#     def check_ownership(self, business_id):
-#         business = get_object_or_404(Business, id=business_id)
-#         if business.owner != self.request.user:
-#             # Return a Response indicating permission denied if the user is not the owner
-#             return Response({"detail": "You do not have permission to perform this action."},
-#                             status=status.HTTP_403_FORBIDDEN)
-#         # Return None if the user is the owner
-#         return None
-
-
 class IsBusinessOwner(permissions.BasePermission):
     """
     Used for CRUD operations for devices
