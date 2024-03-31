@@ -1,0 +1,7 @@
+<div class="input-group mb-3">
+    <span class="input-group-text" id="inputGroup-sizing-default">{{ f_title }}</span>
+    <input type={{ f_type }} id="{{ f_id }}" name="{{ f_name }}" class="form-control"
+           aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+           placeholder="{{ f_placeholder }}"
+                   value={{ f_value|default:'' }}>
+</div>

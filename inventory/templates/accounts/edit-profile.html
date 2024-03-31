@@ -6,13 +6,15 @@
     <div class="edit-profile">
 
 
-        <form class="profile-edit-form" action="{% url 'edit-profile' pk=request.user.pk %}" method="POST" enctype="multipart/form-data">
+        <form class="profile-edit-form" action="{% url 'edit-profile' pk=request.user.pk %}" method="POST"
+              enctype="multipart/form-data">
 
             <div class="title-container">
                 <h4 class="login-title">Edit Profile</h4>
             </div>
 
             <div class="inputs">
+
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="inputGroup-sizing-default">User login</span>
                     <span type="email" id="id_username" class="form-control"
@@ -22,36 +24,13 @@
 
                 <hr>
 
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="inputGroup-sizing-default">First name</span>
-                    <input type="text" id="id_first_name" name="first_name" class="form-control"
-                           aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
-                           placeholder="Enter your first name"
-                           value="{% if not object.first_name %}{% else %}{{ object.first_name }}{% endif %}">
-                </div>
+                {% include 'accounts/partials/edit-input-filed.html' with profile=object f_type='text' f_title='First name' f_id="id_first_name" f_name="first_name" f_placeholder="Enter your first name" f_value=object.first_name %}
+                
+                {% include 'accounts/partials/edit-input-filed.html' with profile=object f_type='text' f_title='Last name' f_id="id_last_name" f_name="last_name" f_placeholder="Enter your last name" f_value=object.last_name %}
 
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="inputGroup-sizing-default">Last name</span>
-                    <input type="text" id="id_last_name" name="last_name" class="form-control"
-                           aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
-                           placeholder="Enter your last name."
-                           value="{% if not object.last_name %}{% else %}{{ object.last_name }}{% endif %}">
-                </div>
+                {% include 'accounts/partials/edit-input-filed.html' with  profile=object f_type='file' f_title='Profile picture' f_id="id_profile_pic" f_name="profile_pic" f_placeholder="" f_value=object.profile_pic %}
 
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="inputGroup-sizing-default">Profile picture</span>
-                    <input type="file" id="id_profile_pic" name="profile_pic" class="form-control"
-                           aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
-                           value="{{ object.profile_pic }}">
-                </div>
-
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="inputGroup-sizing-default">Phone number</span>
-                    <input type="text" id="id_phone_number" name="phone_number" class="form-control"
-                           aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
-                           placeholder="Enter your phone number."
-                           value="{% if not object.phone_number %}{% else %}{{ object.phone_number }}{% endif %}">
-                </div>
+                {% include 'accounts/partials/edit-input-filed.html' with profile=object f_type='text' f_title='Phone number' f_id="id_phone_number" f_name="phone_number" f_placeholder="Enter your phone number" f_value='' %}
 
                 {% csrf_token %}
 

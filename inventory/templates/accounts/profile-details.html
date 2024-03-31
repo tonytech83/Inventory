@@ -21,33 +21,16 @@
                 </div>
 
                 <div class="profile-information">
-                    <div>
-                        <p class="profile-item">User Login</p>
-                        <p class="profile-item">{{ object.account.email }}</p>
-                    </div>
 
-                    <div>
-                        <p class="profile-item">User Initials</p>
-                        <p class="profile-item">{{ object.initials }}</p>
-                    </div>
+                    {% include 'accounts/partials/profile-detail-filed.html' with profile=object p_title='User Login' value=object.account.email %}
 
-                    <div>
-                        <p class="profile-item">First Name</p>
-                        <p class="profile-item">
-                            {% if not object.first_name %}Not set{% else %}{{ object.first_name }}{% endif %}</p>
-                    </div>
+                    {% include 'accounts/partials/profile-detail-filed.html' with profile=object p_title='User Initials' value=object.initials %}
 
-                    <div>
-                        <p class="profile-item">Last Name</p>
-                        <p class="profile-item">
-                            {% if not object.last_name %}Not set{% else %}{{ object.last_name }}{% endif %}</p>
-                    </div>
+                    {% include 'accounts/partials/profile-detail-filed.html' with profile=object p_title='First Name' value=object.first_name %}
 
-                    <div>
-                        <p class="profile-item">Phone Number</p>
-                        <p class="profile-item">
-                            {% if not object.phone_number %}Not set{% else %}{{ object.phone_number }}{% endif %}</p>
-                    </div>
+                    {% include 'accounts/partials/profile-detail-filed.html' with profile=object p_title='Last Name' value=object.last_name %}
+
+                    {% include 'accounts/partials/profile-detail-filed.html' with profile=object p_title='Phone Number' value=object.phone_number %}
 
                 </div>
 

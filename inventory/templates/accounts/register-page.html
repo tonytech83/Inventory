@@ -18,27 +18,12 @@
             <h3 style="text-align: center;">Welcome to IT Inventory</h3>
 
             <div class="inputs">
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="inputGroup-sizing-default">Email</span>
-                    <input type="email" id="id_email" name="email" class="form-control"
-                           aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
-                           placeholder="{{ form.email.help_text }}">
-                </div>
 
+                {% include 'accounts/partials/login-register-input-fields.html' with f_title='Email' f_type='email' f_id='id_email' f_name='email' f_placeholder=form.email.help_text %}
 
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="inputGroup-sizing-default">Password</span>
-                    <input type="password" id="id_password1" name="password1" class="form-control"
-                           autocomplete="new-password" aria-label="Sizing example input"
-                           aria-describedby="inputGroup-sizing-default" placeholder="Enter password.">
-                </div>
+                {% include 'accounts/partials/login-register-input-fields.html' with f_title='Password' f_type='password' f_id='id_password1' f_name='password1' f_placeholder='Enter password' %}
 
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="inputGroup-sizing-default">Repeat password</span>
-                    <input type="password" id="id_password2" name="password2" class="form-control"
-                           aria-describedby="inputGroup-sizing-default" aria-label="Sizing example input"
-                           placeholder="Repeat the same password.">
-                </div>
+                {% include 'accounts/partials/login-register-input-fields.html' with f_title='Repeat password' f_type='password' f_id='id_password2' f_name='password2' f_placeholder='Repeat the same password' %}
 
             </div>
 
