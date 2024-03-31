@@ -15,8 +15,23 @@ class SupplierListView(LoginRequiredMixin, views.ListView):
     model = Supplier
     template_name = 'suppliers/suppliers-list.html'
 
+    @property
+    def business_name_pattern(self):
+        return self.request.GET.get('business_name_pattern')
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        business_name_pattern = self.business_name_pattern
+
+        if business_name_pattern:
+            queryset = queryset.filter(name__icontains=self.business_name_pattern)
+
+        return queryset
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['pet_name_pattern'] = self.business_name_pattern or ''
+
         suppliers_list = []
 
         for supplier in self.get_queryset():
@@ -33,6 +48,7 @@ class SupplierListView(LoginRequiredMixin, views.ListView):
 
         # Convert the list of suppliers to JSON and add it to the context
         context['suppliers_json'] = json.dumps(suppliers_list)
+        context['suppliers_exists'] = Supplier.objects.exists()
         return context
 
 

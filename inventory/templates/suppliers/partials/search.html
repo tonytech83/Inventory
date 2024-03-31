@@ -1,0 +1,5 @@
+<form class="search-bar" action="{% url 'supplier-list' %}" method="GET">
+    <input type="text" name="business_name_pattern" placeholder="Search by business name..."
+           value="{{ business_name_pattern }}">
+    <button type="submit" class="reset-button-style button btn-create search-button">Search</button>
+</form>

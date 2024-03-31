@@ -18,7 +18,7 @@ function showCreateForm() {
     document.querySelector('.backdrop').style.display = 'block';
 }
 
-function showEditForm(supplierId, supplierName, supplierContactName,supplierCountryName, supplierPhoneNumber, supplierEmail) {
+function showEditForm(supplierId, supplierName, supplierContactName, supplierCountryName, supplierPhoneNumber, supplierEmail) {
     // Populate the form fields
     document.getElementById('supplierId').value = supplierId;
     document.getElementById('supplierName').value = supplierName;
@@ -204,5 +204,44 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error('Error:', error);
             displayErrors({message: ["An unexpected error occurred. Please try again."]}, 'errorsSupplierEditContainer');
         });
+    });
+});
+
+// Cards view
+document.addEventListener('DOMContentLoaded', function () {
+    const suppliersDataElement = document.getElementById('data-container');
+    const suppliersData = JSON.parse(suppliersDataElement.getAttribute('data-suppliers'));
+
+    console.log(suppliersData)
+
+    let cardsContainer = $('<div class="cards-container"></div>');
+
+    suppliersData.forEach(function (supplier) {
+        let card = $('<div class="supplier-card"></div>');
+        card.append('<h5 class="card-title">' + supplier.name + '</h5>');
+        card.append('<p>Contact: ' + supplier.contact_name + '</p>');
+        card.append('<p>Country: ' + supplier.supplier_country + '</p>');
+        card.append('<p>Phone: ' + supplier.phone_number + '</p>');
+        card.append('<p>Email: <a href="mailto:' + supplier.email + '">' + supplier.email + '</a></p>');
+
+        card.on('click', function () {
+            showEditForm(supplier.id, supplier.name, supplier.contact_name, supplier.supplier_country, supplier.phone_number, supplier.email);
+        });
+
+        cardsContainer.append(card);
+    });
+
+    $('#data-container-no-handsontable').append(cardsContainer);
+
+});
+
+// Toggle between Handsontable and Cards
+$(function () {
+    $('#handsontable-view').hide();
+
+    $('#toggle-view-btn').click(function () {
+        // Toggle visibility of each view
+        $('#handsontable-view').toggle();
+        $('#cards-view').toggle();
     });
 });

@@ -27,13 +27,29 @@
 
     <div class="suppliers-container">
 
-        <!-- Handsontable container-->
-        {% if supplier_list %}
-            <div id="data-container" data-suppliers='{{ suppliers_json|safe }}'></div>
-        {% else %}
-            <h4 style="margin: auto;">There are still no suppliers created.</h4>
-        {% endif %}
+        <div>
+            {% include 'suppliers/partials/search.html' %}
+            {% if suppliers_exists %}
+                {% if supplier_list %}
+                    <!-- Handsontable container-->
+                    <div id="handsontable-view">
+                        <div id="data-container" data-suppliers='{{ suppliers_json|safe }}'></div>
+                    </div>
 
+                    <!-- Cards -->
+                    <div id="cards-view">
+
+                        <div id="data-container-no-handsontable" data-suppliers='{{ suppliers_json|safe }}'></div>
+                    </div>
+                {% else %}
+                    <h4 class="supplier-message">No suppliers found.</h4>
+                {% endif %}
+            {% else %}
+                <div>
+                    <h4>There are still no suppliers created.</h4>
+                </div>
+            {% endif %}
+        </div>
         <!-- Handsontable JS Script-->
         <script src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>
         <script src="{% static 'js/supplier-handsontable.js' %}"></script>
@@ -49,6 +65,7 @@
                 <button class="reset-button-style button btn-create" type="button" onclick="showCreateForm()">Add
                     Supplier
                 </button>
+                <button id="toggle-view-btn" class="reset-button-style button btn-download">Change View</button>
             </div>
         </div>
 
