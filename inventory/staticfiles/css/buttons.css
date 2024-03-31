@@ -32,13 +32,8 @@
 }
 
 .button-container {
-    position: fixed;
-    bottom: 5%; /* Adjusted to a fixed value for consistency */
-    left: 0; /* Align to the left */
-    right: 0; /* Align to the right */
-    width: auto; /* Let it auto adjust */
+    width: 100%;
     padding: 0 10px; /* Keep your padding */
-    margin: 0 20px; /* Adjust margin to keep the container within viewport */
     box-sizing: border-box; /* This ensures padding is included in the width */
     display: flex;
     justify-content: space-between;
@@ -46,11 +41,11 @@
     box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
 }
 
-.form-style {
-    width: auto;
-    position: absolute;
-    bottom: 20px;
-}
+/*.form-style {*/
+/*    width: auto;*/
+/*    position: absolute;*/
+/*    bottom: 20px;*/
+/*}*/
 
 .control-buttons {
     display: flex;

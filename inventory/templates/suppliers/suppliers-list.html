@@ -25,29 +25,33 @@
          data-delete-supplier-url="{% url 'delete-supplier' pk=0 %}"
          hidden id="supplierUrls"></div>
 
-    <!-- Handsontable container-->
-    {% if supplier_list %}
-        <div id="data-container" data-suppliers='{{ suppliers_json|safe }}'></div>
-    {% else %}
-        <h4 style="margin: auto;">There are still no suppliers created.</h4>
-    {% endif %}
+    <div class="suppliers-container">
 
-    <!-- Handsontable JS Script-->
-    <script src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>
-    <script src="{% static 'js/supplier-handsontable.js' %}"></script>
+        <!-- Handsontable container-->
+        {% if supplier_list %}
+            <div id="data-container" data-suppliers='{{ suppliers_json|safe }}'></div>
+        {% else %}
+            <h4 style="margin: auto;">There are still no suppliers created.</h4>
+        {% endif %}
 
-    <!-- Supplier CRUD script -->
-    <script type="module" src="{% static 'js/supplier-crud.js' %}"></script>
+        <!-- Handsontable JS Script-->
+        <script src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>
+        <script src="{% static 'js/supplier-handsontable.js' %}"></script>
 
-    <div class="button-container">
-        <div class="controls">
-            <button class="reset-button-style button btn-download" id="export-file">Download CSV</button>
+        <!-- Supplier CRUD script -->
+        <script type="module" src="{% static 'js/supplier-crud.js' %}"></script>
 
+        <div class="button-container">
+            <div class="controls">
+                <button class="reset-button-style button btn-download" id="export-file">Download CSV</button>
+            </div>
+            <div class="action-buttons">
+                <button class="reset-button-style button btn-create" type="button" onclick="showCreateForm()">Add
+                    Supplier
+                </button>
+            </div>
         </div>
-        <div class="action-buttons">
-            <button class="reset-button-style button btn-create" type="button" onclick="showCreateForm()">Add Supplier
-            </button>
-        </div>
+
     </div>
 
 {% endblock %}

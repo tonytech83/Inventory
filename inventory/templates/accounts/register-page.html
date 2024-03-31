@@ -2,17 +2,19 @@
 
 {% block main_content %}
     <!-- Forms container-->
-    <div class="backdrop"></div>
+    <div class="backdrop nojs"></div>
 
     <div class="register-page">
 
-        <div class="title-container">
-            <h4 class="login-title">Register</h4>
-        </div>
 
-        <form action="{% url 'register-user' %}" method="POST">
+        <form class="signup-form" action="{% url 'register-user' %}" method="POST">
+
+            <div class="title-container">
+                <h4 class="login-title">Register</h4>
+            </div>
+
             {% csrf_token %}
-        
+
             <h3 style="text-align: center;">Welcome to IT Inventory</h3>
 
             <div class="inputs">
@@ -64,7 +66,7 @@
                 </div>
             {% endif %}
 
-        
+
             <div class="button-container">
                 <div class="control-buttons"></div>
                 <div class="action-buttons ">

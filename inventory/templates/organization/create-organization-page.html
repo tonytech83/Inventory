@@ -4,10 +4,10 @@
 {% block main_content %}
 
     <!-- Forms container-->
-    <div class="backdrop"></div>
+    <div class="backdrop nojs"></div>
 
-    <div class="organization-create-form">
-        <form action="{% url 'create-organization' %}" method="POST" enctype="multipart/form-data">
+    <div class="organization-create">
+        <form class="organization-create-form" action="{% url 'create-organization' %}" method="POST" enctype="multipart/form-data">
 
             {% csrf_token %}
 

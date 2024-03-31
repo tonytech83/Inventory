@@ -3,10 +3,10 @@
 {% block main_content %}
 
     <!-- Forms container-->
-    <div class="backdrop"></div>
+    <div class="backdrop nojs"></div>
 
-    <div class="organization-edit-form">
-        <form action="{% url 'edit-organization' pk=1 %}" method="POST" enctype="multipart/form-data">
+    <div class="organization-edit">
+        <form class="organization-edit-form" action="{% url 'edit-organization' pk=1 %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
 
             <div class="title-container">

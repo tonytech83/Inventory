@@ -10,9 +10,9 @@
 @import "table.css";
 @import "forms.css";
 @import "footer.css";
-@import "accounts.css";
 @import "dashboard.css";
 @import "upload.css";
+@import "suppliers.css";
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
@@ -21,6 +21,7 @@
     --primary-color: #ACBABF;
     --secondary-color: #6c757d;
     --text-color: #c0c0c2;
+    --text-error: #ff0000;
 }
 
 * {

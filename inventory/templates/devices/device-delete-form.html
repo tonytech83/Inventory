@@ -1,16 +1,18 @@
 <div id="deleteDeviceForm" style="display:none;">
 
-    <div class="title-container">
-        <h4 class="suppliers-title">Delete Device</h4>
-    </div>
 
-    <form id="deviceDeleteForm">
+    <form id="deviceDeleteForm" class="device-delite-form">
+
+        <div class="title-container">
+            <h4 class="suppliers-title">Delete Device</h4>
+        </div>
+
         <input type="hidden" id="deleteDeviceId" name="deviceId">
 
-        <p id="deleteConfirmationText" style="text-align: center; margin-top: 25%;">Are you sure you want to delete
+        <p id="deleteConfirmationText" style="text-align: center;">Are you sure you want to delete
             device <strong><span
                     id="deleteDeviceHostName"></span></strong></p>
-        
+
         <div id="errorsDeleteConfirmContainer" style="display: none;"></div>
 
         <div class="button-container form-style">

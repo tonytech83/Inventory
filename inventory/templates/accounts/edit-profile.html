@@ -1,15 +1,16 @@
 {% extends 'base/base.html' %}
 
 {% block main_content %}
-    <div class="backdrop"></div>
+    <div class="backdrop nojs"></div>
 
     <div class="edit-profile">
 
-        <div class="title-container">
-            <h4 class="login-title">Edit Profile</h4>
-        </div>
 
-        <form action="{% url 'edit-profile' pk=request.user.pk %}" method="POST" enctype="multipart/form-data">
+        <form class="profile-edit-form" action="{% url 'edit-profile' pk=request.user.pk %}" method="POST" enctype="multipart/form-data">
+
+            <div class="title-container">
+                <h4 class="login-title">Edit Profile</h4>
+            </div>
 
             <div class="inputs">
                 <div class="input-group mb-3">

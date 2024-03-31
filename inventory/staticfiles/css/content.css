@@ -1,5 +1,5 @@
 .content {
-    flex: 1; /* This makes the content area flexible */
+    flex: 1;
     padding: 20px;
     height: 90vh;
 }

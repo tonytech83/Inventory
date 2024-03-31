@@ -1,10 +1,11 @@
 <div id="createSupplierForm" style="display: none">
 
-    <div class="title-container">
-        <h4 class="login-title">Create Supplier</h4>
-    </div>
 
-    <form id="supplierCreateForm">
+    <form id="supplierCreateForm" class="supplier-create-form">
+
+        <div class="title-container">
+            <h4 class="login-title">Create Supplier</h4>
+        </div>
 
         <div class="inputs">
             <div class="input-group mb-3">
@@ -20,8 +21,8 @@
                        aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
                        placeholder="Enter the name of supplier contact.">
             </div>
-            
-             <div class="input-group mb-3">
+
+            <div class="input-group mb-3">
                 <span class="input-group-text" id="inputGroup-sizing-default">Country</span>
                 <input type="text" id="supplierCountryName" name="supplier_country" class="form-control"
                        aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
@@ -43,7 +44,7 @@
             </div>
 
         </div>
-        
+
         <div id="errorsSupplierContainer" style="display: none;"></div>
 
         <div class="button-container form-style">

@@ -1,9 +1,11 @@
 <div id="editSupplierForm" style="display:none;">
-    <div class="title-container">
-        <h4 class="suppliers-title">Edit Supplier</h4>
-    </div>
 
-    <form id="supplierEditForm">
+
+    <form id="supplierEditForm" class="supplier-edit-form">
+
+        <div class="title-container">
+            <h4 class="suppliers-title">Edit Supplier</h4>
+        </div>
 
         <div class="inputs">
             <input type="hidden" id="supplierId" name="supplierId">
@@ -21,8 +23,8 @@
                        aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
                        placeholder="Enter the name of supplier contact.">
             </div>
-            
-                <div class="input-group mb-3">
+
+            <div class="input-group mb-3">
                 <span class="input-group-text" id="inputGroup-sizing-default">Country</span>
                 <input type="text" id="supplierCountryName" name="supplier_country" class="form-control"
                        aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
@@ -44,7 +46,7 @@
             </div>
 
         </div>
-        
+
         <div id="errorsSupplierEditContainer" style="display: none;"></div>
 
         <div class="button-container form-style">

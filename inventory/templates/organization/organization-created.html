@@ -1,0 +1,30 @@
+{% extends 'base/base.html' %}
+
+
+{% block main_content %}
+
+    <!-- Forms container-->
+    <div class="backdrop nojs"></div>
+
+    <div class="organization-create">
+        <form class="organization-create-form-done" action="{% url 'create-organization' %}" method="POST" enctype="multipart/form-data">
+
+            {% csrf_token %}
+
+            <div class="title-container">
+                <h4 class="login-title">Organization</h4>
+            </div>
+
+            <h4 style="margin: auto;">Organization already crated.</h4>
+
+            <div class="button-container">
+                <div class="control-buttons"></div>
+                <div class="action-buttons ">
+                    <a class="button btn-cancel" href="{% url 'home-page' %}">Back to Home</a>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+{% endblock %}

@@ -10,13 +10,17 @@
     z-index: 10;
 }
 
-/* Edit and Save form styles */
+.nojs {
+    display: block;
+}
+
+/* Bigger Edit and Save form for devices */
 #editForm,
 #createForm,
 #deleteForm,
 #uploadCSVForm {
     width: 80%;
-    height: 55%;
+    height: 60%;
 
     position: fixed; /* Position relative to the viewport */
     top: 50%; /* Center vertically */
@@ -26,9 +30,67 @@
     background-color: darkgrey; /* Ensure the form is visible against the backdrop */
     padding: 20px; /* Add some padding */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow */
-    display: none; /* Hidden by default */
+    display: none;
 }
 
+/* Smaller Edit, Create, Login, Register and etc. forms */
+.login-page,
+.register-page,
+.profile-container,
+.edit-profile,
+.password-change,
+.password_done,
+#createBusinessForm,
+#createSupplierForm,
+#editSupplierForm,
+#deleteSupplierForm,
+#businessEditFormContainer,
+#deleteDeviceForm,
+.organization-create,
+.organization-edit {
+    width: 50%;
+    height: 40%;
+
+    position: fixed; /* Position relative to the viewport */
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Adjust the centering */
+    z-index: 1000; /* Above the backdrop */
+    background-color: darkgrey; /* Ensure the form is visible against the backdrop */
+    padding: 20px; /* Add some padding */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow */
+}
+
+.login-form,
+.signup-form,
+.business-create-form,
+.business-edit-form,
+.device-create-form,
+.device-edit-form,
+.device-delite-form,
+.profile-details-form,
+.profile-edit-form,
+.password-change-form,
+.password-done-form,
+.organization-edit-form,
+.organization-create-form,
+.organization-create-form-done,
+.supplier-create-form,
+.supplier-edit-form,
+.supplier-delete-form {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.inputs {
+    width: 70%;
+    margin: auto;
+}
+
+
+/* Tables in Dashboard */
 #tableOne,
 #tableTwo,
 #tableThree {
@@ -46,13 +108,14 @@
     display: none; /* Hidden by default */
 }
 
-.small {
-    width: 40%;
-    height: 40%;
-}
+/*.small {*/
+/*    width: 40%;*/
+/*    height: 40%;*/
+/*}*/
 
 
 .title-container {
+    width: 100%;
     border: 2px solid var(--background-color);
     box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
     margin-bottom: 20px;
@@ -64,6 +127,24 @@
     line-height: 1;
     margin: 6px 0;
 }
+
+/* Error*/
+.error-messages {
+    display: flex;
+    justify-content: center;
+}
+
+.error-messages .error {
+    text-align: center;
+    color: var(--text-error);
+    font-size: 0.9em;
+}
+
+.pass_done {
+    text-align: center;
+    margin-top: 25%;
+}
+
 
 #errorsSupplierContainer,
 #errorsSupplierEditContainer,

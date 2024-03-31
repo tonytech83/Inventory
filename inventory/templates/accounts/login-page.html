@@ -3,54 +3,56 @@
 {% block main_content %}
 
     <!-- Forms container-->
-    <div class="backdrop"></div>
+    <div class="backdrop nojs"></div>
 
-    <div class="login-page">
-        <form method="POST" action="{% url 'login-user' %}">
+        <div class="login-page">
+            <form class="login-form" action="{% url 'login-user' %}" method="POST" >
 
-            {% csrf_token %}
+                {% csrf_token %}
 
-            <div class="title-container">
-                <h4 class="login-title">Log In</h4>
-            </div>
+                <div class="title-container">
+                    <h4 class="login-title">Log In</h4>
+                </div>
 
-            <h3 style="text-align: center;">Welcome to IT Inventory</h3>
+                <h3 style="text-align: center;">Welcome to IT Inventory</h3>
 
-            <div class="inputs">
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="inputGroup-sizing-default">Email</span>
-                    <input type="email" id="id_username" name="username" class="form-control"
-                           aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
-                           placeholder="Provide your email address.">
+                <div class="inputs">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Email</span>
+                        <input type="email" id="id_username" name="username" class="form-control"
+                               aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+                               placeholder="Provide your email address.">
+                    </div>
+
+
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Password</span>
+                        <input type="password" id="id_password" name="password" class="form-control"
+                               aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+                               placeholder="Enter your password.">
+                    </div>
+
+                </div>
+
+                <div class="error-messages">
+                    {% if form.non_field_errors %}
+                        {% for error in form.non_field_errors %}
+                            <p class="error">{{ error }}</p>
+                        {% endfor %}
+                    {% endif %}
                 </div>
 
 
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="inputGroup-sizing-default">Password</span>
-                    <input type="password" id="id_password" name="password" class="form-control"
-                           aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
-                           placeholder="Enter your password.">
+                <div class="button-container">
+                    <div class="control-buttons"></div>
+                    <div class="action-buttons ">
+                        <button class="reset-button-style button btn-create">Log In</button>
+                        <a class="button btn-download" href="{% url 'register-user' %}">SignUp</a>
+                        <a class="button btn-cancel" href="{% url 'dashboard' %}">Cancel</a>
+                    </div>
                 </div>
+            
+            </form>
+        </div>
 
-            </div>
-
-            <div class="error-messages">
-                {% if form.non_field_errors %}
-                    {% for error in form.non_field_errors %}
-                        <p class="error">{{ error }}</p>
-                    {% endfor %}
-                {% endif %}
-            </div>
-
-
-            <div class="button-container">
-                <div class="control-buttons"></div>
-                <div class="action-buttons ">
-                    <button class="reset-button-style button btn-create">Log In</button>
-                    <a class="button btn-download" href="{% url 'register-user' %}">Sign Up</a>
-                    <a class="button btn-cancel" href="{% url 'dashboard' %}">Cancel</a>
-                </div>
-            </div>
-        </form>
-    </div>
 {% endblock %}

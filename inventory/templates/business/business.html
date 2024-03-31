@@ -38,16 +38,49 @@
     {% include 'business/partials/business-stats.html' %}
     <!-- End Stats -->
 
-    <!-- Handsontable data container -->
-    {% if not has_devices %}
-        <h4 style="margin: auto;">No devices.</h4>
-    {% else %}
-        <div id="data-container" data-devices='{{ devices_json|safe }}'></div>
-    {% endif %}
+    <div class="business-container">
 
-    <!-- Handsontable JS Script-->
-    <script src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>
-    <script src="{% static 'js/device-handsontable.js' %}"></script>
+        <!-- Handsontable data container -->
+        {% if not has_devices %}
+            <h4 style="margin: auto; height: 64vh">No devices.</h4>
+        {% else %}
+            <div id="data-container" data-devices='{{ devices_json|safe }}'></div>
+        {% endif %}
+
+        <!-- Handsontable JS Script-->
+        <script src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>
+        <script src="{% static 'js/device-handsontable.js' %}"></script>
+
+        <div class="button-container">
+            {% if request.user.pk == object.owner_id %}
+                <div class="control-buttons">
+                    <button class="reset-button-style button btn-download" id="export-file">Download CSV</button>
+                </div>
+                <div class="action-buttons">
+                    <a class="button btn-create" type="button" onclick="showCreateForm()">Create device</a>
+                    <button class="button btn-download" onclick="showUploadForm({{ object.pk }})">Import devices
+                    </button>
+                    <a class="button btn-edit" type="button"
+                       data-business-id="{{ business.id }}"
+                       data-business-name="{{ business.business_name }}"
+                       data-business-country="{{ business.country }}"
+                       data-business-is-visible="{{ business.is_visible }}"
+                       onclick="showEditBusinessForm(
+                       this.getAttribute('data-business-id'),
+                       this.getAttribute('data-business-name'),
+                       this.getAttribute('data-business-country'),
+                       this.getAttribute('data-business-is-visible'))">Edit
+                        Business</a>
+                </div>
+            {% else %}
+                <div class="control-buttons">
+                    <button class="reset-button-style button btn-download" id="export-file">Download CSV</button>
+                </div>
+            {% endif %}
+
+        </div>
+
+    </div>
 
     <!-- Devices CRUD script -->
     <script type="module" src="{% static 'js/device-crud.js' %}"></script>
@@ -57,35 +90,6 @@
 
     <!-- List suppliers for device creation form -->
     <script src="{% static 'js/list-suppliers.js' %}"></script>
-
-
-    <div class="button-container">
-        {% if request.user.pk == object.owner_id %}
-            <div class="control-buttons">
-                <button class="reset-button-style button btn-download" id="export-file">Download CSV</button>
-            </div>
-            <div class="action-buttons">
-                <a class="button btn-create" type="button" onclick="showCreateForm()">Create device</a>
-                <button class="button btn-download" onclick="showUploadForm({{ object.pk }})">Import devices</button>
-                <a class="button btn-edit" type="button"
-                   data-business-id="{{ business.id }}"
-                   data-business-name="{{ business.business_name }}"
-                   data-business-country="{{ business.country }}"
-                   data-business-is-visible="{{ business.is_visible }}"
-                   onclick="showEditBusinessForm(
-                       this.getAttribute('data-business-id'),
-                       this.getAttribute('data-business-name'),
-                       this.getAttribute('data-business-country'),
-                       this.getAttribute('data-business-is-visible'))">Edit
-                    Business</a>
-            </div>
-        {% else %}
-            <div class="control-buttons">
-                <button class="reset-button-style button btn-download" id="export-file">Download CSV</button>
-            </div>
-        {% endif %}
-
-    </div>
 
     <!-- Business CRUD scripts -->
     <script type="module" src="{% static 'js/business-crud.js' %}"></script>
