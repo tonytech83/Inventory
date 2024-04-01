@@ -5,10 +5,12 @@ from rest_framework.permissions import IsAuthenticated
 
 from django.views import generic as views
 from django.contrib.auth import mixins as auth_mixins
+from django.db import IntegrityError
 
 from inventory.business.models import Business
 from inventory.business.serializers import BusinessSerializer
 from inventory.business.utils import prepare_device_list, filter_devices_queryset
+from inventory.core.utils import catches_exception
 from inventory.organization.models import Organization
 from inventory.suppliers.models import Supplier
 
@@ -51,8 +53,20 @@ class CreateBusinessApiView(api_views.CreateAPIView):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user, organization=Organization.objects.first())
 
+    def post(self, request, *args, **kwargs):
+        try:
+            return super().post(request, *args, **kwargs)
+        except IntegrityError as e:
+            catches_exception(e)
+
 
 class UpdateBusinessApiView(api_views.UpdateAPIView):
     queryset = Business.objects.all()
     serializer_class = BusinessSerializer
     permission_classes = [IsAuthenticated]
+
+    def update(self, request, *args, **kwargs):
+        try:
+            return super().update(request, *args, **kwargs)
+        except IntegrityError as e:
+            catches_exception(e)

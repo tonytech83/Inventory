@@ -44,6 +44,32 @@ function hideBusinessCreateForm() {
     document.querySelector('.backdrop').style.display = 'none';
 }
 
+function displayErrors(errors, containerId) {
+    const errorsContainer = document.getElementById(containerId);
+    errorsContainer.innerHTML = '';
+
+    errors.message.forEach(msg => {
+        const errorElement = document.createElement('p');
+
+        let key = (Object.keys(msg))[0];
+        let message = msg[key][0]
+
+        if (key === 'business_name') {
+            key = 'Business name'
+        } else {
+            key = 'Country'
+        }
+
+        console.log(message)
+
+        errorElement.textContent = `${key} - ${message}`;
+        errorElement.classList.add('error-message');
+        errorsContainer.appendChild(errorElement);
+    });
+
+    errorsContainer.style.display = 'block';
+}
+
 // Create
 document.addEventListener('DOMContentLoaded', function () {
     const createForm = document.getElementById('BusinessCreateForm');
@@ -65,13 +91,31 @@ document.addEventListener('DOMContentLoaded', function () {
                 },
                 body: formData,
             })
-                .then(response => response.json())
+                .then(response => {
+                    const contentType = response.headers.get("Content-Type");
+                    if (!response.ok) {
+                        if (contentType && contentType.indexOf("application/json") !== -1) {
+                            // Parse response to JSON
+                            return response.json().then(data => Promise.reject(data));
+                        } else {
+                            // Non-JSON response, treat as text
+                            return response.text().then(text => Promise.reject(text));
+                        }
+                    }
+                    return response.json();
+                })
                 .then(data => {
                     console.log('Success:', data);
+                    hideBusinessCreateForm();
                     window.location.reload();
                 })
                 .catch(error => {
-                    console.error('Error:', error);
+                    if (typeof error === 'string' || typeof error === 'object') {
+                        displayErrors({message: [error]}, 'errorsContainer');
+                    } else {
+                        console.error('Error:', error);
+                        displayErrors({message: ["JS error"]}, 'errorsContainer');
+                    }
                 });
         });
     }
@@ -102,19 +146,30 @@ document.addEventListener('DOMContentLoaded', function () {
                 body: JSON.stringify(Object.fromEntries(formData))
             })
                 .then(response => {
+                    const contentType = response.headers.get("Content-Type");
                     if (!response.ok) {
-                        throw new Error('Network response was not ok');
+                        if (contentType && contentType.indexOf("application/json") !== -1) {
+                            // Parse response to JSON
+                            return response.json().then(data => Promise.reject(data));
+                        } else {
+                            // Non-JSON response, treat as text
+                            return response.text().then(text => Promise.reject(text));
+                        }
                     }
                     return response.json();
                 })
                 .then(data => {
                     console.log('Success:', data);
-                    document.getElementById('businessEditFormContainer').style.display = 'none';
+                    hideBusinessForm();
                     window.location.reload();
                 })
-                .catch((error) => {
-                    console.error('Error:', error);
-
+                .catch(error => {
+                    if (typeof error === 'string' || typeof error === 'object') {
+                        displayErrors({message: [error]}, 'errorsEditBusinessContainer');
+                    } else {
+                        console.error('Error:', error);
+                        displayErrors({message: ["JS error"]}, 'errorsEditBusinessContainer');
+                    }
                 });
         });
     }

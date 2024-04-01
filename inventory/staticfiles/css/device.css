@@ -36,7 +36,8 @@
 }
 
 #errorsContainer,
-#errorsEditContainer {
+#errorsEditContainer,
+#errorsEditBusinessContainer {
     width: 100%;
     text-align: center;
     color: red;
