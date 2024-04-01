@@ -15,6 +15,7 @@ from inventory.organization.models import Organization
 from inventory.suppliers.models import Supplier
 
 
+# auth_mixins.LoginRequiredMixin
 class BusinessView(auth_mixins.LoginRequiredMixin, views.DetailView):
     template_name = 'business/business.html'
 

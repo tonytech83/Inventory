@@ -1,4 +1,27 @@
 /* ---------------------
+  Dashboard not logged in
+------------------------ */
+.dashboard-container {
+    height: 85vh;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: auto;
+    justify-content: space-between;
+    padding: 5% 0;
+}
+
+.mySlides {
+    display:none;
+    border: 2px solid var(--background-color);
+    padding: 20px;
+}
+.w3-left, .w3-right, .w3-badge {cursor:pointer}
+.w3-badge {height:13px;width:13px;padding:0}
+
+
+
+/* ---------------------
         Table
 ------------------------ */
 .dashboard-table {
