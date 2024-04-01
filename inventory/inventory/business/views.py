@@ -1,19 +1,19 @@
 import json
 
 from rest_framework import generics as api_views
+from rest_framework.permissions import IsAuthenticated
 
 from django.views import generic as views
-from rest_framework.permissions import IsAuthenticated
+from django.contrib.auth import mixins as auth_mixins
 
 from inventory.business.models import Business
 from inventory.business.serializers import BusinessSerializer
 from inventory.business.utils import prepare_device_list, filter_devices_queryset
 from inventory.organization.models import Organization
-
 from inventory.suppliers.models import Supplier
 
 
-class BusinessView(views.DetailView):
+class BusinessView(auth_mixins.LoginRequiredMixin, views.DetailView):
     template_name = 'business/business.html'
 
     def get_queryset(self):

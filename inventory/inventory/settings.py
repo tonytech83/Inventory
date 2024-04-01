@@ -160,6 +160,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts.InventoryUser'
 
+LOGIN_URL = 'login-user'
+
 LOGOUT_REDIRECT_URL = 'dashboard'
 LOGIN_REDIRECT_URL = 'home-page'
 
