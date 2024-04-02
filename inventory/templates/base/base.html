@@ -30,17 +30,14 @@
 
 
 </div>
-{# define the logout URL using a data-* attribute on an HTML element, which can then be accessed by your JavaScript #}
-<div id="logout-config" data-logout-url="{% url 'logout-user' %}" style="display:none;"></div>
 
-<!-- JavaScript Libraries Start -->
-{% include 'base/partials/js.html' %}
+<!-- Scripts -->
+{% include 'base/partials/js-scripts.html' %}
 
-
-<!-- Charts jquery -->
+{#<!-- Charts jquery -->#}
 <script>$(document).ready(function () {
     {% block jquery %}{% endblock %}
- })</script>
+}) </script>
 
 </body>
 </html>

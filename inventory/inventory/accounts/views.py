@@ -1,5 +1,5 @@
-from django.contrib.auth import views as auth_views, get_user_model
-from django.shortcuts import get_object_or_404, render
+from django.contrib.auth import views as auth_views, get_user_model, logout
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse_lazy
 from django.views import generic as views
 
@@ -34,8 +34,10 @@ class LoginView(auth_views.LoginView):
             return super().get_success_url()
 
 
-class LogoutView(auth_views.LogoutView):
-    pass
+def logout_user(request):
+    logout(request)
+
+    return redirect('dashboard')
 
 
 class RegisterUserView(views.CreateView):

@@ -36,8 +36,14 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3"></script>
- 
-<!-- Custom js scripts -->
-<script src="{% static 'js/logout.js' %}"></script>
 
+<!-- Custom js scripts -->
+<script>
+    var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'));
+    var dropdownList = dropdownElementList.map(function (dropdownToggleEl) {
+        return new bootstrap.Dropdown(dropdownToggleEl);
+    });
+</script>
+
+{#<script src="{% static 'js/logout.js' %}"></script>#}
 

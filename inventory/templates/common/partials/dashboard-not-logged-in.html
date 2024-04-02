@@ -1,24 +1,49 @@
 {% load static %}
-<div class="dashboard-container">
-    <div class="w3-container">
-        <h2>Welcome to IT Inventory web application</h2>
-        <p>This software was created to assist my colleagues in making their work easier.</p>
+<div class="container">
+    <div class="dashboard-container">
+        <div class="w3-container">
+            <h1>Welcome to IT Inventory web application</h1>
+            <h4>This software was created to assist my colleagues in making their work easier.</h4>
+        </div>
+
+        <div class="w3-content w3-display-container">
+            <img class="mySlides" src="{% static 'img/pic_1.jpg' %}">
+            <img class="mySlides" src="{% static 'img/pic_2.jpg' %}">
+            <img class="mySlides" src="{% static 'img/pic_3.jpg' %}">
+            <img class="mySlides" src="{% static 'img/pic_4.jpg' %}">
+            <img class="mySlides" src="{% static 'img/pic_5.jpg' %}">
+
+            <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+            <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
+        </div>
+
+        <div>
+            <h4>You can start using the application, you just need to register.</h4>
+        </div>
+
     </div>
-
-    <div class="w3-content w3-display-container">
-        <img class="mySlides" src="{% static 'img/pic_1.jpg' %}" style="width:100%">
-        <img class="mySlides" src="{% static 'img/pic_2.jpg' %}" style="width:100%">
-        <img class="mySlides" src="{% static 'img/pic_3.jpg' %}" style="width:100%">
-        <img class="mySlides" src="{% static 'img/pic_4.jpg' %}" style="width:100%">
-        <img class="mySlides" src="{% static 'img/pic_5.jpg' %}" style="width:100%">
-        
-        <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
-        <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
-    </div>
-
-    <div>
-        <h4>You can start using the application, you just need to register.</h4>
-    </div>
-
-
 </div>
+
+<script>
+    let slideIndex = 1;
+    showDivs(slideIndex);
+
+    function plusDivs(n) {
+        showDivs(slideIndex += n);
+    }
+
+    function showDivs(n) {
+        let i;
+        let x = document.getElementsByClassName("mySlides");
+        if (n > x.length) {
+            slideIndex = 1
+        }
+        if (n < 1) {
+            slideIndex = x.length
+        }
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        x[slideIndex - 1].style.display = "block";
+    }
+</script>

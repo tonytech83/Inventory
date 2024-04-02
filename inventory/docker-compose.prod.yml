@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  postgres_db:
+    image: postgres:latest
+    container_name: postgresql_container
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres123
+      POSTGRES_DB: inventory_db
+#    volumes:
+#      - postgres_data:/var/lib/postgresql/data
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx_container
+    restart: always
+    ports:
+      - '8000:80'
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - ./staticfiles:/var/www/static
+    depends_on:
+      - postgres_db

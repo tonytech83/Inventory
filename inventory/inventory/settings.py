@@ -10,7 +10,10 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:8000'
+]
 
 # Application definition
 
@@ -81,11 +84,11 @@ if DEBUG:
 else:
     DATABASES['default'] = {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'prod_db_name',
-        'USER': 'prod_db_user',
-        'PASSWORD': 'prod_db_password',
-        'HOST': 'prod_db_host',
-        'PORT': 'prod_db_port',
+        'NAME': 'inventory_db',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres123',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 
 # DATABASES = {
@@ -161,7 +164,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'accounts.InventoryUser'
 
 LOGIN_URL = 'login-user'
-
 LOGOUT_REDIRECT_URL = 'dashboard'
 LOGIN_REDIRECT_URL = 'home-page'
 

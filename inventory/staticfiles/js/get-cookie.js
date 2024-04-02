@@ -1,4 +1,4 @@
-// Function to retrieve CSRF token from cookies
+// Function to get CSRF token from cookies
 export function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
