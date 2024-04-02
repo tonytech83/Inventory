@@ -54,10 +54,11 @@
                     }
                 })
 
-                const ctx = document.getElementById('chart_one').getContext('2d');
-                const ctx2 = document.getElementById('chart_two').getContext('2d');
-                const ctx3 = document.getElementById('chart_three').getContext('2d');
-                const ctx4 = document.getElementById('bar').getContext('2d');
+                const ctx = document.getElementById('chart_one')
+                {#const ctx = document.getElementById('chart_one').getContext('2d');#}
+                const ctx2 = document.getElementById('chart_two')
+                const ctx3 = document.getElementById('chart_three')
+                const ctx4 = document.getElementById('bar')
                 let myChart = new Chart(ctx, {
                     type: 'pie',
                     data: {
