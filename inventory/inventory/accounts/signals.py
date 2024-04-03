@@ -1,8 +1,11 @@
+from celery import shared_task
 from django.contrib.auth import get_user_model, user_logged_in
+from django.core.mail import EmailMessage
 
 from django.db import transaction
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
+from django.template.loader import render_to_string
 
 from inventory import settings
 from inventory.accounts.models import Profile
@@ -31,21 +34,45 @@ def create_user_profile(sender, instance, created, **kwargs):
     if not created:
         return
 
-    send_successful_registration_email(instance)
+    # send_successful_registration_email(instance)
+    send_successful_registration_email_task.delay(instance.pk)
     Profile.objects.create(account=instance)
 
 
-def send_successful_registration_email(user):
+@shared_task
+def send_successful_registration_email_task(user_id):
+
+    user = UserModel.objects.get(pk=user_id)
+
     context = {
         'user': user,
     }
-    return send_the_email(
-        subject='Registration greetings!',
-        from_email=settings.EMAIL_HOST_USER,
-        recipient_list=(user.email,),
-        template_name='emails/email_greeting.html',
-        context=context,
+    subject = 'Registration greetings!'
+    message = render_to_string('emails/email_greeting.html', context)
+    from_email = settings.EMAIL_HOST_USER
+    recipient_list = [user.email]
+
+    email = EmailMessage(
+        subject=subject,
+        body=message,
+        from_email=from_email,
+        to=recipient_list
     )
+    email.content_subtype = 'html'
+    email.send()
+
+
+# def send_successful_registration_email(user):
+#     context = {
+#         'user': user,
+#     }
+#     return send_the_email(
+#         subject='Registration greetings!',
+#         from_email=settings.EMAIL_HOST_USER,
+#         recipient_list=(user.email,),
+#         template_name='emails/email_greeting.html',
+#         context=context,
+#     )
 
 
 @receiver(user_logged_in)
@@ -53,4 +80,3 @@ def set_first_login(sender, request, user, **kwargs):
     # Check if this is the first login
     if user.last_login is None:
         request.session['first_login'] = True
-
