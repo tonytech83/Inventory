@@ -10,6 +10,8 @@ class CreateOrganizationView(auth_mixins.LoginRequiredMixin, views.CreateView):
     template_name = 'organization/create-organization-page.html'
     form_class = OrganizationCreateForm
 
+    success_url = reverse_lazy('home-page')
+
     def get_template_names(self):
         user = self.request.user
         organization = Organization.objects.exists()
