@@ -31,21 +31,21 @@ def create_user_profile(sender, instance, created, **kwargs):
     if not created:
         return
 
-    # send_successful_registration_email(instance)
+    send_successful_registration_email(instance)
     Profile.objects.create(account=instance)
 
 
-# def send_successful_registration_email(user):
-#     context = {
-#         'user': user,
-#     }
-#     return send_the_email(
-#         subject='Registration greetings!',
-#         from_email=settings.EMAIL_HOST_USER,
-#         recipient_list=(user.email,),
-#         template_name='emails/email_greeting.html',
-#         context=context,
-#     )
+def send_successful_registration_email(user):
+    context = {
+        'user': user,
+    }
+    return send_the_email(
+        subject='Registration greetings!',
+        from_email=settings.EMAIL_HOST_USER,
+        recipient_list=(user.email,),
+        template_name='emails/email_greeting.html',
+        context=context,
+    )
 
 
 @receiver(user_logged_in)
