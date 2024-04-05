@@ -32,3 +32,18 @@
     gap: 20px;
     flex-wrap: wrap;
 }
+
+@media (max-height: 1080px) {
+    .business-stats .title-container h3 {
+        font-size: 18px;
+    }
+
+    .business-stats h5 {
+        font-size: 16px;
+    }
+
+    .business-stats .box {
+        height: 180px;
+        width: 230px;
+    }
+}

@@ -1,6 +1,5 @@
 @import "home.css";
 @import "nav.css";
-@import "content.css";
 @import "business-card.css";
 @import "device.css";
 @import "profile.css";
@@ -13,6 +12,7 @@
 @import "dashboard.css";
 @import "upload.css";
 @import "suppliers.css";
+@import "system-messages.css";
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
@@ -40,13 +40,14 @@ html, body {
 .site-container {
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* Make sure container takes up at least the height of the viewport */
+    min-height: 100vh;
 }
 
 .content {
-    flex: 1; /* Makes the content area grow to occupy the available space */
+    flex: 1;
+    padding: 20px;
     display: flex;
-    flex-direction: column; /* Optional: Depends on your layout */
+    flex-direction: column;
 }
 
 

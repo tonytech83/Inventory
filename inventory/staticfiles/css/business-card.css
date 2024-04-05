@@ -88,3 +88,19 @@
     margin: 0;
     font-size: 4em;
 }
+
+@media (max-height: 1080px) {
+    .business-card {
+        width: 180px;
+        height: 180px;
+        padding: 15px 15px;
+    }
+
+    .create-business {
+        background: green;
+    }
+
+    .business-link {
+        font-size: 1.2em;
+    }
+}

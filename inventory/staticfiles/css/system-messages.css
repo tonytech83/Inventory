@@ -1,9 +1,3 @@
-.content {
-    flex: 1;
-    padding: 20px;
-    height: 90vh;
-}
-
 .forbidden,
 .not-found {
     display: flex;

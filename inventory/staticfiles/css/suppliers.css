@@ -65,7 +65,7 @@
 .search-bar {
     position: relative;
     width: 20%;
-    margin-left: auto;
+    margin-right: auto;
     display: flex;
     align-items: center;
     border: 2px solid var(--background-color);
@@ -87,4 +87,20 @@
 .search-button {
     position: absolute;
     right: 10px;
+}
+
+@media (max-height: 1080px) {
+    .supplier-card {
+        display: flex;
+        flex-direction: column;
+        width: 220px;
+        height: 220px;
+        padding: 10px;
+        justify-content: space-between;
+    }
+
+    .supplier-card p {
+        margin-bottom: 8px;
+        font-size: 14px;
+    }
 }

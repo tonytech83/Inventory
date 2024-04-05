@@ -111,3 +111,22 @@ header {
         --bs-btn-focus-box-shadow: 0 0 0 .25rem rgba(255, 255, 255, .2);
     }
 }
+
+@media (max-height: 1080px) {
+    .link-item,
+    .link-item-link {
+        font-size: 18px;
+    }
+
+    .logo {
+        height: 40px;
+        width: 40px;
+    }
+
+    .initials {
+        width: 30px;
+        height: 30px;
+        font-size: 18px;
+
+    }
+}

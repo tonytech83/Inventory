@@ -41,12 +41,6 @@
     box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
 }
 
-/*.form-style {*/
-/*    width: auto;*/
-/*    position: absolute;*/
-/*    bottom: 20px;*/
-/*}*/
-
 .control-buttons {
     display: flex;
     gap: 5px;
@@ -123,4 +117,10 @@
 
 .btn-edit:hover {
     border: 2px solid var(--edit-border-hover);
+}
+
+@media (max-height: 1080px) {
+    .button {
+        font-size: 0.9em;
+    }
 }

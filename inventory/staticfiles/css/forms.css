@@ -108,12 +108,6 @@
     display: none; /* Hidden by default */
 }
 
-/*.small {*/
-/*    width: 40%;*/
-/*    height: 40%;*/
-/*}*/
-
-
 .title-container {
     width: 100%;
     border: 2px solid var(--background-color);
@@ -167,4 +161,66 @@
 #inputGroup-sizing-sm {
     color: black;
     font-weight: 500;
+}
+
+@media (max-height: 1080px) {
+    #editForm,
+    #createForm {
+        width: 80%;
+        height: 70%;
+    }
+
+    .login-page,
+    .register-page,
+    .profile-container,
+    .edit-profile,
+    .password-change,
+    .password_done,
+    #createBusinessForm,
+    #createSupplierForm,
+    #editSupplierForm,
+    #deleteSupplierForm,
+    #businessEditFormContainer,
+    #deleteDeviceForm,
+    .organization-create,
+    .organization-edit {
+        width: 40%;
+        height: 40%;
+
+        position: fixed; /* Position relative to the viewport */
+        top: 50%; /* Center vertically */
+        left: 50%; /* Center horizontally */
+        transform: translate(-50%, -50%); /* Adjust the centering */
+        z-index: 1000; /* Above the backdrop */
+        background-color: darkgrey; /* Ensure the form is visible against the backdrop */
+        padding: 20px; /* Add some padding */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow */
+    }
+
+    .inputs .input-group-text {
+        font-size: 14px !important;
+        padding: 3px 10px !important;
+    }
+
+    .inputs .form-control {
+        font-size: 14px !important;
+        padding: 3px 10px !important;
+    }
+
+    .login-form h3,
+    .register-page h3 {
+        font-size: 20px;
+    }
+
+    .title-container {
+        margin-bottom: 15px;
+    }
+
+    .title-container h4 {
+        font-size: 20px;
+    }
+
+    .title-container h3 {
+        font-size: 22px;
+    }
 }

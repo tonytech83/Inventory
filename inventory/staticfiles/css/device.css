@@ -2,8 +2,7 @@
 #deviceEditForm {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    /*gap: 20px;*/
+    justify-content: space-between;
 }
 
 .device-info,
@@ -43,5 +42,25 @@
     color: red;
 }
 
+@media (max-height: 1080px) {
+    #deviceCreateForm .input-group,
+    #deviceEditForm .input-group {
+        font-size: 14px !important;
+        margin-bottom: 8px !important;
+    }
 
+    #deviceCreateForm .input-group-text,
+    #deviceEditForm .input-group-text {
+        padding: 2px 4px;
+    }
 
+    #deviceEditForm .action-title,
+    #deviceCreateForm .action-title {
+        font-size: 20px;
+    }
+
+    #deviceEditForm .sub-title,
+    #deviceCreateForm .sub-title {
+        font-size: 16px;
+    }
+}

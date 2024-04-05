@@ -90,21 +90,6 @@
     box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
 }
 
-#bar {
-    height: 630px !important;
-}
-
-#chart_one,
-#chart_two,
-#chart_three {
-    width: 350px !important;
-    height: 350px !important;
-    display: block;
-    box-sizing: border-box;
-    gap: 20px;
-
-}
-
 .chart-legend {
     padding: 5px 25px;
     border: 2px solid var(--background-color);
@@ -124,6 +109,21 @@
     backface-visibility: hidden;
     perspective: 1000px;
 }
+
+#chart_one,
+#chart_two,
+#chart_three {
+    width: 350px !important;
+    height: 350px !important;
+    display: block;
+    box-sizing: border-box;
+    gap: 20px;
+}
+
+#bar {
+    height: 630px !important;
+}
+
 
 /* Shake animation */
 @keyframes shake {
@@ -159,4 +159,71 @@
     border-radius: 50%;
     display: inline-block;
     margin-right: 3px;
+}
+
+@media (max-height: 1080px) {
+
+    .dashboard-container {
+        margin: auto;
+        width: 60%;
+    }
+
+    .container .w3-container h1 {
+        font-size: 24px;
+    }
+
+    .container .w3-container h1 {
+        font-size: 24px;
+    }
+
+    .container .w3-container h4,
+    .start-using {
+        font-size: 18px;
+    }
+
+
+    .mySlides {
+        width: 100%;
+        display: none;
+        border: 2px solid var(--background-color);
+        padding: 20px 40px;
+        background: lightgrey;
+    }
+}
+
+@media (max-height: 1080px) {
+    .pie-carts {
+        justify-content: space-between;
+
+        gap: 20px;
+    }
+
+
+    .chart-legend {
+        width: 28%;
+        height: 25%;
+    }
+
+    #bar {
+        height: 500px !important;
+    }
+
+    .bar-chart {
+        margin-top: 15px;
+    }
+
+    #chart_one,
+    #chart_two,
+    #chart_three {
+        width: 250px !important;
+        height: 250px !important;
+        display: block;
+        box-sizing: border-box;
+        gap: 15px;
+    }
+
+    .dashboard-table {
+        height: auto;
+        font-size: 0.8em;
+    }
 }

@@ -223,3 +223,14 @@
     font-size: 0.6em;
     cursor: pointer;
 }
+
+@media (max-height: 1080px) {
+    #data-container {
+        height: 59vh !important;
+    }
+
+
+    .suppliers-container #data-container {
+        height: auto !important;
+    }
+}

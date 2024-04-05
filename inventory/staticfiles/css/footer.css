@@ -5,3 +5,10 @@
     box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
     color: var(--text-color);
 }
+
+@media (max-height: 1080px) {
+    .footer {
+        padding: 5px 0;
+        font-size: 16px;
+    }
+}
