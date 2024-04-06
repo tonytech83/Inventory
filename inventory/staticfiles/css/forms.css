@@ -47,7 +47,8 @@
 #businessEditFormContainer,
 #deleteDeviceForm,
 .organization-create,
-.organization-edit {
+.organization-edit,
+.report-edit {
     width: 50%;
     height: 40%;
 
@@ -77,7 +78,8 @@
 .organization-create-form-done,
 .supplier-create-form,
 .supplier-edit-form,
-.supplier-delete-form {
+.supplier-delete-form,
+.report-edit-form {
     height: 100%;
     display: flex;
     flex-direction: column;

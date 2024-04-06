@@ -11,11 +11,11 @@
 
             <h4 class="sub-title">Device</h4>
 
-            {% include 'devices/partials/device-create-edit-filed.html' with f_title='Hostname' f_type='text' f_id='editDeviceHostName' f_name='device_name' f_placeholder='Device hostname' %}
+            {% include 'devices/partials/device-create-edit-filed.html' with f_title='Hostname' f_type='text' f_id='editDeviceHostName' f_name='device_name' f_placeholder='Device hostname' f_class='important' %}
 
-            {% include 'devices/partials/device-create-edit-filed.html' with f_title='Domain' f_type='text' f_id='editDeviceDomain' f_name='domain' f_placeholder='Domain if existing' %}
+            {% include 'devices/partials/device-create-edit-filed.html' with f_title='Domain' f_type='text' f_id='editDeviceDomain' f_name='domain' f_placeholder='Domain if existing' f_class='' %}
 
-            {% include 'devices/partials/device-create-edit-filed.html' with f_title='Description' f_type='text' f_id='editDeviceDescription' f_name='description' f_placeholder='Short description' %}
+            {% include 'devices/partials/device-create-edit-filed.html' with f_title='Description' f_type='text' f_id='editDeviceDescription' f_name='description' f_placeholder='Short description' f_class='' %}
 
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text" id="inputGroup-sizing-sm">Status</span>
@@ -30,17 +30,17 @@
             </div>
             
 
-            {% include 'devices/partials/device-create-edit-filed.html' with f_title='Manufacturer' f_type='text' f_id='editDeviceManufacturer' f_name='manufacturer' f_placeholder='Device manufacturer' %}
+            {% include 'devices/partials/device-create-edit-filed.html' with f_title='Manufacturer' f_type='text' f_id='editDeviceManufacturer' f_name='manufacturer' f_placeholder='Device manufacturer' f_class='' %}
 
-            {% include 'devices/partials/device-create-edit-filed.html' with f_title='Model' f_type='text' f_id='editDeviceModel' f_name='model' f_placeholder='Device model' %}
+            {% include 'devices/partials/device-create-edit-filed.html' with f_title='Model' f_type='text' f_id='editDeviceModel' f_name='model' f_placeholder='Device model' f_class='' %}
 
-            {% include 'devices/partials/device-create-edit-filed.html' with f_title='IP Address' f_type='text' f_id='editDeviceIpAddress' f_name='ip_address' f_placeholder='Device IP address' %}
+            {% include 'devices/partials/device-create-edit-filed.html' with f_title='IP Address' f_type='text' f_id='editDeviceIpAddress' f_name='ip_address' f_placeholder='Device IP address' f_class='' %}
 
-            {% include 'devices/partials/device-create-edit-filed.html' with f_title='IP Address Second' f_type='text' f_id='editDeviceIpAddressSecondary' f_name='ip_address_sec' f_placeholder='Device second IP address' %}
+            {% include 'devices/partials/device-create-edit-filed.html' with f_title='IP Address Second' f_type='text' f_id='editDeviceIpAddressSecondary' f_name='ip_address_sec' f_placeholder='Device second IP address' f_class='' %}
 
-            {% include 'devices/partials/device-create-edit-filed.html' with f_title='IP Address Second' f_type='text' f_id='editDeviceOperatingSystem' f_name='operating_system' f_placeholder='Device second IP address' %}
+            {% include 'devices/partials/device-create-edit-filed.html' with f_title='IP Address Second' f_type='text' f_id='editDeviceOperatingSystem' f_name='operating_system' f_placeholder='Device second IP address' f_class='' %}
 
-            {% include 'devices/partials/device-create-edit-filed.html' with f_title='Building' f_type='text' f_id='editDeviceBuilding' f_name='building' f_placeholder='Building / Location of device' %}
+            {% include 'devices/partials/device-create-edit-filed.html' with f_title='Building' f_type='text' f_id='editDeviceBuilding' f_name='building' f_placeholder='Building / Location of device' f_class='' %}
 
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text" id="inputGroup-sizing-sm">Category</span>
@@ -94,9 +94,9 @@
                 </select>
             </div>
 
-            {% include 'devices/partials/device-create-edit-filed.html' with f_title='Serial Number' f_type='text' f_id='editDeviceSerialNumber' f_name='serial_number' f_placeholder='Device unique serial number' %}
+            {% include 'devices/partials/device-create-edit-filed.html' with f_title='Serial Number' f_type='text' f_id='editDeviceSerialNumber' f_name='serial_number' f_placeholder='Device unique serial number' f_class='important' %}
 
-            {% include 'devices/partials/device-create-edit-filed.html' with f_title='Owner' f_type='text' f_id='editDeviceOwnerName' f_name='owner_name' f_placeholder='Person who use / own device' %}
+            {% include 'devices/partials/device-create-edit-filed.html' with f_title='Owner' f_type='text' f_id='editDeviceOwnerName' f_name='owner_name' f_placeholder='Person who use / own device' f_class='' %}
 
         </div>
 
@@ -104,20 +104,20 @@
 
             <h4 class="sub-title">Support</h4>
 
-            {% include 'devices/partials/device-create-edit-filed.html' with f_title='Support Model' f_type='text' f_id='editDeviceSupportModel' f_name='support_model' f_placeholder='Short desc of device support model' %}
+            {% include 'devices/partials/device-create-edit-filed.html' with f_title='Support Model' f_type='text' f_id='editDeviceSupportModel' f_name='support_model' f_placeholder='Short desc of device support model' f_class='' %}
 
-            {% include 'devices/partials/device-create-edit-filed.html' with f_title='PO Number' f_type='text' f_id='editDevicePurchaseOrderNumber' f_name='purchase_order_number' f_placeholder='Purchase order number' %}
+            {% include 'devices/partials/device-create-edit-filed.html' with f_title='PO Number' f_type='text' f_id='editDevicePurchaseOrderNumber' f_name='purchase_order_number' f_placeholder='Purchase order number' f_class='' %}
 
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text" id="inputGroup-sizing-sm">Invoice Image</span>
                 <input type="file" id="editDeviceInvoiceImage" name="invoice_img" class="form-control">
             </div>
 
-            {% include 'devices/partials/device-create-edit-filed.html' with f_title='Start Of Support' f_type='date' f_id='editDeviceStartOfSupport' f_name='sos' f_placeholder='' %}
+            {% include 'devices/partials/device-create-edit-filed.html' with f_title='Start Of Support' f_type='date' f_id='editDeviceStartOfSupport' f_name='sos' f_placeholder='' f_class='' %}
 
-            {% include 'devices/partials/device-create-edit-filed.html' with f_title='End Of Support' f_type='date' f_id='editDeviceEndOfSupport' f_name='eos' f_placeholder='' %}
+            {% include 'devices/partials/device-create-edit-filed.html' with f_title='End Of Support' f_type='date' f_id='editDeviceEndOfSupport' f_name='eos' f_placeholder='' f_class='' %}
 
-            {% include 'devices/partials/device-create-edit-filed.html' with f_title='End Of Life' f_type='date' f_id='editDeviceEndOfLife' f_name='eol' f_placeholder='' %}
+            {% include 'devices/partials/device-create-edit-filed.html' with f_title='End Of Life' f_type='date' f_id='editDeviceEndOfLife' f_name='eol' f_placeholder='' f_class='' %}
 
             <a id="existingInvoiceLink" class="button btn-create" href="#" style="display:none;" download>Download
                 Invoice</a><br>
@@ -128,7 +128,7 @@
 
             <h4 class="sub-title">Risk</h4>
 
-            {% include 'devices/partials/device-create-edit-filed.html' with f_title='Process At Risk' f_type='text' f_id='editDeviceBusinessProcessAtRisk' f_name='business_processes_at_risk' f_placeholder='Short desc of device support model' %}
+            {% include 'devices/partials/device-create-edit-filed.html' with f_title='Process At Risk' f_type='text' f_id='editDeviceBusinessProcessAtRisk' f_name='business_processes_at_risk' f_placeholder='Short desc of device support model' f_class='' %}
 
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text" id="inputGroup-sizing-sm">Impact</span>

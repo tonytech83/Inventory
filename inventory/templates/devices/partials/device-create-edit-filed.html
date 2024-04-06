@@ -1,6 +1,8 @@
-<div class="input-group input-group-sm mb-3">
-    <span class="input-group-text" id="inputGroup-sizing-sm">{{ f_title }}</span>
-    <input type="{{ f_type }}" id="{{ f_id }}" name="{{ f_name }}" class="form-control"
-           aria-label="Sizing example input"
-           aria-describedby="inputGroup-sizing-sm" placeholder="{{ f_placeholder }}">
-</div>
+{% with full_class="input-group-text"|add:" "|add:f_class|default:"" %}
+    <div class="input-group input-group-sm mb-3">
+        <span class="{{ full_class }}" id="inputGroup-sizing-sm">{{ f_title }}</span>
+        <input type="{{ f_type }}" id="{{ f_id }}" name="{{ f_name }}" class="form-control"
+               aria-label="Sizing example input"
+               aria-describedby="inputGroup-sizing-sm" placeholder="{{ f_placeholder }}">
+    </div>
+{% endwith %}

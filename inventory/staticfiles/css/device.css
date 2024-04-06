@@ -34,6 +34,11 @@
     font-size: 1.2em;
 }
 
+/* color for Hostname ans Serial Number fields */
+.important {
+    color: red !important;
+}
+
 #errorsContainer,
 #errorsEditContainer,
 #errorsEditBusinessContainer {

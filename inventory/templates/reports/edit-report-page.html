@@ -1,0 +1,46 @@
+{% extends 'base/base.html' %}
+
+{% block main_content %}
+
+    <!-- Forms container-->
+    <div class="backdrop nojs"></div>
+
+    <div class="report-edit">
+        <form class="report-edit-form" action="{% url 'edit-report' %}" method="POST">
+
+            {% csrf_token %}
+
+            <div class="title-container">
+                <h4 class="login-title">Edit Report</h4>
+            </div>
+
+            <p style="text-align: center;">You can choose to disable the reports or change the day reports
+                generated. </p>
+
+            <div class="inputs">
+                <div class="form-check form-switch">
+                    <label class="form-check-label" for="turn_on" id="inputGroup-sizing-default">Turn on/off
+                        report</label>
+                    <input type="checkbox" id="turn_on" name="turn_on" class="form-check-input" role="switch"
+                           {% if object.turn_on %}checked{% endif %}>
+                </div>
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Day of week</span>
+                    {{ form.day_of_week }}
+                </div>
+
+            </div>
+
+            <div class="button-container">
+                <div class="control-buttons"></div>
+                <div class="action-buttons ">
+                    <button class="reset-button-style button btn-create" type="submit">Save</button>
+                    <a class="button btn-cancel" href="{% url 'home-page' %}">Cancel</a>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+{% endblock %}

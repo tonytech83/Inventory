@@ -1,3 +1,5 @@
+import time
+
 from celery import shared_task
 from django.contrib.auth import get_user_model, user_logged_in
 from django.core.mail import EmailMessage
@@ -9,14 +11,13 @@ from django.template.loader import render_to_string
 
 from inventory import settings
 from inventory.accounts.models import Profile
-from inventory.accounts.utils import send_the_email
+from inventory.reports.models import Report
 
 UserModel = get_user_model()
 
 
 @receiver(pre_save, sender=UserModel)
 def set_first_user_superuser(sender, instance, **kwargs):
-    # Use a transaction.atomic block to ensure thread safety
     with transaction.atomic():
 
         if not UserModel.objects.exists():
@@ -34,14 +35,13 @@ def create_user_profile(sender, instance, created, **kwargs):
     if not created:
         return
 
-    # send_successful_registration_email(instance)
+    profile = Profile.objects.create(account=instance)
     send_successful_registration_email_task.delay(instance.pk)
-    Profile.objects.create(account=instance)
+    Report.objects.create(profile=profile)
 
 
 @shared_task
 def send_successful_registration_email_task(user_id):
-
     user = UserModel.objects.get(pk=user_id)
 
     context = {
@@ -60,19 +60,6 @@ def send_successful_registration_email_task(user_id):
     )
     email.content_subtype = 'html'
     email.send()
-
-
-# def send_successful_registration_email(user):
-#     context = {
-#         'user': user,
-#     }
-#     return send_the_email(
-#         subject='Registration greetings!',
-#         from_email=settings.EMAIL_HOST_USER,
-#         recipient_list=(user.email,),
-#         template_name='emails/email_greeting.html',
-#         context=context,
-#     )
 
 
 @receiver(user_logged_in)

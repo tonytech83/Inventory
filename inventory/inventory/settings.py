@@ -24,13 +24,17 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'celery',
+    'django_celery_results',
+    'django_celery_beat',
+
 
     'inventory.devices',
     'inventory.business',
     'inventory.common',
     'inventory.accounts.apps.AccountsConfig',
     'inventory.suppliers',
-    "inventory.organization.apps.OrganizationConfig"
+    "inventory.organization.apps.OrganizationConfig",
+    "inventory.reports.apps.ReportsConfig"
 ]
 
 MIDDLEWARE = [
@@ -151,5 +155,18 @@ EMAIL_USE_TLS = False
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
+# CELERY_BROKER_URL = 'redis://localhost:6379/0'
+# CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+
+# Celery Configuration
 CELERY_BROKER_URL = 'redis://localhost:6379/0'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Europe/Sofia'
+
+# Stores tasks in django db
+CELERY_RESULT_BACKEND = 'django-db'
+
+# Celery beat settings
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
