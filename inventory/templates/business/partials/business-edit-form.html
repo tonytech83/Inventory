@@ -9,20 +9,10 @@
 
         <div class="inputs">
             <input type="hidden" id="editBusinessId" name="businessId">
-
-            <div class="input-group mb-3">
-                <span class="input-group-text" id="inputGroup-sizing-default">Business name</span>
-                <input type="text" id="editBusinessName" name="business_name" class="form-control"
-                       aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
-                       placeholder="Enter business name">
-            </div>
-
-            <div class="input-group mb-3">
-                <span class="input-group-text" id="inputGroup-sizing-default">Country</span>
-                <input type="text" id="editBusinessCountry" name="country" class="form-control"
-                       aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
-                       placeholder="Enter business name">
-            </div>
+            
+            {% include 'business/partials/business-create-edit-field.html' with f_title='Business name' f_type='text' f_id="editBusinessName" f_name='business_name' f_placeholder='Enter business name' %}
+            
+            {% include 'business/partials/business-create-edit-field.html' with f_title='Country' f_type='text' f_id="editBusinessCountry" f_name='country' f_placeholder='Enter the country where the business is located' %}
 
             <div class="form-check form-switch">
                 <span class="form-check-label" id="editBusinessIsVisible">Visibility</span>

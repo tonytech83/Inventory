@@ -77,7 +77,7 @@
                     <td>No Support</td>
                     <td>{% url 'business' pk=business.pk as business_url %}
                         <a href="
-                                
+
                                 {% if request.GET.no_support == 'true' %}{{ business_url }}{% else %}{{ business_url }}?no_support=true{% endif %}">
                             <span class="{% if request.GET.no_support == 'true' %}selected{% else %}not-selected{% endif %}">{% count_no_support_devices object %}</span>
                         </a>

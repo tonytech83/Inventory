@@ -8,29 +8,19 @@
         </div>
 
         <div class="inputs">
-            <div class="input-group mb-3">
-                <span class="input-group-text" id="inputGroup-sizing-default">Business name</span>
-                <input type="text" id="businessName" name="business_name" class="form-control"
-                       aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
-                       placeholder="Enter business name">
-            </div>
 
-            <div class="input-group mb-3">
-                <span class="input-group-text" id="inputGroup-sizing-default">Country</span>
-                <input type="text" id="businessCountry" name="country" class="form-control"
-                       aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
-                       placeholder="Enter the country where the business is located.">
-            </div>
+            {% include 'business/partials/business-create-edit-field.html' with f_title='Business name' f_type='text' f_id='businessName' f_name='business_name' f_placeholder='Enter business name' %}
+
+            {% include 'business/partials/business-create-edit-field.html' with f_title='Country' f_type='text' f_id='businessCountry' f_name='country' f_placeholder='Enter the country where the business is located' %}
 
             <div class="form-check form-switch">
                 <label class="form-check-label" for="businessIsVisible">Visibility</label>
                 <input type="checkbox" id="businessIsVisible" name="is_visible" class="form-check-input"
-                       aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
-                       placeholder="Enter the country where the business is located." checked>
+                       aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" checked>
             </div>
 
         </div>
-        
+
         <div id="errorsContainer" style="display: none;"></div>
 
         <div class="button-container form-style">

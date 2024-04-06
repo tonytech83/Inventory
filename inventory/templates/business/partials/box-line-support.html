@@ -1,8 +1,0 @@
-{% load business_tags %}
-<td>{{ support }}</td>
-<td>
-    {% url 'business' pk=business.pk as business_url %}
-    <a href="{% if request|get_query_param:query_param == 'true' %}{{ business_url }}{% else %}{{ business_url }}?{{ query_param }}=true{% endif %}">
-    <span class="{% if request.GET|get_query_param:query_param == 'true' %}selected{% else %}not-selected{% endif %}">{% count_lt_year_gt_six_month object %}</span>
-    </a>
-</td>
