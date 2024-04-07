@@ -1,11 +1,110 @@
+{% load static %}
+{% load business_tags %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>IT Inventory</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif
+        }
+    </style>
 </head>
 <body>
-    {{ user.email }}
-    {{ businesses.count }}
+
+<h2 style="width: 800px; margin: auto; ">Hello, {{ user.email }} !</h2>
+<br>
+
+<div class="owned-businesses">
+    {% for business in businesses %}
+        <div class="business-info-container"
+             style="width: 800px; margin: auto; border: 3px solid black; padding: 30px; background: #f3f3f4;">
+            <div class="title-container">
+                <h3 style="border: 3px solid black; padding: 2px 0; text-align: center; margin: 0; font-size: 22px; background: white;">{{ business.business_name }}</h3>
+            </div>
+
+            <table style="padding: 10px 15px 0 15px; width: 100%">
+                <tr>
+                    <td style="border-bottom: 1px solid black"><strong>Total devices</strong></td>
+                    <td style="text-align: right; border-bottom: 1px solid black">{{ business.device_set.count }}</td>
+                </tr>
+
+                <tr>
+                    <td style="border-bottom: 1px solid black"><strong>Not Reviewed</strong></td>
+                    <td style="text-align: right; border-bottom: 1px solid black">{% count_no_reviewed_devices business %}</td>
+                </tr>
+            </table>
+            <br>
+
+            <div class="title-container">
+                <h4 style="border: 2px solid black; padding: 2px 0 2px 10px;margin: 0; font-size: 18px; background: white;">Status</h4>
+            </div>
+            <table style="padding: 10px 15px 0 15px; width: 100%">
+                <tr>
+                    <td style="border-bottom: 1px solid black"><strong>In operation</strong></td>
+                    <td style="text-align: right; border-bottom: 1px solid black">{% count_by_status business status='In operation' %}</td>
+                </tr>
+                <tr>
+                    <td style="border-bottom: 1px solid black"><strong>Decommissioned</strong></td>
+                    <td style="text-align: right; border-bottom: 1px solid black">{% count_by_status business status='Decommissioned' %}</td>
+                </tr>
+                <tr>
+                    <td style="border-bottom: 1px solid black"><strong>Pending Setup</strong></td>
+                    <td style="text-align: right; border-bottom: 1px solid black">{% count_by_status business status='Pending Setup' %}</td>
+                </tr>
+                <tr>
+                    <td style="border-bottom: 1px solid black"><strong>Offline</strong></td>
+                    <td style="text-align: right; border-bottom: 1px solid black">{% count_by_status business status='Offline' %}</td>
+                </tr>
+                <tr>
+                    <td style="border-bottom: 1px solid black"><strong>Not defined yet</strong></td>
+                    <td style="text-align: right; border-bottom: 1px solid black">{% count_by_status business status='Not defined yet' %}</td>
+                </tr>
+                <tr>
+                    <td style="border-bottom: 1px solid black"><strong>Exception</strong></td>
+                    <td style="text-align: right; border-bottom: 1px solid black">{% count_by_status business status='Exception' %}</td>
+                </tr>
+            </table>
+            <br>
+
+            <div class="title-container">
+                <h4 style="border: 2px solid black; padding: 2px 0 2px 10px;margin: 0; font-size: 18px; background: white;">Support</h4>
+            </div>
+            <table style="padding: 10px 15px 0 15px; width: 100%">
+                <tr>
+                    <td style="border-bottom: 1px solid black"><strong>No Support</strong></td>
+                    <td style="text-align: right; border-bottom: 1px solid black">{% count_no_support_devices business %}</td>
+                </tr>
+                <tr>
+                    <td style="border-bottom: 1px solid black"><strong>3 to No support</strong></td>
+                    <td style="text-align: right; border-bottom: 1px solid black">{% count_lt_three_months_and_no_support business %}</td>
+                </tr>
+                <tr>
+                    <td style="border-bottom: 1px solid black"><strong>6 to 3 months</strong></td>
+                    <td style="text-align: right; border-bottom: 1px solid black">{% count_lt_six_gt_three_months business %}</td>
+                </tr>
+                <tr>
+                    <td style="border-bottom: 1px solid black"><strong>12 to 6 months</strong></td>
+                    <td style="text-align: right; border-bottom: 1px solid black">{% count_lt_year_gt_six_month business %}</td>
+                </tr>
+                <tr>
+                    <td style="border-bottom: 1px solid black"><strong>Good</strong></td>
+                    <td style="text-align: right; border-bottom: 1px solid black">{% count_devices_in_support business %}</td>
+                </tr>
+                <tr>
+                    <td style="border-bottom: 1px solid black"><strong>Unknown</strong></td>
+                    <td style="text-align: right; border-bottom: 1px solid black">{% count_devices_unknown_support business %}</td>
+                </tr>
+
+            </table>
+        
+        </div>
+        <br>
+        <br>
+
+    {% endfor %}
+</div>
 </body>
 </html>

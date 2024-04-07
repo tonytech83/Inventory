@@ -147,6 +147,8 @@ LOGIN_URL = reverse_lazy('login-user')
 LOGOUT_REDIRECT_URL = reverse_lazy('dashboard')
 LOGIN_REDIRECT_URL = reverse_lazy('home-page')
 
+
+# SMTP settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.abv.bg'
 EMAIL_PORT = 465
