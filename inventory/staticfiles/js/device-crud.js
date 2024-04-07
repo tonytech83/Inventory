@@ -108,6 +108,30 @@ function displayErrors(errors, containerId) {
 
         if (key === 'serial_number') {
             key = 'Serial Number'
+        } else if (key === 'purchase_order_number') {
+            key = 'PO number'
+        } else if (key === 'domain') {
+            key = 'Domain'
+        } else if (key === 'ip_address') {
+            key = 'IP Address'
+        } else if (key === 'manufacturer') {
+            key = 'Manufacturer'
+        }  else if (key === 'model') {
+            key = 'Model'
+        } else if (key === 'ip_address_sec') {
+            key = 'IP Address Second'
+        } else if (key === 'operating_system') {
+            key = 'Operating System'
+        } else if (key === 'building') {
+            key = 'Building'
+        } else if (key === 'business_processes_at_risk') {
+            key = 'Process At Risk'
+        } else if (key === 'support_model') {
+            key = 'support_model'
+        } else if (key === 'invoice_img') {
+            key = 'Invoice image'
+        } else if (key === 'owner_name') {
+            key = 'Owner'
         } else {
             key = 'Device Name'
         }
@@ -130,6 +154,8 @@ function submitDeviceForm() {
     const csrftoken = getCookie('csrftoken');
     const businessId = document.getElementById('businessId').value;
     formData.append('business', businessId);
+
+    console.log(formData)
 
     fetch(createDeviceUrl, {
         method: 'POST',
@@ -206,17 +232,6 @@ function submitEditForm() {
             window.location.reload();
         })
         .catch(error => {
-            // if (typeof error === 'object' ) {
-            //     console.log('Error is object')
-            // }
-            //
-            // console.log(typeof error)
-
-
-            // if (typeof error === 'object') {
-            //     // console.log(error.details)
-            //     displayErrors({message: [error]}, 'errorsEditContainer');
-            // } else
             console.log(error)
             if (typeof error === 'string' || typeof error === 'object') {
                 // Handle non-JSON errors, potentially parsing for known error messages
