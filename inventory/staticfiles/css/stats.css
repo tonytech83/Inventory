@@ -28,7 +28,8 @@ h5 {
     color: var(--text-color);
 }
 
-.total-devices:hover {
+.total-devices:hover,
+.not-reviewed:hover {
     background: lightgray;
     color: var(--background-color);
     transition: background 0.3s;
