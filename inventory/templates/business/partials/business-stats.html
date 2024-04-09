@@ -6,15 +6,15 @@
         <div class="table-location">
             <table>
                 <tr>
-                    <td>Business:</td>
+                    <td>Business</td>
                     <td>{{ object.business_name }}</td>
                 </tr>
                 <tr>
-                    <td>Country:</td>
+                    <td>Country</td>
                     <td>{{ object.country }}</td>
                 </tr>
                 <tr>
-                    <td>Owner:</td>
+                    <td>Owner</td>
                     <td>{{ object.owner.profile.full_name }}</td>
                 </tr>
             </table>
@@ -33,9 +33,8 @@
         <div class="table-location">
             <div class="table-location">
                 <h1>{% url 'business' pk=business.pk as business_url %}
-                    <a href="
-                           {% if request.GET.no_reviewed == 'true' %}{{ business_url }}{% else %}{{ business_url }}?no_reviewed=true{% endif %}">
-                            <span class="{% if request.GET.no_reviewed == 'true' %}selected{% else %}not-selected{% endif %}">{% count_no_reviewed_devices object %}</span>
+                    <a href="{% if request.GET.no_reviewed == 'true' %}{{ business_url }}{% else %}{{ business_url }}?no_reviewed=true{% endif %}">
+                        <span class="{% if request.GET.no_reviewed == 'true' %}selected{% else %}not-selected{% endif %}">{% count_no_reviewed_devices object %}</span>
                     </a></h1>
             </div>
         </div>
@@ -76,9 +75,7 @@
                 <tr class="box-row">
                     <td>No Support</td>
                     <td>{% url 'business' pk=business.pk as business_url %}
-                        <a href="
-
-                                {% if request.GET.no_support == 'true' %}{{ business_url }}{% else %}{{ business_url }}?no_support=true{% endif %}">
+                        <a href="{% if request.GET.no_support == 'true' %}{{ business_url }}{% else %}{{ business_url }}?no_support=true{% endif %}">
                             <span class="{% if request.GET.no_support == 'true' %}selected{% else %}not-selected{% endif %}">{% count_no_support_devices object %}</span>
                         </a>
                     </td>
@@ -86,9 +83,7 @@
                 <tr class="box-row">
                     <td>3 to No support</td>
                     <td>{% url 'business' pk=business.pk as business_url %}
-                        <a href="
-                                
-                                {% if request.GET.lt_three_months_and_no_support == 'true' %}{{ business_url }}{% else %}{{ business_url }}?lt_three_months_and_no_support=true{% endif %}">
+                        <a href="{% if request.GET.lt_three_months_and_no_support == 'true' %}{{ business_url }}{% else %}{{ business_url }}?lt_three_months_and_no_support=true{% endif %}">
                             <span class="{% if request.GET.lt_three_months_and_no_support == 'true' %}selected{% else %}not-selected{% endif %}">{% count_lt_three_months_and_no_support object %}</span>
                         </a>
                     </td>
@@ -96,9 +91,7 @@
                 <tr class="box-row">
                     <td>6 to 3 months</td>
                     <td>{% url 'business' pk=business.pk as business_url %}
-                        <a href="
-                                
-                                {% if request.GET.lt_six_gt_three_months == 'true' %}{{ business_url }}{% else %}{{ business_url }}?lt_six_gt_three_months=true{% endif %}">
+                        <a href="{% if request.GET.lt_six_gt_three_months == 'true' %}{{ business_url }}{% else %}{{ business_url }}?lt_six_gt_three_months=true{% endif %}">
                             <span class="{% if request.GET.lt_six_gt_three_months == 'true' %}selected{% else %}not-selected{% endif %}">{% count_lt_six_gt_three_months object %}</span>
                         </a>
                     </td>
@@ -107,9 +100,7 @@
                     <td>12 to 6 months</td>
                     <td>
                         {% url 'business' pk=business.pk as business_url %}
-                        <a href="
-                                
-                                {% if request.GET.lt_year_gt_six_month == 'true' %}{{ business_url }}{% else %}{{ business_url }}?lt_year_gt_six_month=true{% endif %}">
+                        <a href="{% if request.GET.lt_year_gt_six_month == 'true' %}{{ business_url }}{% else %}{{ business_url }}?lt_year_gt_six_month=true{% endif %}">
                             <span class="{% if request.GET.lt_year_gt_six_month == 'true' %}selected{% else %}not-selected{% endif %}">{% count_lt_year_gt_six_month object %}</span>
                         </a>
                     </td>
@@ -118,9 +109,7 @@
                     <td>Good</td>
                     <td>
                         {% url 'business' pk=business.pk as business_url %}
-                        <a href="
-                                
-                                {% if request.GET.count_devices_in_support == 'true' %}{{ business_url }}{% else %}{{ business_url }}?count_devices_in_support=true{% endif %}">
+                        <a href="{% if request.GET.count_devices_in_support == 'true' %}{{ business_url }}{% else %}{{ business_url }}?count_devices_in_support=true{% endif %}">
                             <span class="{% if request.GET.count_devices_in_support == 'true' %}selected{% else %}not-selected{% endif %}">{% count_devices_in_support object %}</span>
                         </a>
                     </td>
@@ -129,13 +118,12 @@
                     <td>Unknown</td>
                     <td>
                         {% url 'business' pk=business.pk as business_url %}
-                        <a href="
-                                {% if request.GET.count_devices_unknown_support == 'true' %}{{ business_url }}{% else %}{{ business_url }}?count_devices_unknown_support=true{% endif %}">
+                        <a href="{% if request.GET.count_devices_unknown_support == 'true' %}{{ business_url }}{% else %}{{ business_url }}?count_devices_unknown_support=true{% endif %}">
                             <span class="{% if request.GET.count_devices_unknown_support == 'true' %}selected{% else %}not-selected{% endif %}">{% count_devices_unknown_support object %}</span>
                         </a>
                     </td>
                 </tr>
-                
+
             </table>
         </div>
     </div>
@@ -147,8 +135,7 @@
                 <tr>
                     <td>Risk below 5</td>
                     <td>
-                        <a href="
-                                {% if request.GET.risk_below_five == 'true' %}{{ business_url }}{% else %}{{ business_url }}?risk_below_five=true{% endif %}">
+                        <a href="{% if request.GET.risk_below_five == 'true' %}{{ business_url }}{% else %}{{ business_url }}?risk_below_five=true{% endif %}">
                             <span class="{% if request.GET.risk_below_five == 'true' %}selected{% else %}not-selected{% endif %}">{% risk_below_five object %}</span>
                         </a>
                     </td>
@@ -156,8 +143,7 @@
                 <tr>
                     <td>Risk 5-10</td>
                     <td>
-                        <a href="
-                                {% if request.GET.between_five_and_ten == 'true' %}{{ business_url }}{% else %}{{ business_url }}?between_five_and_ten=true{% endif %}">
+                        <a href="{% if request.GET.between_five_and_ten == 'true' %}{{ business_url }}{% else %}{{ business_url }}?between_five_and_ten=true{% endif %}">
                             <span class="{% if request.GET.between_five_and_ten == 'true' %}selected{% else %}not-selected{% endif %}">{% between_five_and_ten object %}</span>
                         </a>
                     </td>
@@ -165,8 +151,7 @@
                 <tr>
                     <td>Risk above 10</td>
                     <td>
-                        <a href="
-                                {% if request.GET.above_ten == 'true' %}{{ business_url }}{% else %}{{ business_url }}?above_ten=true{% endif %}">
+                        <a href="{% if request.GET.above_ten == 'true' %}{{ business_url }}{% else %}{{ business_url }}?above_ten=true{% endif %}">
                             <span class="{% if request.GET.above_ten == 'true' %}selected{% else %}not-selected{% endif %}">{% above_ten object %}</span>
                         </a>
                     </td>
@@ -175,5 +160,5 @@
         </div>
     </div>
 
-    
+
 </div>

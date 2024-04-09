@@ -6,13 +6,13 @@ from rest_framework.permissions import IsAuthenticated
 from .serializers import SupplierSerializer
 
 from django.views import generic as views
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import mixins as auth_mixins
 
 from inventory.suppliers.models import Supplier
 from .utils import prepare_suppliers_list
 
 
-class SupplierListView(LoginRequiredMixin, views.ListView):
+class SupplierListView(auth_mixins.LoginRequiredMixin, views.ListView):
     model = Supplier
     template_name = 'suppliers/suppliers-list.html'
 
@@ -40,9 +40,10 @@ class SupplierListView(LoginRequiredMixin, views.ListView):
         return context
 
 
-class SupplierUpdateApiView(LoginRequiredMixin, api_views.UpdateAPIView):
+class SupplierUpdateApiView(api_views.UpdateAPIView):
     queryset = Supplier.objects.all()
     serializer_class = SupplierSerializer
+    permission_classes = [IsAuthenticated]
 
 
 class SupplierCreateApiView(api_views.CreateAPIView):
