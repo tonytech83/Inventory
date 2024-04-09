@@ -60,10 +60,3 @@ def send_successful_registration_email_task(user_id):
     )
     email.content_subtype = 'html'
     email.send()
-
-
-@receiver(user_logged_in)
-def set_first_login(sender, request, user, **kwargs):
-    # Check if this is the first login
-    if user.last_login is None:
-        request.session['first_login'] = True

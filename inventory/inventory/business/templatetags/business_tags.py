@@ -43,7 +43,7 @@ def count_lt_year_gt_six_month(business):
     today = now().date()
     six_months_from_now = today + timedelta(days=182)
     one_year_from_now = today + timedelta(days=365)
-    filter_query = Q(eos__gt=six_months_from_now) & Q(eos__lt=one_year_from_now)
+    filter_query = Q(eos__gte=six_months_from_now) & Q(eos__lt=one_year_from_now)
     return count_devices_by_filter(business, filter_query)
 
 
@@ -52,7 +52,7 @@ def count_lt_six_gt_three_months(business):
     today = now().date()
     six_months_from_now = today + timedelta(days=182)
     three_months_from_now = today + timedelta(days=90)
-    filter_query = Q(eos__gt=three_months_from_now) & Q(eos__lt=six_months_from_now)
+    filter_query = Q(eos__gte=three_months_from_now) & Q(eos__lt=six_months_from_now)
     return count_devices_by_filter(business, filter_query)
 
 
@@ -60,7 +60,7 @@ def count_lt_six_gt_three_months(business):
 def count_lt_three_months_and_no_support(business):
     today = now().date()
     three_months_from_now = today + timedelta(days=90)
-    filter_query = Q(eos__gt=today) & Q(eos__lt=three_months_from_now)
+    filter_query = Q(eos__gte=today) & Q(eos__lt=three_months_from_now)
     return count_devices_by_filter(business, filter_query)
 
 

@@ -1,12 +1,9 @@
-import random
-
 from django.http import FileResponse
 import openpyxl
 
 from django.conf import settings
 import os
 
-from django.db import IntegrityError
 from django.shortcuts import get_object_or_404
 
 from rest_framework.parsers import MultiPartParser, FormParser
@@ -17,12 +14,12 @@ from rest_framework import status
 from rest_framework.views import APIView
 
 from inventory.business.models import Business
-from inventory.core.utils import catches_exception
+
 from inventory.core.view_mixins import IsBusinessOwner
 
 from inventory.devices.models import Device
 from inventory.devices.serializers import CSVUploadSerializer, DeviceSerializer
-from inventory.devices.utils import  create_devices_form_upload
+from inventory.devices.utils import create_devices_form_upload
 
 
 class DeviceCreateAPIView(api_views.CreateAPIView):
@@ -41,23 +38,11 @@ class DeviceCreateAPIView(api_views.CreateAPIView):
         })
         return context
 
-    def post(self, request, *args, **kwargs):
-        try:
-            return super().post(request, *args, **kwargs)
-        except IntegrityError as e:
-            catches_exception(e)
-
 
 class DeviceUpdateApiView(api_views.UpdateAPIView):
     queryset = Device.objects.all()
     serializer_class = DeviceSerializer
     permission_classes = [IsBusinessOwner, IsAuthenticated]
-
-    def update(self, request, *args, **kwargs):
-        try:
-            return super().update(request, *args, **kwargs)
-        except IntegrityError as e:
-            catches_exception(e)
 
 
 class DeviceDeleteApiView(api_views.DestroyAPIView):

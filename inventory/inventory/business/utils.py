@@ -2,6 +2,8 @@ from datetime import timedelta
 from django.utils.timezone import now
 from django.db.models import ExpressionWrapper, F, fields
 
+from inventory.suppliers.models import Supplier
+
 
 def prepare_device_list(device_queryset):
     """
@@ -121,3 +123,15 @@ def filter_devices_queryset(self, business):
         ).filter(calculated_risk_score__gt=10)
 
     return device_queryset
+
+
+def prepare_suppliers_list(suppliers):
+    # suppliers = get_list_or_404(Supplier) if no suppliers through 404
+
+    return [{
+        "id": supplier.id,
+        "name": supplier.name,
+        "contact_name": supplier.contact_name,
+        "phone_number": supplier.phone_number,
+        "email": supplier.email,
+    } for supplier in suppliers]

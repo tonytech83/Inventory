@@ -1,5 +1,5 @@
 import random
-
+from datetime import date
 from inventory.devices.models import Device
 
 
@@ -28,6 +28,9 @@ def create_devices_form_upload(sheet, business):
                 owner_name=row[13].value,
                 support_model=row[14].value,
                 purchase_order_number=row[15].value,
+                sos=row[17].value if row[17].value else date.today(),
+                eos=row[18].value if row[18].value else date.today(),
+                eol=row[19].value if row[19].value else date.today(),
                 business_processes_at_risk=row[20].value,
                 impact=row[21].value if row[21].value else 1,
                 likelihood=row[22].value if row[22].value else 1,
