@@ -2,211 +2,6 @@
 {% load static %}
 {% load business_tags %}
 
-
-<!-- Charts -->
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        {% block jquery %}
-            const endpoint = '{% url "chart-data" %}';
-            let businessLabels = [];
-            let devices = [];
-            let colors = [];
-            let status_labels = [];
-            let status_data = [];
-            let support_labels = [];
-            let support_data = [];
-            let categories_data = [];
-            let category_labels = [];
-
-            $.ajax({
-                method: 'GET',
-                url: endpoint,
-                success: function (data) {
-                    businessLabels = data.labels;
-                    devices = data.devices;
-                    colors = data.colors;
-                    status_labels = data.status_labels;
-                    status_data = data.status_data;
-                    support_labels = data.support_labels;
-                    support_data = data.support_data;
-                    categories_data = data.categories_data;
-                    category_labels = data.category_labels
-
-
-                    setChart();
-                    createLegend(businessLabels, colors, 'legend_one');
-                    createLegend(status_labels, colors, 'legend_two')
-                    createLegend(support_labels, colors, 'legend_three')
-                },
-                error: function (error_data) {
-                    console.log('error');
-                    console.log(error_data);
-                }
-            });
-
-            function setChart() {
-
-                const dataset_categories = category_labels.map((label, idx) => {
-                    return {
-                        label: label,
-                        data: businessLabels.map(name => categories_data[name][idx] || 0),
-                        backgroundColor: 'rgba(' + (idx * 30 % 255) + ', ' + (idx * 60 % 255) + ', ' + (idx * 90 % 255) + ', 0.5)',
-                    }
-                })
-
-                const ctx = document.getElementById('chart_one')
-                {#const ctx = document.getElementById('chart_one').getContext('2d');#}
-                const ctx2 = document.getElementById('chart_two')
-                const ctx3 = document.getElementById('chart_three')
-                const ctx4 = document.getElementById('bar')
-                let myChart = new Chart(ctx, {
-                    type: 'pie',
-                    data: {
-                        labels: businessLabels,
-                        datasets: [{
-                            label: '# of Devices',
-                            data: devices,
-                            backgroundColor: colors,
-                        }]
-                    },
-                    options: {
-                        plugins: {
-                            title: {
-                                display: true,
-                                color: '#000',
-                                align: 'start',
-                                text: 'Devices per business',
-                                font: {
-                                    size: 22,
-                                }
-                            },
-                            legend: {
-                                display: false,
-                            },
-                            tooltip: {
-                                enabled: true,
-                                bodyFont: {
-                                    size: 18,
-                                },
-                                titleFont: {
-                                    size: 22,
-                                },
-                            }
-                        }
-                    }
-                });
-                let myChart2 = new Chart(ctx2, {
-                    type: 'pie',
-                    data: {
-                        labels: status_labels,
-                        datasets: [{
-                            label: '# of Devices',
-                            data: status_data,
-                            backgroundColor: colors,
-                        }]
-                    },
-                    options: {
-                        plugins: {
-                            title: {
-                                display: true,
-                                color: '#000',
-                                align: 'start',
-                                text: 'Devices by status',
-                                font: {
-                                    size: 22,
-                                }
-                            },
-                            legend: {
-                                display: false,
-                            },
-                            tooltip: {
-                                enabled: true,
-                                bodyFont: {
-                                    size: 18,
-                                },
-                                titleFont: {
-                                    size: 22,
-                                },
-                            }
-                        }
-                    }
-                });
-                let myChart3 = new Chart(ctx3, {
-                    type: 'pie',
-                    data: {
-                        labels: support_labels,
-                        datasets: [{
-                            label: '# of Devices',
-                            data: support_data,
-                            backgroundColor: colors,
-                        }]
-                    },
-                    options: {
-                        plugins: {
-                            title: {
-                                display: true,
-                                color: '#000',
-                                align: 'start',
-                                text: 'Devices by support',
-                                font: {
-                                    size: 22,
-                                }
-                            },
-                            legend: {
-                                display: false,
-                            },
-                            tooltip: {
-                                enabled: true,
-                                bodyFont: {
-                                    size: 18,
-                                },
-                                titleFont: {
-                                    size: 22,
-                                },
-                            }
-                        }
-                    }
-                });
-                let myChart4 = new Chart(ctx4, {
-                    type: 'bar',
-                    data: {
-                        labels: businessLabels,
-                        datasets: dataset_categories,
-                    },
-                    options: {
-                        plugins: {
-                            legend: {
-                                display: true,
-                            },
-                            tooltip: {
-                                enabled: true,
-                                bodyFont: {
-                                    size: 14,
-                                },
-                                titleFont: {
-                                    size: 16,
-                                },
-                            }
-                        }
-                    }
-                });
-            }
-
-            function createLegend(labels, colors, legend_number) {
-                const legendContainer = document.getElementById(`${legend_number}`);
-                legendContainer.innerHTML = '';
-
-                labels.forEach((name, idx) => {
-                    const color = colors[idx];
-                    const legendItem = document.createElement('div');
-                    legendItem.innerHTML = `<span class="legend-dot" style="background-color: ${color};"></span>${name}`;
-                    legendContainer.appendChild(legendItem);
-                });
-            }
-        {% endblock %}
-    });
-</script>
-
 {% block main_content %}
 
     <!-- Forms container-->
@@ -370,3 +165,207 @@
     <script src="{% static 'js/dashboard.js' %}"></script>
 
 {% endblock %}
+
+{% if request.user.is_authenticated %}
+    <!-- Charts script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            {% block jquery %}
+                const endpoint = '{% url "chart-data" %}';
+                let businessLabels = [];
+                let devices = [];
+                let colors = [];
+                let status_labels = [];
+                let status_data = [];
+                let support_labels = [];
+                let support_data = [];
+                let categories_data = [];
+                let category_labels = [];
+
+                $.ajax({
+                    method: 'GET',
+                    url: endpoint,
+                    success: function (data) {
+                        businessLabels = data.labels;
+                        devices = data.devices;
+                        colors = data.colors;
+                        status_labels = data.status_labels;
+                        status_data = data.status_data;
+                        support_labels = data.support_labels;
+                        support_data = data.support_data;
+                        categories_data = data.categories_data;
+                        category_labels = data.category_labels
+
+
+                        setChart();
+                        createLegend(businessLabels, colors, 'legend_one');
+                        createLegend(status_labels, colors, 'legend_two')
+                        createLegend(support_labels, colors, 'legend_three')
+                    },
+                    error: function () {
+                        console.log('403');
+                    }
+                });
+
+                function setChart() {
+
+                    const dataset_categories = category_labels.map((label, idx) => {
+                        return {
+                            label: label,
+                            data: businessLabels.map(name => categories_data[name][idx] || 0),
+                            backgroundColor: 'rgba(' + (idx * 30 % 255) + ', ' + (idx * 60 % 255) + ', ' + (idx * 90 % 255) + ', 0.5)',
+                        }
+                    })
+
+                    const ctx = document.getElementById('chart_one')
+                    const ctx2 = document.getElementById('chart_two')
+                    const ctx3 = document.getElementById('chart_three')
+                    const ctx4 = document.getElementById('bar')
+                    let myChart = new Chart(ctx, {
+                        type: 'pie',
+                        data: {
+                            labels: businessLabels,
+                            datasets: [{
+                                label: '# of Devices',
+                                data: devices,
+                                backgroundColor: colors,
+                            }]
+                        },
+                        options: {
+                            plugins: {
+                                title: {
+                                    display: true,
+                                    color: '#000',
+                                    align: 'start',
+                                    text: 'Devices per business',
+                                    font: {
+                                        size: 22,
+                                    }
+                                },
+                                legend: {
+                                    display: false,
+                                },
+                                tooltip: {
+                                    enabled: true,
+                                    bodyFont: {
+                                        size: 18,
+                                    },
+                                    titleFont: {
+                                        size: 22,
+                                    },
+                                }
+                            }
+                        }
+                    });
+                    let myChart2 = new Chart(ctx2, {
+                        type: 'pie',
+                        data: {
+                            labels: status_labels,
+                            datasets: [{
+                                label: '# of Devices',
+                                data: status_data,
+                                backgroundColor: colors,
+                            }]
+                        },
+                        options: {
+                            plugins: {
+                                title: {
+                                    display: true,
+                                    color: '#000',
+                                    align: 'start',
+                                    text: 'Devices by status',
+                                    font: {
+                                        size: 22,
+                                    }
+                                },
+                                legend: {
+                                    display: false,
+                                },
+                                tooltip: {
+                                    enabled: true,
+                                    bodyFont: {
+                                        size: 18,
+                                    },
+                                    titleFont: {
+                                        size: 22,
+                                    },
+                                }
+                            }
+                        }
+                    });
+                    let myChart3 = new Chart(ctx3, {
+                        type: 'pie',
+                        data: {
+                            labels: support_labels,
+                            datasets: [{
+                                label: '# of Devices',
+                                data: support_data,
+                                backgroundColor: colors,
+                            }]
+                        },
+                        options: {
+                            plugins: {
+                                title: {
+                                    display: true,
+                                    color: '#000',
+                                    align: 'start',
+                                    text: 'Devices by support',
+                                    font: {
+                                        size: 22,
+                                    }
+                                },
+                                legend: {
+                                    display: false,
+                                },
+                                tooltip: {
+                                    enabled: true,
+                                    bodyFont: {
+                                        size: 18,
+                                    },
+                                    titleFont: {
+                                        size: 22,
+                                    },
+                                }
+                            }
+                        }
+                    });
+                    let myChart4 = new Chart(ctx4, {
+                        type: 'bar',
+                        data: {
+                            labels: businessLabels,
+                            datasets: dataset_categories,
+                        },
+                        options: {
+                            plugins: {
+                                legend: {
+                                    display: true,
+                                },
+                                tooltip: {
+                                    enabled: true,
+                                    bodyFont: {
+                                        size: 14,
+                                    },
+                                    titleFont: {
+                                        size: 16,
+                                    },
+                                }
+                            }
+                        }
+                    });
+                }
+
+                function createLegend(labels, colors, legend_number) {
+                    const legendContainer = document.getElementById(`${legend_number}`);
+                    legendContainer.innerHTML = '';
+
+                    labels.forEach((name, idx) => {
+                        const color = colors[idx];
+                        const legendItem = document.createElement('div');
+                        legendItem.innerHTML = `<span class="legend-dot" style="background-color: ${color};"></span>${name}`;
+                        legendContainer.appendChild(legendItem);
+                    });
+                }
+            {% endblock %}
+        });
+    </script>
+{% endif %}

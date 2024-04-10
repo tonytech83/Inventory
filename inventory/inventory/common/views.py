@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 
 from django.views import generic as views
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -26,6 +27,8 @@ class DashboardView(views.ListView):
 
 
 class ChartData(APIView):
+    permission_classes = [IsAuthenticated]
+
     def get(self, request, format=None):
         business_names = [b.business_name for b in Business.objects.all()]
         devices_per_business = [b.device_set.count() for b in Business.objects.all()]
