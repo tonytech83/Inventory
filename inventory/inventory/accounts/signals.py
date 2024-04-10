@@ -1,7 +1,5 @@
-import time
-
 from celery import shared_task
-from django.contrib.auth import get_user_model, user_logged_in
+from django.contrib.auth import get_user_model
 from django.core.mail import EmailMessage
 
 from django.db import transaction

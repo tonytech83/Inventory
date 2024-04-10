@@ -2,8 +2,6 @@ from datetime import timedelta
 from django.utils.timezone import now
 from django.db.models import ExpressionWrapper, F, fields
 
-from inventory.suppliers.models import Supplier
-
 
 def prepare_device_list(device_queryset):
     """

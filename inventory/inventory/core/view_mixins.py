@@ -1,9 +1,7 @@
 from django.core.exceptions import PermissionDenied
-from django.shortcuts import get_object_or_404
-from rest_framework import status, permissions
-from rest_framework.response import Response
 
-from inventory.business.models import Business
+from rest_framework import permissions
+
 from inventory.devices.models import Device
 
 
@@ -11,6 +9,7 @@ class OwnerRequiredMixin:
     """
     Used when request user tried to modify foreign profile
     """
+
     def get_object(self, queryset=None):
         obj = super().get_object(queryset=queryset)
 
@@ -24,6 +23,7 @@ class IsBusinessOwner(permissions.BasePermission):
     """
     Used for CRUD operations for devices
     """
+
     def has_permission(self, request, view):
         business_id = request.data.get('business')
 
@@ -45,7 +45,3 @@ class IsBusinessOwner(permissions.BasePermission):
         a = 5
 
         return is_owner
-
-
-
-
