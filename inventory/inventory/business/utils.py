@@ -5,8 +5,19 @@ from django.db.models import ExpressionWrapper, F, fields
 
 def prepare_device_list(device_queryset):
     """
-    Receive a QuerySet and return it into list of dictionaries
+    Converts a queryset of device objects into a list of dictionaries containing detailed device information.
+
+    Each device in the queryset is transformed into a dictionary with key attributes such as device ID, name, domain,
+    etc. Supplier-related information is also included.
+
+    Args:
+        device_queryset (QuerySet): A Django QuerySet containing device objects that need to be processed.
+
+    Returns:
+        list of dict: A list where each element is a dictionary representing a device with all its attributes and
+        associated data extracted and formatted as described.
     """
+
     device_list = []
 
     for device in device_queryset:
@@ -46,6 +57,26 @@ def prepare_device_list(device_queryset):
 
 
 def filter_devices_queryset(self, business):
+    """
+    Filters a queryset of devices associated with a given business based on various criteria received via request parameters.
+
+    The function applies multiple filters on device status, review dates, support periods, and risk scores based on
+    criteria specified in the request's GET parameters. It includes date ranges for filtering devices needing review
+    or nearing the end of support, and calculates risk scores to filter by predefined risk thresholds.
+
+    Args:
+        business (Business): The business instance from which device data is to be filtered.
+
+    Returns:
+        QuerySet: A Django QuerySet containing devices that match the filtering criteria specified in the request.
+
+    Filtering includes:
+    - Device status such as 'In operation', 'Decommissioned', etc.
+    - Devices not reviewed in the last year.
+    - Devices with support ending within different future timeframes.
+    - Devices categorized by risk scores below 5, between 5 and 10, and above 10.
+    """
+
     device_queryset = business.device_set.all()
     filters = self.request.GET
 
@@ -58,7 +89,7 @@ def filter_devices_queryset(self, business):
     six_months_from_now = today + timedelta(days=182)
     three_months_from_now = today + timedelta(days=90)
 
-    # Status Filters
+    # Filters based on device status
     if 'in_operation' in filters:
         device_queryset = device_queryset.filter(status='In operation')
     if 'is_decommissioned' in filters:
@@ -72,11 +103,10 @@ def filter_devices_queryset(self, business):
     if 'is_exception' in filters:
         device_queryset = device_queryset.filter(status='Exception')
 
-    # Not Reviewed Filter
+    # Filters based on device review and support periods
     if 'no_reviewed' in filters:
         device_queryset = device_queryset.filter(updated_at__lte=one_year_ago)
 
-    # Support Filters
     if 'no_support' in filters:
         device_queryset = device_queryset.filter(eos__lt=now().date())
 
@@ -95,7 +125,7 @@ def filter_devices_queryset(self, business):
     if 'count_devices_unknown_support' in filters:
         device_queryset = device_queryset.filter(eos=None)
 
-    # Risk Filters
+    # Filters based on risk
     if 'risk_below_five' in filters:
         device_queryset = device_queryset.annotate(
             calculated_risk_score=ExpressionWrapper(
@@ -124,7 +154,9 @@ def filter_devices_queryset(self, business):
 
 
 def prepare_suppliers_list(suppliers):
-    # suppliers = get_list_or_404(Supplier) if no suppliers through 404
+    """
+    Prepare list of dictionaries with suppliers.
+    """
 
     return [{
         "id": supplier.id,

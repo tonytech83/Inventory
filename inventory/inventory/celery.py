@@ -14,7 +14,7 @@ app.config_from_object('django.conf:settings', namespace='CELERY')
 app.conf.beat_schedule = {
     'check-and-send-reports-daily': {
         'task': 'inventory.reports.tasks.check_and_send_reports',
-        'schedule': crontab(hour=8, minute=5),
+        'schedule': crontab(hour=9, minute=45),
     },
 }
 

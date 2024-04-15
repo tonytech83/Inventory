@@ -1,4 +1,3 @@
-
 from django.utils.timezone import now
 from datetime import timedelta
 
@@ -9,6 +8,15 @@ from inventory.devices.models import Device, Category
 
 
 def get_device_status_counts():
+    """
+    Aggregates and counts devices based on their status, ordering the counts in descending order.
+
+    Returns:
+        tuple: A tuple containing two elements:
+               - labels (list of str): The device statuses.
+               - data (list of int): The count of devices for each status.
+    """
+
     status_counts = Device.objects.values('status').annotate(total=Count('status')).order_by('-total')
 
     labels = [status['status'] for status in status_counts]
@@ -18,6 +26,15 @@ def get_device_status_counts():
 
 
 def get_devices_support_count():
+    """
+       Calculates the number of devices categorized by their support status based on the end of support date (eos).
+
+       Returns:
+           tuple: A tuple containing:
+                  - labels (list of str): The categories of support status.
+                  - counts_list (list of int): The count of devices in each category, aligned with the labels list.
+    """
+
     labels = ['No support', '3 months to 0', '6 to 3 months', '12 to 6 months', 'Good', 'Unknown']
     today = now().date()
     twelve_months_ago = today - timedelta(days=365)
@@ -48,6 +65,16 @@ def get_devices_support_count():
 
 
 def get_business_by_categories():
+    """
+       Aggregates and counts devices within each business, categorized by predefined categories.
+
+       Returns:
+           tuple: A tuple containing:
+                  - data (dict): A dictionary where keys are business names and values are lists of device counts
+                                 for each category.
+                  - categories (list of str): The list of categories used for counting devices.
+    """
+
     businesses = Business.objects.all()
     categories = [category[0] for category in Category.choices]
 

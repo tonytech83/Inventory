@@ -7,7 +7,14 @@ from inventory.devices.models import Device
 
 class OwnerRequiredMixin:
     """
-    Used when request user tried to modify foreign profile
+    Mixin used to ensure that the request user is the owner of the profile or account they are attempting to modify.
+
+    Method:
+    - get_object(queryset=None): Retrieves the object from the database based on the provided queryset and checks if
+      the request user is the owner of the object. Raises PermissionDenied if not.
+
+    Raises:
+        PermissionDenied: If the request user is not authenticated or is not the owner of the object.
     """
 
     def get_object(self, queryset=None):
@@ -21,7 +28,19 @@ class OwnerRequiredMixin:
 
 class IsBusinessOwner(permissions.BasePermission):
     """
-    Used for CRUD operations for devices
+    Custom permission class used to verify that the current user is the owner of the business associated with
+    the device for CRUD operations.
+
+    Methods:
+    - has_permission(request, view): Determines if the request should be permitted based on whether the request user
+      is the owner of the business. Retrieves business ID from request data or, if missing, from device details based
+      on view's kwargs.
+
+    Returns:
+        bool: True if the user is the owner of the business; otherwise, False.
+
+    Raises:
+        ValueError: If the business ID in the request is not a valid integer (implied by returning False).
     """
 
     def has_permission(self, request, view):
@@ -41,7 +60,5 @@ class IsBusinessOwner(permissions.BasePermission):
             return False
 
         is_owner = request.user.owner.filter(id=business_id).exists()
-
-        a = 5
 
         return is_owner

@@ -72,6 +72,14 @@ class CSVUploadApiView(APIView):
 
 
 def download_template(request):
+    """
+    Handles a request to download an Excel template file for device data entry.
+
+    Returns:
+        FileResponse: A response object that allows the file specified at the template_path to be downloaded by
+        the client.
+    """
+
     # Define the path to the template
     template_path = os.path.join(settings.BASE_DIR, 'staticfiles', 'template_file', 'template.xlsx')
 

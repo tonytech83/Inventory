@@ -27,6 +27,14 @@ class DashboardView(views.ListView):
 
 
 class ChartData(APIView):
+    """
+    API view that aggregates data for Chart.js based on the business, device status, support status,
+    and device categories.
+
+    Returns:
+        Response: A Django REST framework Response object containing the chart data as a JSON object.
+    """
+
     permission_classes = [IsAuthenticated]
 
     def get(self, request, format=None):

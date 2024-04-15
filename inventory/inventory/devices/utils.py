@@ -4,6 +4,21 @@ from inventory.devices.models import Device
 
 
 def create_devices_form_upload(sheet, business):
+    """
+    Processes an Excel sheet to bulk create device entries associated with a given business in the database.
+
+    Parameters:
+        sheet (openpyxl.worksheet.worksheet.Worksheet): The worksheet object from which device data is read.
+        business (Business): The business instance to which these devices will be associated.
+
+    Returns:
+        list of dict: A list containing the results for each device processing attempt, including the device name and
+                      the status ('success' or 'Error' with an error message if applicable).
+
+    Each Device creation failure due to data issues is caught and returned with an error message, allowing the caller
+    to identify and address these issues in the dataset.
+    """
+
     results = []
 
     for row in sheet.iter_rows(min_row=3):
