@@ -11,13 +11,13 @@ After launching the application, the first registered user becomes a superuser a
 
 - ### Build with:
 
+    - ![Django](https://img.shields.io/badge/Django-092E20)
     - ![Python](https://img.shields.io/badge/Python-3670A0)
     - ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169e1)
     - ![JavaScript](https://img.shields.io/badge/JavaScript-ECDB6F)
     - ![Bootstrap](https://img.shields.io/badge/Bootstrap-850EF6)
     - ![HTML](https://img.shields.io/badge/HTML-F17545)
     - ![CSS](https://img.shields.io/badge/CSS-2964F2)
-    - ![Django](https://img.shields.io/badge/Django-092E20)
 
 - ### To run the project:
 
