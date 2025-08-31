@@ -1,0 +1,64 @@
+{% extends 'base/base.html' %} {% block main_content %}
+<div class="backdrop nojs"></div>
+
+<div class="edit-profile">
+  <form
+    class="profile-edit-form"
+    action="{% url 'edit-profile' pk=request.user.pk %}"
+    method="POST"
+    enctype="multipart/form-data"
+  >
+    <div class="title-container">
+      <h4 class="login-title">Edit Profile</h4>
+    </div>
+
+    <div class="inputs">
+      {% include 'accounts/partials/edit-input-filed.html' with profile=object
+      f_type='text' f_title='First name' f_id="id_first_name"
+      f_name="first_name" f_placeholder="Enter your first name"
+      f_value=object.first_name %} {% include
+      'accounts/partials/edit-input-filed.html' with profile=object
+      f_type='text' f_title='Last name' f_id="id_last_name" f_name="last_name"
+      f_placeholder="Enter your last name" f_value=object.last_name %} {%
+      include 'accounts/partials/edit-input-filed.html' with profile=object
+      f_type='file' f_title='Profile picture' f_id="id_profile_pic"
+      f_name="profile_pic" f_placeholder="" f_value=object.profile_pic %} {%
+      include 'accounts/partials/edit-input-filed.html' with profile=object
+      f_type='text' f_title='Phone number' f_id="id_phone_number"
+      f_name="phone_number" f_placeholder="Enter your phone number" f_value=''
+      %} {% csrf_token %}
+    </div>
+
+    {% if form.first_name.errors %}
+    <div class="error-messages">
+      {% for error in form.first_name.errors %}
+      <p class="error">{{ error }}</p>
+      {% endfor %}
+    </div>
+    {% endif %} {% if form.last_name.errors %}
+    <div class="error-messages">
+      {% for error in form.last_name.errors %}
+      <p class="error">{{ error }}</p>
+      {% endfor %}
+    </div>
+    {% endif %} {% if form.phone_number.errors %}
+    <div class="error-messages">
+      {% for error in form.phone_number.errors %}
+      <p class="error">{{ error }}</p>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="button-container">
+      <div class="control-buttons"></div>
+      <div class="action-buttons">
+        <button class="reset-button-style button btn-create">Save</button>
+        <a class="button btn-cancel" href="{% url 'details-profile' %}"
+          >Cancel</a
+        >
+      </div>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

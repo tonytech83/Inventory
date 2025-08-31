@@ -11,32 +11,39 @@ After launching the application, the first registered user becomes a superuser a
 
 - ### Build with:
 
-    - ![Django](https://img.shields.io/badge/Django-092E20)
-    - ![Python](https://img.shields.io/badge/Python-3670A0)
-    - ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169e1)
-    - ![JavaScript](https://img.shields.io/badge/JavaScript-ECDB6F)
-    - ![Bootstrap](https://img.shields.io/badge/Bootstrap-850EF6)
-    - ![HTML](https://img.shields.io/badge/HTML-F17545)
-    - ![CSS](https://img.shields.io/badge/CSS-2964F2)
+  - ![Django](https://img.shields.io/badge/Django-092E20)
+  - ![Python](https://img.shields.io/badge/Python-3670A0)
+  - ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169e1)
+  - ![JavaScript](https://img.shields.io/badge/JavaScript-ECDB6F)
+  - ![Bootstrap](https://img.shields.io/badge/Bootstrap-850EF6)
+  - ![HTML](https://img.shields.io/badge/HTML-F17545)
+  - ![CSS](https://img.shields.io/badge/CSS-2964F2)
 
 - ### To run the project:
 
-    - run docker-compose.yml
-    ```powershel
-    docker-compose -f docker-compose.yml up
-    ```
-    - start the app
+  - run docker-compose.yml
+
+  ```powershel
+  docker-compose -f docker-compose.yml up
+  ```
+
+  - start the app
+
   ```powershell
   python manage.py runserver
   ```
-    - start celery
-    ```powershell
-    celery -A inventory worker --loglevel=info --concurrency=2 -P solo
-    ```
-    - start celery beat
-    ```powershell
-    celery -A inventory beat --loglevel=info
-    ```
+
+  - start celery
+
+  ```powershell
+  celery -A inventory worker --loglevel=info --concurrency=2 -P solo
+  ```
+
+  - start celery beat
+
+  ```powershell
+  celery -A inventory beat --loglevel=info
+  ```
 
 - ### Full project description at this [link](./description/description.md)
 
