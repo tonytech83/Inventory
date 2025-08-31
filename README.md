@@ -185,18 +185,18 @@ Before you begin, ensure you have the following installed:
 2. **Start the Django development server**
 
    ```bash
-   python3 manage.py runserver
+   python3 manage.py runserver &
    ```
 
 3. **Start Celery worker (in a new terminal)**
 
    ```bash
-   celery -A inventory worker --loglevel=info --concurrency=2 -P solo
+   celery -A inventory worker --loglevel=info --concurrency=2 -P solo &
    ```
 
 4. **Start Celery beat scheduler (in another terminal)**
    ```bash
-   celery -A inventory beat --loglevel=info
+   celery -A inventory beat --loglevel=info &
    ```
 
 ### Access the Application
