@@ -65,20 +65,20 @@ document.addEventListener('DOMContentLoaded', function () {
             { type: 'text' },
         ],
 
-        < !--Start General settings-- >
-    width: '100%', // size of the table
+        // Start General settings
+        width: '100%', // size of the table
         stretchH: 'all', // stretch horizontally table
         height: '64vh',
         overflow: 'auto',
-        < !--End General settings-- >
+        // End General settings
 
-        < !--Start Columns settings-- >
-    columnSorting: true,
+        // Start Columns settings
+        columnSorting: true,
         colHeaders: ['Hostname', 'Domain', 'Description', 'Status', 'Manufacturer', 'Model', 'IP Address', 'IP Address Second', 'Operating System', 'Building', 'Category', 'Sub Category', 'Serial Number', 'Owner', 'Support Model', 'PO Number', 'Invoice', 'SOS', 'EOS', 'EOL', 'Process at risk', 'Impact', 'Likelihood', 'Supplier'],
         hiddenColumns: {
-        columns: [1, 2, 4, 6, 7, 8, 9, 14, 15, 16, 17, 19, 20, 21, 22],
-        indicators: false
-    },
+            columns: [1, 2, 4, 6, 7, 8, 9, 14, 15, 16, 17, 19, 20, 21, 22],
+            indicators: false
+        },
         // Make first column link to edit
         afterRenderer: function (TD, row, col, prop, value, cellProperties) {
             if (col === 0) {
@@ -115,14 +115,14 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         },
         colWidths: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        < !--End Columns settings-- >
+        // End Columns settings
 
-        < !--Start Rows settings-- >
-    rowHeaders: false,
-        < !--End Rows settings-- >
+        // Start Rows settings
+        rowHeaders: false,
+        // End Rows settings
 
-        < !--Start Filters settings-- >
-    filters: true,
+        // Start Filters settings
+        filters: true,
         dropdownMenu: ['filter_by_value', 'filter_action_bar'],
         // Remove all selections in dropdownMenu
         // afterDropdownMenuShow(instance) {
@@ -136,40 +136,40 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Disable cell selection
         disableVisualSelection: true,
-        < !--End Filters settings-- >
+        // End Filters settings
 
-        < !--Start Other settings-- >
-    readOnly: true,
+        // Start Other settings
+        readOnly: true,
         licenseKey: 'non-commercial-and-evaluation',
-        < !--End Other settings-- >
+        // End Other settings
     });
 
-// // Start part of the `Remove all selection in dropdown menu`
-// var filters = hot.getPlugin('filters');
-//
-// window.hot = hot;
-// window.filters = filters;
-//
-// hot.render();
-// // End part of the `Remove all selection`
+    // // Start part of the `Remove all selection in dropdown menu`
+    // var filters = hot.getPlugin('filters');
+    //
+    // window.hot = hot;
+    // window.filters = filters;
+    //
+    // hot.render();
+    // // End part of the `Remove all selection`
 
-// Download data to CSV
-const button = document.querySelector('#export-file');
-const exportPlugin = hot.getPlugin('exportFile');
+    // Download data to CSV
+    const button = document.querySelector('#export-file');
+    const exportPlugin = hot.getPlugin('exportFile');
 
-button.addEventListener('click', () => {
-    exportPlugin.downloadFile('csv', {
-        bom: false,
-        columnDelimiter: ',',
-        columnHeaders: true,
-        exportHiddenColumns: true,
-        exportHiddenRows: true,
-        fileExtension: 'csv',
-        filename: 'devices_[YYYY]-[MM]-[DD]',
-        mimeType: 'text/csv',
-        rowDelimiter: '\r\n',
-        rowHeaders: false,
-        // range: [0, 0, devicesData.length, 10] //
+    button.addEventListener('click', () => {
+        exportPlugin.downloadFile('csv', {
+            bom: false,
+            columnDelimiter: ',',
+            columnHeaders: true,
+            exportHiddenColumns: true,
+            exportHiddenRows: true,
+            fileExtension: 'csv',
+            filename: 'devices_[YYYY]-[MM]-[DD]',
+            mimeType: 'text/csv',
+            rowDelimiter: '\r\n',
+            rowHeaders: false,
+            // range: [0, 0, devicesData.length, 10] //
+        });
     });
-});
 });

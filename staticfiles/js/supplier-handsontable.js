@@ -24,13 +24,13 @@ document.addEventListener('DOMContentLoaded', function () {
             {},
         ],
 
-            < !--Start General settings-- >
-    width: '100%', // size of the table
+        // Start General settings
+        width: '100%', // size of the table
         stretchH: 'all', // stretch horizontally table
-            < !--End General settings-- >
+        // End General settings
 
-            < !--Start Columns settings-- >
-    columnSorting: true,
+        // Start Columns settings
+        columnSorting: true,
         colHeaders: ['Name', 'Contact name', 'Country', 'Phone number', 'Email'],
         // Make first column link to edit
         afterRenderer: function (TD, row, col, prop, value, cellProperties) {
@@ -46,43 +46,43 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         },
         colWidths: [1, 1, 1, 1, 1],
-            < !--End Columns settings-- >
+        // End Columns settings
 
-            < !--Start Rows settings-- >
-    rowHeaders: false,
-            < !--End Rows settings-- >
+        // Start Rows settings
+        rowHeaders: false,
+        // End Rows settings
 
-            < !--Start Filters settings-- >
-    filters: true,
+        //Start Filters settings
+        filters: true,
         // dropdownMenu: true,
         dropdownMenu: ['filter_by_value', 'filter_action_bar'],
         // Disable cell selection
         disableVisualSelection: true,
-            < !--End Filters settings-- >
+        // End Filters settings
 
-            < !--Start Other settings-- >
-    readOnly: true,
+        //Start Other settings
+        readOnly: true,
         licenseKey: 'non-commercial-and-evaluation',
-            < !--End Other settings-- >
-        })
-    ;
+        // End Other settings
+    })
+        ;
 
-// Set up CSV download button
-const button = document.querySelector('#export-file');
+    // Set up CSV download button
+    const button = document.querySelector('#export-file');
 
-button.addEventListener('click', () => {
-    hot.getPlugin('exportFile').downloadFile('csv', {
-        bom: false,
-        columnDelimiter: ',',
-        columnHeaders: true,
-        exportHiddenColumns: true,
-        exportHiddenRows: true,
-        fileExtension: 'csv',
-        filename: 'suppliers_[YYYY]-[MM]-[DD]',
-        mimeType: 'text/csv',
-        rowDelimiter: '\r\n',
-        rowHeaders: false,
+    button.addEventListener('click', () => {
+        hot.getPlugin('exportFile').downloadFile('csv', {
+            bom: false,
+            columnDelimiter: ',',
+            columnHeaders: true,
+            exportHiddenColumns: true,
+            exportHiddenRows: true,
+            fileExtension: 'csv',
+            filename: 'suppliers_[YYYY]-[MM]-[DD]',
+            mimeType: 'text/csv',
+            rowDelimiter: '\r\n',
+            rowHeaders: false,
+        });
     });
-});
 
 });

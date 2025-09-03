@@ -13,20 +13,11 @@
     </div>
 
     <div class="inputs">
-      {% include 'accounts/partials/edit-input-filed.html' with profile=object
-      f_type='text' f_title='First name' f_id="id_first_name"
-      f_name="first_name" f_placeholder="Enter your first name"
-      f_value=object.first_name %} {% include
-      'accounts/partials/edit-input-filed.html' with profile=object
-      f_type='text' f_title='Last name' f_id="id_last_name" f_name="last_name"
-      f_placeholder="Enter your last name" f_value=object.last_name %} {%
-      include 'accounts/partials/edit-input-filed.html' with profile=object
-      f_type='file' f_title='Profile picture' f_id="id_profile_pic"
-      f_name="profile_pic" f_placeholder="" f_value=object.profile_pic %} {%
-      include 'accounts/partials/edit-input-filed.html' with profile=object
-      f_type='text' f_title='Phone number' f_id="id_phone_number"
-      f_name="phone_number" f_placeholder="Enter your phone number" f_value=''
-      %} {% csrf_token %}
+      {% include 'accounts/partials/edit-input-filed.html' with profile=object f_type='text' f_title='First name' f_id="id_first_name" f_name="first_name" f_placeholder="Enter your first name" f_value=object.first_name %}
+      {% include 'accounts/partials/edit-input-filed.html' with profile=object f_type='text' f_title='Last name' f_id="id_last_name" f_name="last_name" f_placeholder="Enter your last name" f_value=object.last_name %}
+      {% include 'accounts/partials/edit-input-filed.html' with profile=object f_type='file' f_title='Profile picture' f_id="id_profile_pic" f_name="profile_pic" f_placeholder="" f_value=object.profile_pic %}
+      {% include 'accounts/partials/edit-input-filed.html' with profile=object f_type='text' f_title='Phone number' f_id="id_phone_number" f_name="phone_number" f_placeholder="Enter your phone number" f_value='' %}
+      {% csrf_token %}
     </div>
 
     {% if form.first_name.errors %}

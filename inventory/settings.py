@@ -9,7 +9,10 @@ SECRET_KEY = config("SECRET_KEY")
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["inventory.tonytech.xyz"]
+CSRF_TRUSTED_ORIGINS = [
+    "https://inventory.tonytech.xyz",
+]
 
 # Application definition
 INSTALLED_APPS = [

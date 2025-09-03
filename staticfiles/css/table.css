@@ -1,105 +1,104 @@
 :root {
-    --background: #000;
-    --color: #FFF;
-    --table-border-color: #444;
-    --table-header-background: #262626;
-    --table-header-color: #FFF;
-    --background-color-row-odd: #0D0D0D;
-    --background-color-row-even: #0D0D0D;
-    --background-color-row-first: #0D0D0D;
-    --cell-color: #0D0D0D;
-    --cell-selected-color: #222;
-    --ctx-background: #111;
-    --ctx-background-hover: #222;
-    --scroll-track: #111;
-    --scroll-thumb: #575757;
-    --scroll-thumb-hover: #575757;
+  --background: #000;
+  --color: #fff;
+  --table-border-color: #444;
+  --table-header-background: #262626;
+  --table-header-color: #fff;
+  --background-color-row-odd: #0d0d0d;
+  --background-color-row-even: #0d0d0d;
+  --background-color-row-first: #0d0d0d;
+  --cell-color: #0d0d0d;
+  --cell-selected-color: #222;
+  --ctx-background: #111;
+  --ctx-background-hover: #222;
+  --scroll-track: #111;
+  --scroll-thumb: #575757;
+  --scroll-thumb-hover: #575757;
 }
 
-
 #data-container {
-    font-family: "Montserrat", sans-serif;
-    font-size: 1.5em;
-    border: 3px solid var(--table-border-color);
-    box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.5em;
+  border: 3px solid var(--table-border-color);
+  box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
+  width: 100%;
 }
 
 #data-container .handsontable {
-    font-size: 1em;
-    font-weight: normal;
-    /*color: var(--color);*/
-    color: var(--text-color);
+  font-size: 1em;
+  font-weight: normal;
+  /*color: var(--color);*/
+  color: var(--text-color);
 }
 
-
 #data-container .handsontable .wtHolder {
-    background-color: var(--table-header-background);
+  background-color: var(--table-header-background);
 }
 
 /* All headers */
 #data-container .handsontable th {
-    background-color: var(--table-header-background);
-    color: var(--table-header-color);
+  background-color: var(--table-header-background);
+  color: var(--table-header-color);
 }
 
 /* Row headers */
 #data-container .ht_clone_left th {
-    background-color: var(--table-header-background);
-    color: var(--table-header-color);
+  background-color: var(--table-header-background);
+  color: var(--table-header-color);
 }
 
 /* Column headers */
 #data-container .ht_clone_top th {
-    background-color: var(--table-header-background);
-    color: var(--text-color);
-    font-size: 1.1em;
+  background-color: var(--table-header-background);
+  color: var(--text-color);
+  font-size: 1.1em;
 }
 
 /* Row headers */
 #data-container .ht_clone_top_left_corner th {
-    border-bottom: 1px solid var(--table-border-color);
+  border-bottom: 1px solid var(--table-border-color);
 }
 
 #data-container .ht_clone_left th {
-    border-right: 1px solid var(--table-border-color);
-    border-left: 1px solid var(--table-border-color);
+  border-right: 1px solid var(--table-border-color);
+  border-left: 1px solid var(--table-border-color);
 }
 
 /* Column headers */
 #data-container .ht_clone_top th {
-    border-top: 1px solid var(--table-border-color);
-    border-right: 1px solid var(--table-border-color);
-    border-bottom: 1px solid var(--table-border-color);
+  border-top: 1px solid var(--table-border-color);
+  border-right: 1px solid var(--table-border-color);
+  border-bottom: 1px solid var(--table-border-color);
 }
 
 #data-container .ht_clone_top_left_corner th {
-    border-right: 1px solid var(--table-border-color);
+  border-right: 1px solid var(--table-border-color);
 }
 
 #data-container .handsontable .changeType {
-    background: coral;
-    border-color: var(--table-border-color);
+  background: coral;
+  border-color: var(--table-border-color);
 }
 
 /* Borders */
 #data-container .handsontable th,
 #data-container .handsontable td {
-    border-right: 1px solid var(--table-border-color);
-    border-bottom: 1px solid var(--table-border-color);
+  border-right: 1px solid var(--table-border-color);
+  border-bottom: 1px solid var(--table-border-color);
 }
 
 #data-container .handsontable tr:first-child td,
 #data-container .handsontable tr:first-child th {
-    border-top: 1px solid var(--table-border-color);
+  border-top: 1px solid var(--table-border-color);
 }
 
 #data-container .ht_master tr > td {
-    border-bottom: 1px solid var(--table-border-color);
+  border-bottom: 1px solid var(--table-border-color);
 }
 
 /* Right */
 #data-container .ht_master tr > td {
-    border-right: 1px solid var(--table-border-color);
+  border-right: 1px solid var(--table-border-color);
 }
 
 #data-container #data-container .handsontable .htNoFrame + td,
@@ -108,39 +107,39 @@
 #data-container .handsontable td:first-of-type,
 #data-container .handsontable th:first-child,
 #data-container .handsontable th:nth-child(2) {
-    border-left: 1px solid var(--table-border-color);
+  border-left: 1px solid var(--table-border-color);
 }
 
 #data-container .ht_clone_top_left_corner thead tr th:nth-last-child(2) {
-    border-right: 1px solid var(--table-border-color);
+  border-right: 1px solid var(--table-border-color);
 }
 
 #data-container .handsontable th:last-child {
-    border-right: 1px solid var(--table-border-color);
-    border-bottom: 1px solid var(--table-border-color);
+  border-right: 1px solid var(--table-border-color);
+  border-bottom: 1px solid var(--table-border-color);
 }
 
 /* Selected cell */
 #data-container tr > td {
-    background-color: var(--background-color);
+  background-color: var(--background-color);
 }
 
 /* Selected cell */
 #data-container tr > td.current {
-    background-color: var(--cell-selected-color);
+  background-color: var(--cell-selected-color);
 }
 
 /* Context menu */
 .htContextMenu tr,
 .htDropdownMenu tr,
 .htFiltersConditionsMenu tr {
-    background-color: var(--ctx-background);
+  background-color: var(--ctx-background);
 }
 
 .htContextMenu table tbody tr td,
 .htDropdownMenu table tbody tr td,
 .htFiltersConditionsMenu table tbody tr td {
-    background-color: var(--text-color);
+  background-color: var(--text-color);
 }
 
 .htContextMenu table tbody tr td.current,
@@ -149,88 +148,85 @@
 .htDropdownMenu table tbody tr td.zeroclipboard-is-hover,
 .htFiltersConditionsMenu table tbody tr td.current,
 .htFiltersConditionsMenu table tbody tr td.zeroclipboard-is-hover {
-    background-color: var(--ctx-background-hover);
+  background-color: var(--ctx-background-hover);
 }
-
 
 .htContextMenu .handsontable table td.htCustomMenuRenderer,
 .htDropdownMenu .handsontable table td.htCustomMenuRenderer {
-    background-color: var(--background-color);
+  background-color: var(--background-color);
 }
 
 .handsontable .htUISelectCaption,
 .handsontable .htUISelectCaption:hover {
-    background-color: var(--ctx-background);
+  background-color: var(--ctx-background);
 }
 
 /* Scroll bar */
 ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-    background: var(--scroll-track);
+  background: var(--scroll-track);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--scroll-thumb);
+  background: var(--scroll-thumb);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--scroll-thumb-hover);
+  background: var(--scroll-thumb-hover);
 }
 
 /*==================================*/
 
 .handsontable .htUIClearAll a,
 .handsontable .htUISelectAll a {
-    font-size: 1em;
+  font-size: 1em;
 }
 
-.handsontable .htFiltersMenuCondition .htUIInput input, .handsontable .htFiltersMenuValue .htUIMultipleSelectSearch input {
-    font-size: 1em;
+.handsontable .htFiltersMenuCondition .htUIInput input,
+.handsontable .htFiltersMenuValue .htUIMultipleSelectSearch input {
+  font-size: 1em;
 }
 
 .handsontable .htFiltersMenuLabel {
-    color: var(--text-color);
+  color: var(--text-color);
 }
 
-
-
 .handsontable a {
-    color: coral;
+  color: coral;
 }
 
 .handsontable .changeType {
-    /*display: none;*/
+  /*display: none;*/
 }
 
 .handsontable span.colHeader {
-    font-size: 0.6em;
-    font-weight: bold;
-    /*color: var(--background-color);*/
+  font-size: 0.6em;
+  font-weight: bold;
+  /*color: var(--background-color);*/
 }
 
 .handsontable .htDimmed {
-    color: var(--text-color);
-    font-size: 0.6em;
+  color: var(--text-color);
+  font-size: 0.6em;
 }
 
 .handsontable .htDimmed:nth-child(1) {
-    color: coral;
-    font-weight: 500;
-    font-size: 0.6em;
-    cursor: pointer;
+  color: coral;
+  font-weight: 500;
+  font-size: 0.6em;
+  cursor: pointer;
 }
 
 @media (max-height: 1080px) {
-    #data-container {
-        height: 59vh !important;
-    }
+  #data-container {
+    height: 59vh !important;
+  }
 
-
-    .suppliers-container #data-container {
-        height: auto !important;
-    }
+  .suppliers-container #data-container {
+    height: auto !important;
+  }
 }
