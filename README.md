@@ -251,7 +251,7 @@ DATABASE_URL=postgresql://user:password@localhost:5432/inventory
 
 ## Documentation
 
-For detailed project documentation, see the [full description](./description/description.md).
+For detailed project documentation, see the [full description](./docs/description.md).
 
 ## Contributing
 
