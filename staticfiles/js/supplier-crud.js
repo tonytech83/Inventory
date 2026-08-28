@@ -218,23 +218,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
     suppliersData.forEach(function (supplier) {
         let card = $('<div class="supplier-card"></div>');
-        card.append('<h5 class="card-title">' + supplier.name + '</h5>');
-        card.append('<p>Contact: ' + supplier.contact_name + '</p>');
-        card.append('<p>Country: ' + supplier.supplier_country + '</p>');
-        card.append('<p>Phone: ' + supplier.phone_number + '</p>');
-        const emailValue = String(supplier.email || '');
-        const emailParagraph = $('<p></p>');
-        const safeEmailValue = emailValue.trim();
-        const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(safeEmailValue);
-        emailParagraph.append(document.createTextNode('Email: '));
-        if (isValidEmail) {
-            const emailLink = $('<a></a>')
-                .attr('href', 'mailto:' + encodeURIComponent(safeEmailValue))
-                .text(safeEmailValue);
-            emailParagraph.append(emailLink);
-        } else {
-            emailParagraph.append(document.createTextNode(safeEmailValue));
-        }
+
+        card.append($('<h5 class="card-title"></h5>').text(supplier.name));
+        card.append($('<p></p>').text('Contact: ' + supplier.contact_name));
+        card.append($('<p></p>').text('Country: ' + supplier.supplier_country));
+        card.append($('<p></p>').text('Phone: ' + supplier.phone_number));
+
+        const emailParagraph = $('<p></p>').text('Email: ');
+        const rawEmail = String(supplier.email || '').trim();
+        const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(rawEmail);
+        const safeEmail = isValidEmail ? rawEmail : '';
+
+        const emailLink = $('<a></a>')
+            .attr('href', safeEmail ? ('mailto:' + encodeURIComponent(safeEmail)) : '#')
+            .text(safeEmail || rawEmail);
+        emailParagraph.append(emailLink);
         card.append(emailParagraph);
 
         card.on('click', function () {
