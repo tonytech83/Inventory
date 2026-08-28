@@ -224,9 +224,17 @@ document.addEventListener('DOMContentLoaded', function () {
         card.append('<p>Phone: ' + supplier.phone_number + '</p>');
         const emailValue = String(supplier.email || '');
         const emailParagraph = $('<p></p>');
-        const emailLink = $('<a></a>').attr('href', 'mailto:' + emailValue).text(emailValue);
+        const safeEmailValue = emailValue.trim();
+        const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(safeEmailValue);
         emailParagraph.append(document.createTextNode('Email: '));
-        emailParagraph.append(emailLink);
+        if (isValidEmail) {
+            const emailLink = $('<a></a>')
+                .attr('href', 'mailto:' + encodeURIComponent(safeEmailValue))
+                .text(safeEmailValue);
+            emailParagraph.append(emailLink);
+        } else {
+            emailParagraph.append(document.createTextNode(safeEmailValue));
+        }
         card.append(emailParagraph);
 
         card.on('click', function () {
