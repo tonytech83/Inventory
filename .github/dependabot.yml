@@ -7,7 +7,7 @@ updates:
       interval: "weekly"
 
   # Docker images referenced in docker-compose.yml
-  - package-ecosystem: "docker"
+  - package-ecosystem: "docker-compose"
     directory: "/"
     schedule:
       interval: "weekly"
