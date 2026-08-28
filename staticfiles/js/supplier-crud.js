@@ -222,7 +222,12 @@ document.addEventListener('DOMContentLoaded', function () {
         card.append('<p>Contact: ' + supplier.contact_name + '</p>');
         card.append('<p>Country: ' + supplier.supplier_country + '</p>');
         card.append('<p>Phone: ' + supplier.phone_number + '</p>');
-        card.append('<p>Email: <a href="mailto:' + supplier.email + '">' + supplier.email + '</a></p>');
+        const emailValue = String(supplier.email || '');
+        const emailParagraph = $('<p></p>');
+        const emailLink = $('<a></a>').attr('href', 'mailto:' + emailValue).text(emailValue);
+        emailParagraph.append(document.createTextNode('Email: '));
+        emailParagraph.append(emailLink);
+        card.append(emailParagraph);
 
         card.on('click', function () {
             showEditForm(supplier.id, supplier.name, supplier.contact_name, supplier.supplier_country, supplier.phone_number, supplier.email);
