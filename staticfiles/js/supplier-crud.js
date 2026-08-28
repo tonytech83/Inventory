@@ -218,11 +218,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
     suppliersData.forEach(function (supplier) {
         let card = $('<div class="supplier-card"></div>');
-        card.append('<h5 class="card-title">' + supplier.name + '</h5>');
-        card.append('<p>Contact: ' + supplier.contact_name + '</p>');
-        card.append('<p>Country: ' + supplier.supplier_country + '</p>');
-        card.append('<p>Phone: ' + supplier.phone_number + '</p>');
-        card.append('<p>Email: <a href="mailto:' + supplier.email + '">' + supplier.email + '</a></p>');
+
+        card.append($('<h5 class="card-title"></h5>').text(supplier.name));
+        card.append($('<p></p>').text('Contact: ' + supplier.contact_name));
+        card.append($('<p></p>').text('Country: ' + supplier.supplier_country));
+        card.append($('<p></p>').text('Phone: ' + supplier.phone_number));
+
+        const emailParagraph = $('<p></p>').text('Email: ');
+        const emailLink = $('<a></a>')
+            .attr('href', 'mailto:' + supplier.email)
+            .text(supplier.email);
+        emailParagraph.append(emailLink);
+        card.append(emailParagraph);
 
         card.on('click', function () {
             showEditForm(supplier.id, supplier.name, supplier.contact_name, supplier.supplier_country, supplier.phone_number, supplier.email);
