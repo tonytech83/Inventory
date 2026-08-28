@@ -1,7 +1,10 @@
+import logging
 import random
 from datetime import date
 
 from inventory.devices.models import Device
+
+logger = logging.getLogger(__name__)
 
 
 def create_devices_form_upload(sheet, business):
@@ -58,8 +61,15 @@ def create_devices_form_upload(sheet, business):
             )
             results.append({"device_name": row[0].value, "status": "success"})
         except Exception as e:
+            logger.exception(
+                "Device import failed for device_name=%r", row[0].value, exc_info=e
+            )
             results.append(
-                {"device_name": row[0].value, "status": "Error", "error": str(e)}
+                {
+                    "device_name": row[0].value,
+                    "status": "Error",
+                    "error": "Device could not be imported due to invalid data.",
+                }
             )
             continue
 
