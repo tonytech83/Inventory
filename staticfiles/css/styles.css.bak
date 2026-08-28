@@ -8,11 +8,8 @@
   --text-color: #c0c0c2;
   --text-error: #ff0000;
   /* other */
-  --text-color-light: #c0c0c2;
-  --text-color-dark: #000000;
+  --text-color: #000000;
   --bg-color: #282828;
-  --shadow-soft: rgba(0, 0, 0, 0.35) 0 5px 15px;
-  --card-border: 2px solid var(--background-color);
   /* buttons */
   --create-border: #198754;
   --create-border-hover: #157347;
@@ -83,7 +80,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border: var(--card-border);
+  border: 2px solid var(--background-color);
   padding: 20px;
   height: 88vh;
 }
@@ -131,14 +128,14 @@ header {
   align-items: center;
   padding: 0 2%;
   background: var(--background-color);
-  box-shadow: var(--shadow-soft);
+  box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
 }
 
 .link-item,
 .link-item-link {
   font-weight: 500;
   font-size: 22px;
-  color: var(--text-color-light);
+  color: var(--text-color);
   text-decoration: none;
 }
 
@@ -146,7 +143,7 @@ header {
   height: 60px;
   width: 60px;
   background: transparent;
-  color: var(--text-color-light);
+  color: var(--text-color);
 }
 
 .nav-links {
@@ -213,11 +210,29 @@ header {
   color: black;
 }
 
-/* REMOVED: a [data-bs-theme="dark"] block used SCSS syntax (#{...} interpolation
-   and $variables like $white, $blue-600) inside a plain .css file. That syntax
-   is invalid CSS — browsers ignore every declaration that used it, so this
-   block did nothing. If you want dark-mode Bootstrap variable overrides,
-   they need real values, e.g. --bs-body-color-rgb: 255, 255, 255; */
+[data-bs-theme="dark"] {
+  --bs-body-color: var(--background-color);
+  --bs-body-color-rgb: #{to-rgb($white)};
+  --bs-body-bg: var(--text-color);
+  --bs-body-bg-rgb: #{to-rgb($blue)};
+  --bs-tertiary-bg: #{$blue-600};
+
+  .dropdown {
+    --bs-dropdown-bg: #{mix($blue-500, $blue-600)};
+    --bs-dropdown-link-active-bg: #{$blue-700};
+  }
+
+  .btn-secondary {
+    --bs-btn-bg: #{mix($gray-600, $blue-400, 0.5)};
+    --bs-btn-border-color: #{rgba($white, 0.25)};
+    --bs-btn-hover-bg: #{darken(mix($gray-600, $blue-400, 0.5), 5%)};
+    --bs-btn-hover-border-color: #{rgba($white, 0.25)};
+    --bs-btn-active-bg: #{darken(mix($gray-600, $blue-400, 0.5), 10%)};
+    --bs-btn-active-border-color: #{rgba($white, 0.5)};
+    --bs-btn-focus-border-color: #{rgba($white, 0.5)};
+    --bs-btn-focus-box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.2);
+  }
+}
 
 @media (max-height: 1080px) {
   .link-item,
@@ -250,10 +265,10 @@ header {
   height: 200px;
   padding: 20px 20px;
 
-  box-shadow: var(--shadow-soft);
+  box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
 
   background: var(--background-color);
-  color: var(--text-color-light);
+  color: var(--text-color);
   cursor: pointer;
 }
 
@@ -346,41 +361,41 @@ header {
 
 /* ===============================================================
 === DEVICE
-================================================================== */
+================================================================== *
 #deviceCreateForm,
 #deviceEditForm {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .device-info,
 .support-info,
 .risk-info {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
 }
 
 .input-group-sm {
-  flex-basis: 32%;
+    flex-basis: 32%;
 }
 
 .date-field {
-  flex-basis: 32%;
-  margin-right: 1.5em;
+    flex-basis: 32%;
+    margin-right: 1.5em;
 }
 
 #existingInvoiceLink {
-  flex-basis: 32%;
-  margin-bottom: 1em;
+    flex-basis: 32%;
+    margin-bottom: 1em;
 }
 
 .sub-title {
-  display: inline-block;
-  width: 100%;
-  font-size: 1.2em;
+    display: inline-block;
+    width: 100%;
+    font-size: 1.2em;
 }
 
 /* color for Hostname ans Serial Number fields */
@@ -437,7 +452,7 @@ header {
 }
 
 .profile-container .wrapper .profile-image img {
-  border: var(--card-border);
+  border: 2px solid var(--background-color);
   width: 100%;
   height: 100%;
 }
@@ -452,7 +467,7 @@ header {
 }
 
 .profile-information .profile-item {
-  border: var(--card-border);
+  border: 2px solid var(--background-color);
   padding-left: 10px;
   display: inline-block;
   width: 49%;
@@ -492,10 +507,10 @@ h5 {
   flex-direction: column;
   align-items: center;
 
-  box-shadow: var(--shadow-soft);
+  box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
   background: var(--background-color);
   padding: 10px;
-  color: var(--text-color-light);
+  color: var(--text-color);
 }
 
 .total-devices:hover,
@@ -545,13 +560,13 @@ h5 {
 .box .selected {
   width: 100%;
   padding: 1px 2px;
-  background: var(--text-color-light);
+  background: var(--text-color);
   color: coral;
 }
 
 .box .not-selected {
   padding: 1px 2px;
-  color: var(--text-color-light);
+  color: var(--text-color);
 }
 
 .box .not-selected:hover {
@@ -604,8 +619,8 @@ table {
   box-sizing: border-box; /* This ensures padding is included in the width */
   display: flex;
   justify-content: space-between;
-  border: var(--card-border); /* Example border */
-  box-shadow: var(--shadow-soft);
+  border: 2px solid var(--background-color); /* Example border */
+  box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
 }
 
 .control-buttons {
@@ -630,7 +645,7 @@ table {
   background: var(--create-border);
   border: 2px solid var(--create-border);
   transition: border-color 0.3s;
-  color: var(--text-color-light);
+  color: var(--text-color);
   font-weight: bold;
 }
 
@@ -638,13 +653,7 @@ table {
   background: var(--create-border-hover);
 }
 
-/* .btn-cancel/.btn-download/.btn-delete/.btn-edit shared the exact same base
-   styles and only differed in their :hover border color — merged into one
-   rule to avoid repeating the same 5 declarations four times. */
-.btn-cancel,
-.btn-download,
-.btn-delete,
-.btn-edit {
+.btn-cancel {
   border: 2px solid transparent;
   transition: border-color 0.3s;
   background: darkgrey;
@@ -656,12 +665,36 @@ table {
   border: 2px solid var(--cancel-border-hover);
 }
 
+.btn-download {
+  border: 2px solid transparent;
+  transition: border-color 0.3s;
+  background: darkgrey;
+  color: var(--background-color);
+  font-weight: bold;
+}
+
 .btn-download:hover {
   border: 2px solid var(--download-border);
 }
 
+.btn-delete {
+  border: 2px solid transparent;
+  transition: border-color 0.3s;
+  background: darkgrey;
+  color: var(--background-color);
+  font-weight: bold;
+}
+
 .btn-delete:hover {
   border: 2px solid var(--delete-border-hover);
+}
+
+.btn-edit {
+  border: 2px solid transparent;
+  transition: border-color 0.3s;
+  background: darkgrey;
+  color: var(--background-color);
+  font-weight: bold;
 }
 
 .btn-edit:hover {
@@ -693,7 +726,7 @@ table {
   font-family: "Montserrat", sans-serif;
   font-size: 1.5em;
   border: 3px solid var(--table-border-color);
-  box-shadow: var(--shadow-soft);
+  box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
   width: 100%;
 }
 
@@ -701,7 +734,7 @@ table {
   font-size: 1em;
   font-weight: normal;
   /*color: var(--color);*/
-  color: var(--text-color-light);
+  color: var(--text-color);
 }
 
 #data-container .handsontable .wtHolder {
@@ -723,7 +756,7 @@ table {
 /* Column headers */
 #data-container .ht_clone_top th {
   background-color: var(--table-header-background);
-  color: var(--text-color-light);
+  color: var(--text-color);
   font-size: 1.1em;
 }
 
@@ -812,7 +845,7 @@ table {
 .htContextMenu table tbody tr td,
 .htDropdownMenu table tbody tr td,
 .htFiltersConditionsMenu table tbody tr td {
-  background-color: var(--text-color-light);
+  background-color: var(--text-color);
 }
 
 .htContextMenu table tbody tr td.current,
@@ -865,7 +898,7 @@ table {
 }
 
 .handsontable .htFiltersMenuLabel {
-  color: var(--text-color-dark);
+  color: var(--text-color);
 }
 
 .handsontable a {
@@ -879,7 +912,7 @@ table {
 }
 
 .handsontable .htDimmed {
-  color: var(--text-color-dark);
+  color: var(--text-color);
   font-size: 0.6em;
 }
 
@@ -1016,8 +1049,8 @@ table {
 
 .title-container {
   width: 100%;
-  border: var(--card-border);
-  box-shadow: var(--shadow-soft);
+  border: 2px solid var(--background-color);
+  box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
   margin-bottom: 20px;
 }
 
@@ -1137,8 +1170,8 @@ table {
   text-align: center;
   background: var(--background-color);
   padding: 10px 0;
-  box-shadow: var(--shadow-soft);
-  color: var(--text-color-light);
+  box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
+  color: var(--text-color);
 }
 
 @media (max-height: 1080px) {
@@ -1167,7 +1200,7 @@ table {
 .mySlides {
   width: 100%;
   display: none;
-  border: var(--card-border);
+  border: 2px solid var(--background-color);
   padding: 20px 40px;
   background: lightgrey;
 }
@@ -1188,8 +1221,8 @@ table {
         Table
 ------------------------ */
 .dashboard-table {
-  border: var(--card-border);
-  box-shadow: var(--shadow-soft);
+  border: 2px solid var(--background-color);
+  box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
   width: 100%;
   height: 100%;
   font-size: 0.9em;
@@ -1197,8 +1230,8 @@ table {
 }
 
 .dashboard-table th {
-  border-right: var(--card-border);
-  border-left: var(--card-border);
+  border-right: 2px solid var(--background-color);
+  border-left: 2px solid var(--background-color);
   text-align: center;
 }
 
@@ -1206,15 +1239,15 @@ table {
 .dashboard-table td:last-child,
 .totals {
   background: var(--background-color);
-  color: var(--text-color-light);
+  color: var(--text-color);
 }
 
 .dashboard-table tr {
-  border: var(--card-border);
+  border: 2px solid var(--background-color);
 }
 
 .dashboard-table td {
-  border-right: var(--card-border);
+  border-right: 2px solid var(--background-color);
   font-weight: 500;
   text-align: center;
 }
@@ -1238,14 +1271,14 @@ table {
 .bar-chart {
   margin-top: 30px;
   padding: 10px;
-  border: var(--card-border);
-  box-shadow: var(--shadow-soft);
+  border: 2px solid var(--background-color);
+  box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
 }
 
 .chart-legend {
   padding: 5px 25px;
-  border: var(--card-border);
-  box-shadow: var(--shadow-soft);
+  border: 2px solid var(--background-color);
+  box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -1276,7 +1309,29 @@ table {
   height: 630px !important;
 }
 
-/* (duplicate @keyframes shake removed — already defined once near the top of the file) */
+/* Shake animation */
+@keyframes shake {
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-2px, 0, 0);
+  }
+
+  40%,
+  60% {
+    transform: translate3d(2px, 0, 0);
+  }
+}
 
 #legend_one,
 #legend_two,
@@ -1304,12 +1359,22 @@ table {
     font-size: 24px;
   }
 
+  .container .w3-container h1 {
+    font-size: 24px;
+  }
+
   .container .w3-container h4,
   .start-using {
     font-size: 18px;
   }
 
-  /* (.mySlides rule removed here — it exactly duplicated the base rule above and did nothing) */
+  .mySlides {
+    width: 100%;
+    display: none;
+    border: 2px solid var(--background-color);
+    padding: 20px 40px;
+    background: lightgrey;
+  }
 }
 
 @media (max-height: 1080px) {
@@ -1395,9 +1460,9 @@ table {
 
 .supplier-card {
   position: relative;
-  box-shadow: var(--shadow-soft);
+  box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
   background: var(--background-color);
-  color: var(--text-color-light);
+  color: var(--text-color);
   cursor: pointer;
   padding: 20px;
   width: 300px;
@@ -1414,7 +1479,29 @@ table {
   perspective: 1000px;
 }
 
-/* (duplicate @keyframes shake removed — already defined once near the top of the file) */
+/* Shake animation */
+@keyframes shake {
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-2px, 0, 0);
+  }
+
+  40%,
+  60% {
+    transform: translate3d(2px, 0, 0);
+  }
+}
 
 .card-title {
   font-size: 20px;
@@ -1432,8 +1519,8 @@ table {
   margin-right: auto;
   display: flex;
   align-items: center;
-  border: var(--card-border);
-  box-shadow: var(--shadow-soft);
+  border: 2px solid var(--background-color);
+  box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
   margin-bottom: 20px;
   transition: width 0.5s ease-in-out;
 }
