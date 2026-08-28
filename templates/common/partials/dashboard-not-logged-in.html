@@ -1,49 +1,78 @@
 {% load static %}
 <div class="container">
-    <div class="dashboard-container">
-        <div class="w3-container">
-            <h1>Welcome to IT Inventory web application</h1>
-            <h4>This software was created to assist my colleagues in making their work easier.</h4>
-        </div>
-
-        <div class="w3-content w3-display-container">
-            <img class="mySlides" src="{% static 'img/pic_1.jpg' %}" fetchpriority="high">
-            <img class="mySlides" src="{% static 'img/pic_2.jpg' %}">
-            <img class="mySlides" src="{% static 'img/pic_3.jpg' %}">
-            <img class="mySlides" src="{% static 'img/pic_4.jpg' %}">
-            <img class="mySlides" src="{% static 'img/pic_5.jpg' %}">
-
-            <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
-            <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
-        </div>
-
-        <div>
-            <h4 class="start-using">You can start using the application, you just need to register.</h4>
-        </div>
-
+  <div class="dashboard-container">
+    <div class="w3-container">
+      <h1>Welcome to IT Inventory web application</h1>
+      <h4>
+        This software was created to assist my colleagues in making their work
+        easier.
+      </h4>
     </div>
+
+    <div class="w3-content w3-display-container">
+      <img
+        class="mySlides"
+        src="{% static 'img/pic_1.webp' %}"
+        fetchpriority="high"
+        alt="Dashboard overview screenshot"
+      />
+      <img
+        class="mySlides"
+        src="{% static 'img/pic_2.webp' %}"
+        alt="Inventory list screenshot"
+      />
+      <img
+        class="mySlides"
+        src="{% static 'img/pic_3.webp' %}"
+        alt="Suppliers list screenshot"
+      />
+      <img
+        class="mySlides"
+        src="{% static 'img/pic_4.webp' %}"
+        alt="Creation of new device"
+      />
+      <img
+        class="mySlides"
+        src="{% static 'img/pic_5.webp' %}"
+        alt="Home overview"
+      />
+
+      <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">
+        &#10094;
+      </button>
+      <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">
+        &#10095;
+      </button>
+    </div>
+
+    <div>
+      <h4 class="start-using">
+        You can start using the application, you just need to register.
+      </h4>
+    </div>
+  </div>
 </div>
 
 <script>
-    let slideIndex = 1;
-    showDivs(slideIndex);
+  let slideIndex = 1;
+  showDivs(slideIndex);
 
-    function plusDivs(n) {
-        showDivs(slideIndex += n);
-    }
+  function plusDivs(n) {
+    showDivs((slideIndex += n));
+  }
 
-    function showDivs(n) {
-        let i;
-        let x = document.getElementsByClassName("mySlides");
-        if (n > x.length) {
-            slideIndex = 1
-        }
-        if (n < 1) {
-            slideIndex = x.length
-        }
-        for (i = 0; i < x.length; i++) {
-            x[i].style.display = "none";
-        }
-        x[slideIndex - 1].style.display = "block";
+  function showDivs(n) {
+    let i;
+    let x = document.getElementsByClassName("mySlides");
+    if (n > x.length) {
+      slideIndex = 1;
     }
+    if (n < 1) {
+      slideIndex = x.length;
+    }
+    for (i = 0; i < x.length; i++) {
+      x[i].style.display = "none";
+    }
+    x[slideIndex - 1].style.display = "block";
+  }
 </script>
