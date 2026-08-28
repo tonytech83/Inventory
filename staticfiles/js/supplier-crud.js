@@ -225,9 +225,13 @@ document.addEventListener('DOMContentLoaded', function () {
         card.append($('<p></p>').text('Phone: ' + supplier.phone_number));
 
         const emailParagraph = $('<p></p>').text('Email: ');
+        const rawEmail = String(supplier.email || '').trim();
+        const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(rawEmail);
+        const safeEmail = isValidEmail ? rawEmail : '';
+
         const emailLink = $('<a></a>')
-            .attr('href', 'mailto:' + supplier.email)
-            .text(supplier.email);
+            .attr('href', safeEmail ? ('mailto:' + encodeURIComponent(safeEmail)) : '#')
+            .text(safeEmail || rawEmail);
         emailParagraph.append(emailLink);
         card.append(emailParagraph);
 
