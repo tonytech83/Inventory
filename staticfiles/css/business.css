@@ -1,8 +1,0 @@
-.business-container {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    align-items: center;
-    justify-content: space-between;
-}
