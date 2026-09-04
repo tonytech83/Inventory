@@ -11,7 +11,7 @@ click-repl==0.3.0
 colorama==0.4.6
 cron-descriptor==1.4.5
 Django==5.2.16
-django-celery-beat==2.8.1
+django-celery-beat==2.9.0
 django-timezone-field==7.1
 django_celery_results==2.6.0
 djangorestframework==3.17.2
