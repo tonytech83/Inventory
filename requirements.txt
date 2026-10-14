@@ -24,7 +24,7 @@ packaging==26.3
 pillow==12.3.0
 prompt_toolkit==3.0.53
 psycopg2==2.9.13
-python-crontab==3.2.0
+python-crontab==3.4.0
 python-dateutil==2.9.0.post0
 python-decouple==3.8
 python-dotenv==1.2.2
