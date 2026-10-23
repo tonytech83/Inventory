@@ -18,7 +18,7 @@ djangorestframework==3.18.1
 et_xmlfile==2.0.0
 idna==3.20
 kombu==5.6.2
-mailjet-rest==1.9.0
+mailjet-rest==1.9.1
 openpyxl==3.1.5
 packaging==26.3
 pillow==12.3.0
