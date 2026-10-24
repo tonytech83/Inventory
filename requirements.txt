@@ -30,7 +30,7 @@ python-decouple==3.8
 python-dotenv==1.2.2
 pytz==2026.3.post1
 redis==8.1.0
-requests==2.33.0
+requests==2.34.2
 six==1.17.0
 sqlparse==0.6.0
 tzdata==2026.5
